@@ -1,3 +1,4 @@
 *.bak
 C++/build
 *.o
+.DS_Store
