@@ -2,3 +2,8 @@
 C++/build
 *.o
 .DS_Store
+*.class
+*.aux
+*.fdb_latexmk
+*.fls
+*.log

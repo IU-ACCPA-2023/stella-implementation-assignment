@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
-project(Interpreter VERSION 0.1.0)
+project(stella-interpreter VERSION 0.1.0)
 
 set (Stella_Syntax
   Stella/Absyn.H
@@ -23,8 +23,8 @@ set (SRCS
   TypeCheck.cpp
 )
 
-add_executable(Interpreter ${Stella_Syntax} ${SRCS})
-set_property(TARGET Interpreter PROPERTY CXX_STANDARD 17)
+add_executable(stella-interpreter ${Stella_Syntax} ${SRCS})
+set_property(TARGET stella-interpreter PROPERTY CXX_STANDARD 17)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
