@@ -14,3 +14,5 @@ TestStella
 Interpret
 __pycache__
 Python/src/antlr4
+node_modules
+
