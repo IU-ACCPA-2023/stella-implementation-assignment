@@ -12,3 +12,7 @@ C++/build
 *.mli
 TestStella
 Interpret
+*.interp
+*.tokens
+__pycache__
+Python/src/antlr4
