@@ -24,7 +24,7 @@ make
 ```
 
 This typically involves running BNFC converter, and compiling the project in the chosen language,
-resulting in an executable `${LANGUAGE}/interpreter` that you can now use to interpret untyped expressions with functions.
+resulting in an executable `${LANGUAGE}/stella-interpreter` that you can now use to type check and interpret programs.
 
 3. Now, to run the type checker:
 
