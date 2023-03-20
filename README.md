@@ -15,6 +15,9 @@ Your task is to select any of these languages and complete it, making the tests 
 
 ### Building and running the interpreter
 
+**Note:** this was tested with BNFC 2.9.4.1 - (2.9.4 and lower versions are not suitable!).
+The requirements for specific implementations are in the corresponding directories (if any).
+
 1. Change the first line in the [Makefile](Makefile) to match the language of your choice.
 
 2. To build the interpreter run:
@@ -51,5 +54,5 @@ Assuming you have `latexmk` and `pdflatex` installed, you can simply run
 make syntax-pdf
 ```
 
-This will generate PDF files `${LANGUAGE}/doc/Syntax/Normal.pdf` and `${LANGUAGE}/doc/Syntax/Nameless.pdf`.
+This will generate PDF file `doc/Stella.pdf` and `/doc/Stella.tex` from a `Stella.cf` file.
 

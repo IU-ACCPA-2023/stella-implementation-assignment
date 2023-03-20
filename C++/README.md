@@ -2,6 +2,18 @@
 
 This is the skeleton for a C++ implementation of the Stella programming language interpreter.
 
+### Requirements
+
+This was tested with:
+
+* make 4.1
+* BNFC 2.9.4.1
+* flex 2.6.4
+* bison 3.8.2
+* g++ 11.2.0
+* cmake 3.23.0-rc5
+* ninja 1.8.2
+
 ### Building and running the interpreter
 
 1. To build the interpreter run:
