@@ -35,7 +35,7 @@ resulting in an executable `${LANGUAGE}/stella-interpreter` that you can now use
 make typecheck
 ```
 
-This starts the type checker waiting to input the program.
+This starts the type checker waiting to input the program. Note that it will accept input until it encounters the end of file (Ctrl+D).
 
 4. To run the interpreter:
 

@@ -31,7 +31,7 @@ resulting in an executable `build/stella-interpreter` that you can now use to ty
 make typecheck
 ```
 
-This starts the type checker waiting to input the program.
+This starts the type checker waiting to input the program. Note that it will accept input until it encounters the end of file (Ctrl+D).
 
 3. To run the interpreter:
 
