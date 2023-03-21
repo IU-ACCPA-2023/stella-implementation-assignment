@@ -35,7 +35,9 @@ int main(int argc, char ** argv)
       usage();
       exit(1);
     }
-  } else input = stdin;
+  } else {
+    input = stdin;
+  }
 
   Stella::Program *prog = nullptr;
   try {

@@ -45,7 +45,7 @@ and expr =
  | Abstraction of paramDecl list * expr
  | Tuple of expr list
  | Record of binding list
- | Variant of stellaIdent * expr
+ | Variant of stellaIdent * exprData
  | Match of expr * matchCase list
  | List of expr list
  | Add of expr * expr
@@ -75,8 +75,20 @@ and expr =
 and matchCase =
    AMatchCase of pattern * expr
 
+and optionalTyping =
+   NoTyping
+ | SomeTyping of typeT
+
+and patternData =
+   NoPatternData
+ | SomePatternData of pattern
+
+and exprData =
+   NoExprData
+ | SomeExprData of expr
+
 and pattern =
-   PatternVariant of stellaIdent * pattern
+   PatternVariant of stellaIdent * patternData
  | PatternTuple of pattern list
  | PatternRecord of labelledPattern list
  | PatternList of pattern list
@@ -96,17 +108,21 @@ and binding =
 and typeT =
    TypeFun of typeT list * typeT
  | TypeRec of stellaIdent * typeT
+ | TypeSum of typeT * typeT
  | TypeTuple of typeT list
- | TypeRecord of fieldType list
- | TypeVariant of fieldType list
+ | TypeRecord of recordFieldType list
+ | TypeVariant of variantFieldType list
  | TypeList of typeT
  | TypeBool
  | TypeNat
  | TypeUnit
  | TypeVar of stellaIdent
 
-and fieldType =
-   AFieldType of stellaIdent * typeT
+and variantFieldType =
+   AVariantFieldType of stellaIdent * optionalTyping
+
+and recordFieldType =
+   ARecordFieldType of stellaIdent * typeT
 
 and typing =
    ATyping of expr * typeT

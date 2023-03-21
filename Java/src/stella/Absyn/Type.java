@@ -7,6 +7,7 @@ public abstract class Type implements java.io.Serializable {
   public interface Visitor <R,A> {
     public R visit(stella.Absyn.TypeFun p, A arg);
     public R visit(stella.Absyn.TypeRec p, A arg);
+    public R visit(stella.Absyn.TypeSum p, A arg);
     public R visit(stella.Absyn.TypeTuple p, A arg);
     public R visit(stella.Absyn.TypeRecord p, A arg);
     public R visit(stella.Absyn.TypeVariant p, A arg);

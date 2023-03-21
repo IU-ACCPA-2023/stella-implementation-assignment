@@ -81,7 +81,10 @@ let rec prtString (_:int) (s:string) : doc = render ("\"" ^ String.escaped s ^ "
 
 
 let rec prtStellaIdent _ (AbsStella.StellaIdent i) : doc = render i
-
+and prtStellaIdentListBNFC i es : doc = match (i, es) with
+    (_,[]) -> (concatD [])
+  | (_,[x]) -> (concatD [prtStellaIdent 0 x])
+  | (_,x::xs) -> (concatD [prtStellaIdent 0 x ; render "," ; prtStellaIdentListBNFC 0 xs])
 
 let rec prtExtensionName _ (AbsStella.ExtensionName i) : doc = render i
 and prtExtensionNameListBNFC i es : doc = match (i, es) with
@@ -143,42 +146,42 @@ and prtThrowType (i:int) (e : AbsStella.throwType) : doc = match e with
 and prtExpr (i:int) (e : AbsStella.expr) : doc = match e with
        AbsStella.If (expr1, expr2, expr3) -> prPrec i 0 (concatD [render "if" ; prtExpr 0 expr1 ; render "then" ; prtExpr 0 expr2 ; render "else" ; prtExpr 0 expr3])
   |    AbsStella.Let (stellaident, expr1, expr2) -> prPrec i 0 (concatD [render "let" ; prtStellaIdent 0 stellaident ; render "=" ; prtExpr 0 expr1 ; render "in" ; prtExpr 0 expr2])
-  |    AbsStella.LessThan (expr1, expr2) -> prPrec i 0 (concatD [prtExpr 1 expr1 ; render "<" ; prtExpr 1 expr2])
-  |    AbsStella.LessThanOrEqual (expr1, expr2) -> prPrec i 0 (concatD [prtExpr 1 expr1 ; render "<=" ; prtExpr 1 expr2])
-  |    AbsStella.GreaterThan (expr1, expr2) -> prPrec i 0 (concatD [prtExpr 1 expr1 ; render ">" ; prtExpr 1 expr2])
-  |    AbsStella.GreaterThanOrEqual (expr1, expr2) -> prPrec i 0 (concatD [prtExpr 1 expr1 ; render ">=" ; prtExpr 1 expr2])
-  |    AbsStella.Equal (expr1, expr2) -> prPrec i 0 (concatD [prtExpr 1 expr1 ; render "==" ; prtExpr 1 expr2])
-  |    AbsStella.NotEqual (expr1, expr2) -> prPrec i 0 (concatD [prtExpr 1 expr1 ; render "!=" ; prtExpr 1 expr2])
-  |    AbsStella.TypeAsc (expr, type_) -> prPrec i 1 (concatD [prtExpr 1 expr ; render "as" ; prtTypeT 0 type_])
-  |    AbsStella.Abstraction (paramdecls, expr) -> prPrec i 1 (concatD [render "fn" ; render "(" ; prtParamDeclListBNFC 0 paramdecls ; render ")" ; render "{" ; render "return" ; prtExpr 0 expr ; render ";" ; render "}"])
-  |    AbsStella.Tuple exprs -> prPrec i 1 (concatD [render "{" ; prtExprListBNFC 0 exprs ; render "}"])
-  |    AbsStella.Record bindings -> prPrec i 1 (concatD [render "record" ; render "{" ; prtBindingListBNFC 0 bindings ; render "}"])
-  |    AbsStella.Variant (stellaident, expr) -> prPrec i 1 (concatD [render "<" ; prtStellaIdent 0 stellaident ; render "=" ; prtExpr 0 expr ; render ">"])
-  |    AbsStella.Match (expr, matchcases) -> prPrec i 1 (concatD [render "match" ; prtExpr 1 expr ; render "{" ; prtMatchCaseListBNFC 0 matchcases ; render "}"])
-  |    AbsStella.List exprs -> prPrec i 1 (concatD [render "[" ; prtExprListBNFC 0 exprs ; render "]"])
-  |    AbsStella.Add (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 1 expr1 ; render "+" ; prtExpr 2 expr2])
-  |    AbsStella.LogicOr (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 1 expr1 ; render "or" ; prtExpr 2 expr2])
-  |    AbsStella.Multiply (expr1, expr2) -> prPrec i 2 (concatD [prtExpr 2 expr1 ; render "*" ; prtExpr 3 expr2])
-  |    AbsStella.LogicAnd (expr1, expr2) -> prPrec i 2 (concatD [prtExpr 2 expr1 ; render "and" ; prtExpr 3 expr2])
-  |    AbsStella.Application (expr, exprs) -> prPrec i 3 (concatD [prtExpr 3 expr ; render "(" ; prtExprListBNFC 0 exprs ; render ")"])
-  |    AbsStella.ConsList (expr1, expr2) -> prPrec i 4 (concatD [render "cons" ; render "(" ; prtExpr 0 expr1 ; render "," ; prtExpr 0 expr2 ; render ")"])
-  |    AbsStella.Head expr -> prPrec i 4 (concatD [render "List::head" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.IsEmpty expr -> prPrec i 4 (concatD [render "List::isempty" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.Tail expr -> prPrec i 4 (concatD [render "List::tail" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.Succ expr -> prPrec i 4 (concatD [render "succ" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.LogicNot expr -> prPrec i 4 (concatD [render "not" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.Pred expr -> prPrec i 4 (concatD [render "Nat::pred" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.IsZero expr -> prPrec i 4 (concatD [render "Nat::iszero" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.Fix expr -> prPrec i 4 (concatD [render "fix" ; render "(" ; prtExpr 0 expr ; render ")"])
-  |    AbsStella.NatRec (expr1, expr2, expr3) -> prPrec i 4 (concatD [render "Nat::rec" ; render "(" ; prtExpr 0 expr1 ; render "," ; prtExpr 0 expr2 ; render "," ; prtExpr 0 expr3 ; render ")"])
-  |    AbsStella.Fold (type_, expr) -> prPrec i 4 (concatD [render "fold" ; render "[" ; prtTypeT 0 type_ ; render "]" ; prtExpr 5 expr])
-  |    AbsStella.Unfold (type_, expr) -> prPrec i 4 (concatD [render "unfold" ; render "[" ; prtTypeT 0 type_ ; render "]" ; prtExpr 5 expr])
-  |    AbsStella.DotRecord (expr, stellaident) -> prPrec i 5 (concatD [prtExpr 5 expr ; render "." ; prtStellaIdent 0 stellaident])
-  |    AbsStella.DotTuple (expr, integer) -> prPrec i 5 (concatD [prtExpr 5 expr ; render "." ; prtInt 0 integer])
-  |    AbsStella.ConstTrue  -> prPrec i 5 (concatD [render "true"])
-  |    AbsStella.ConstFalse  -> prPrec i 5 (concatD [render "false"])
-  |    AbsStella.ConstInt integer -> prPrec i 5 (concatD [prtInt 0 integer])
-  |    AbsStella.Var stellaident -> prPrec i 5 (concatD [prtStellaIdent 0 stellaident])
+  |    AbsStella.LessThan (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 2 expr1 ; render "<" ; prtExpr 2 expr2])
+  |    AbsStella.LessThanOrEqual (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 2 expr1 ; render "<=" ; prtExpr 2 expr2])
+  |    AbsStella.GreaterThan (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 2 expr1 ; render ">" ; prtExpr 2 expr2])
+  |    AbsStella.GreaterThanOrEqual (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 2 expr1 ; render ">=" ; prtExpr 2 expr2])
+  |    AbsStella.Equal (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 2 expr1 ; render "==" ; prtExpr 2 expr2])
+  |    AbsStella.NotEqual (expr1, expr2) -> prPrec i 1 (concatD [prtExpr 2 expr1 ; render "!=" ; prtExpr 2 expr2])
+  |    AbsStella.TypeAsc (expr, type_) -> prPrec i 2 (concatD [prtExpr 2 expr ; render "as" ; prtTypeT 0 type_])
+  |    AbsStella.Abstraction (paramdecls, expr) -> prPrec i 2 (concatD [render "fn" ; render "(" ; prtParamDeclListBNFC 0 paramdecls ; render ")" ; render "{" ; render "return" ; prtExpr 0 expr ; render ";" ; render "}"])
+  |    AbsStella.Tuple exprs -> prPrec i 2 (concatD [render "{" ; prtExprListBNFC 0 exprs ; render "}"])
+  |    AbsStella.Record bindings -> prPrec i 2 (concatD [render "record" ; render "{" ; prtBindingListBNFC 0 bindings ; render "}"])
+  |    AbsStella.Variant (stellaident, exprdata) -> prPrec i 2 (concatD [render "<|" ; prtStellaIdent 0 stellaident ; prtExprData 0 exprdata ; render "|>"])
+  |    AbsStella.Match (expr, matchcases) -> prPrec i 2 (concatD [render "match" ; prtExpr 1 expr ; render "{" ; prtMatchCaseListBNFC 0 matchcases ; render "}"])
+  |    AbsStella.List exprs -> prPrec i 2 (concatD [render "[" ; prtExprListBNFC 0 exprs ; render "]"])
+  |    AbsStella.Add (expr1, expr2) -> prPrec i 2 (concatD [prtExpr 2 expr1 ; render "+" ; prtExpr 3 expr2])
+  |    AbsStella.LogicOr (expr1, expr2) -> prPrec i 2 (concatD [prtExpr 2 expr1 ; render "or" ; prtExpr 3 expr2])
+  |    AbsStella.Multiply (expr1, expr2) -> prPrec i 3 (concatD [prtExpr 3 expr1 ; render "*" ; prtExpr 4 expr2])
+  |    AbsStella.LogicAnd (expr1, expr2) -> prPrec i 3 (concatD [prtExpr 3 expr1 ; render "and" ; prtExpr 4 expr2])
+  |    AbsStella.Application (expr, exprs) -> prPrec i 4 (concatD [prtExpr 4 expr ; render "(" ; prtExprListBNFC 0 exprs ; render ")"])
+  |    AbsStella.ConsList (expr1, expr2) -> prPrec i 5 (concatD [render "cons" ; render "(" ; prtExpr 0 expr1 ; render "," ; prtExpr 0 expr2 ; render ")"])
+  |    AbsStella.Head expr -> prPrec i 5 (concatD [render "List::head" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.IsEmpty expr -> prPrec i 5 (concatD [render "List::isempty" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.Tail expr -> prPrec i 5 (concatD [render "List::tail" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.Succ expr -> prPrec i 5 (concatD [render "succ" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.LogicNot expr -> prPrec i 5 (concatD [render "not" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.Pred expr -> prPrec i 5 (concatD [render "Nat::pred" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.IsZero expr -> prPrec i 5 (concatD [render "Nat::iszero" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.Fix expr -> prPrec i 5 (concatD [render "fix" ; render "(" ; prtExpr 0 expr ; render ")"])
+  |    AbsStella.NatRec (expr1, expr2, expr3) -> prPrec i 5 (concatD [render "Nat::rec" ; render "(" ; prtExpr 0 expr1 ; render "," ; prtExpr 0 expr2 ; render "," ; prtExpr 0 expr3 ; render ")"])
+  |    AbsStella.Fold (type_, expr) -> prPrec i 5 (concatD [render "fold" ; render "[" ; prtTypeT 0 type_ ; render "]" ; prtExpr 6 expr])
+  |    AbsStella.Unfold (type_, expr) -> prPrec i 5 (concatD [render "unfold" ; render "[" ; prtTypeT 0 type_ ; render "]" ; prtExpr 6 expr])
+  |    AbsStella.DotRecord (expr, stellaident) -> prPrec i 6 (concatD [prtExpr 6 expr ; render "." ; prtStellaIdent 0 stellaident])
+  |    AbsStella.DotTuple (expr, integer) -> prPrec i 6 (concatD [prtExpr 6 expr ; render "." ; prtInt 0 integer])
+  |    AbsStella.ConstTrue  -> prPrec i 6 (concatD [render "true"])
+  |    AbsStella.ConstFalse  -> prPrec i 6 (concatD [render "false"])
+  |    AbsStella.ConstInt integer -> prPrec i 6 (concatD [prtInt 0 integer])
+  |    AbsStella.Var stellaident -> prPrec i 6 (concatD [prtStellaIdent 0 stellaident])
 
 and prtExprListBNFC i es : doc = match (i, es) with
     (_,[]) -> (concatD [])
@@ -191,8 +194,23 @@ and prtMatchCaseListBNFC i es : doc = match (i, es) with
     (_,[]) -> (concatD [])
   | (_,[x]) -> (concatD [prtMatchCase 0 x])
   | (_,x::xs) -> (concatD [prtMatchCase 0 x ; render ";" ; prtMatchCaseListBNFC 0 xs])
+and prtOptionalTyping (i:int) (e : AbsStella.optionalTyping) : doc = match e with
+       AbsStella.NoTyping  -> prPrec i 0 (concatD [])
+  |    AbsStella.SomeTyping type_ -> prPrec i 0 (concatD [render ":" ; prtTypeT 0 type_])
+
+
+and prtPatternData (i:int) (e : AbsStella.patternData) : doc = match e with
+       AbsStella.NoPatternData  -> prPrec i 0 (concatD [])
+  |    AbsStella.SomePatternData pattern -> prPrec i 0 (concatD [render "=" ; prtPattern 0 pattern])
+
+
+and prtExprData (i:int) (e : AbsStella.exprData) : doc = match e with
+       AbsStella.NoExprData  -> prPrec i 0 (concatD [])
+  |    AbsStella.SomeExprData expr -> prPrec i 0 (concatD [render "=" ; prtExpr 0 expr])
+
+
 and prtPattern (i:int) (e : AbsStella.pattern) : doc = match e with
-       AbsStella.PatternVariant (stellaident, pattern) -> prPrec i 0 (concatD [render "<" ; prtStellaIdent 0 stellaident ; render "=" ; prtPattern 0 pattern ; render ">"])
+       AbsStella.PatternVariant (stellaident, patterndata) -> prPrec i 0 (concatD [render "<|" ; prtStellaIdent 0 stellaident ; prtPatternData 0 patterndata ; render "|>"])
   |    AbsStella.PatternTuple patterns -> prPrec i 0 (concatD [render "{" ; prtPatternListBNFC 0 patterns ; render "}"])
   |    AbsStella.PatternRecord labelledpatterns -> prPrec i 0 (concatD [render "record" ; render "{" ; prtLabelledPatternListBNFC 0 labelledpatterns ; render "}"])
   |    AbsStella.PatternList patterns -> prPrec i 0 (concatD [render "[" ; prtPatternListBNFC 0 patterns ; render "]"])
@@ -224,26 +242,34 @@ and prtBindingListBNFC i es : doc = match (i, es) with
 and prtTypeT (i:int) (e : AbsStella.typeT) : doc = match e with
        AbsStella.TypeFun (types, type_) -> prPrec i 0 (concatD [render "fn" ; render "(" ; prtTypeTListBNFC 0 types ; render ")" ; render "->" ; prtTypeT 0 type_])
   |    AbsStella.TypeRec (stellaident, type_) -> prPrec i 0 (concatD [render "µ" ; prtStellaIdent 0 stellaident ; render "." ; prtTypeT 0 type_])
-  |    AbsStella.TypeTuple types -> prPrec i 1 (concatD [render "{" ; prtTypeTListBNFC 0 types ; render "}"])
-  |    AbsStella.TypeRecord fieldtypes -> prPrec i 1 (concatD [render "struct" ; render "{" ; prtFieldTypeListBNFC 0 fieldtypes ; render "}"])
-  |    AbsStella.TypeVariant fieldtypes -> prPrec i 1 (concatD [render "variant" ; render "<" ; prtFieldTypeListBNFC 0 fieldtypes ; render ">"])
-  |    AbsStella.TypeList type_ -> prPrec i 1 (concatD [render "[" ; prtTypeT 0 type_ ; render "]"])
-  |    AbsStella.TypeBool  -> prPrec i 2 (concatD [render "Bool"])
-  |    AbsStella.TypeNat  -> prPrec i 2 (concatD [render "Nat"])
-  |    AbsStella.TypeUnit  -> prPrec i 2 (concatD [render "Unit"])
-  |    AbsStella.TypeVar stellaident -> prPrec i 2 (concatD [prtStellaIdent 0 stellaident])
+  |    AbsStella.TypeSum (type_1, type_2) -> prPrec i 1 (concatD [prtTypeT 2 type_1 ; render "+" ; prtTypeT 2 type_2])
+  |    AbsStella.TypeTuple types -> prPrec i 2 (concatD [render "{" ; prtTypeTListBNFC 0 types ; render "}"])
+  |    AbsStella.TypeRecord recordfieldtypes -> prPrec i 2 (concatD [render "record" ; render "{" ; prtRecordFieldTypeListBNFC 0 recordfieldtypes ; render "}"])
+  |    AbsStella.TypeVariant variantfieldtypes -> prPrec i 2 (concatD [render "variant" ; render "<|" ; prtVariantFieldTypeListBNFC 0 variantfieldtypes ; render "|>"])
+  |    AbsStella.TypeList type_ -> prPrec i 2 (concatD [render "[" ; prtTypeT 0 type_ ; render "]"])
+  |    AbsStella.TypeBool  -> prPrec i 3 (concatD [render "Bool"])
+  |    AbsStella.TypeNat  -> prPrec i 3 (concatD [render "Nat"])
+  |    AbsStella.TypeUnit  -> prPrec i 3 (concatD [render "Unit"])
+  |    AbsStella.TypeVar stellaident -> prPrec i 3 (concatD [prtStellaIdent 0 stellaident])
 
 and prtTypeTListBNFC i es : doc = match (i, es) with
     (_,[]) -> (concatD [])
   | (_,[x]) -> (concatD [prtTypeT 0 x])
   | (_,x::xs) -> (concatD [prtTypeT 0 x ; render "," ; prtTypeTListBNFC 0 xs])
-and prtFieldType (i:int) (e : AbsStella.fieldType) : doc = match e with
-       AbsStella.AFieldType (stellaident, type_) -> prPrec i 0 (concatD [prtStellaIdent 0 stellaident ; render ":" ; prtTypeT 0 type_])
+and prtVariantFieldType (i:int) (e : AbsStella.variantFieldType) : doc = match e with
+       AbsStella.AVariantFieldType (stellaident, optionaltyping) -> prPrec i 0 (concatD [prtStellaIdent 0 stellaident ; prtOptionalTyping 0 optionaltyping])
 
-and prtFieldTypeListBNFC i es : doc = match (i, es) with
+and prtVariantFieldTypeListBNFC i es : doc = match (i, es) with
     (_,[]) -> (concatD [])
-  | (_,[x]) -> (concatD [prtFieldType 0 x])
-  | (_,x::xs) -> (concatD [prtFieldType 0 x ; render "," ; prtFieldTypeListBNFC 0 xs])
+  | (_,[x]) -> (concatD [prtVariantFieldType 0 x])
+  | (_,x::xs) -> (concatD [prtVariantFieldType 0 x ; render "," ; prtVariantFieldTypeListBNFC 0 xs])
+and prtRecordFieldType (i:int) (e : AbsStella.recordFieldType) : doc = match e with
+       AbsStella.ARecordFieldType (stellaident, type_) -> prPrec i 0 (concatD [prtStellaIdent 0 stellaident ; render ":" ; prtTypeT 0 type_])
+
+and prtRecordFieldTypeListBNFC i es : doc = match (i, es) with
+    (_,[]) -> (concatD [])
+  | (_,[x]) -> (concatD [prtRecordFieldType 0 x])
+  | (_,x::xs) -> (concatD [prtRecordFieldType 0 x ; render "," ; prtRecordFieldTypeListBNFC 0 xs])
 and prtTyping (i:int) (e : AbsStella.typing) : doc = match e with
        AbsStella.ATyping (expr, type_) -> prPrec i 0 (concatD [prtExpr 0 expr ; render ":" ; prtTypeT 0 type_])
 

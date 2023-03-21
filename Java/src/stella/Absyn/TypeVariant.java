@@ -3,9 +3,9 @@
 package stella.Absyn;
 
 public class TypeVariant  extends Type {
-  public final ListFieldType listfieldtype_;
+  public final ListVariantFieldType listvariantfieldtype_;
   public int line_num, col_num, offset;
-  public TypeVariant(ListFieldType p1) { listfieldtype_ = p1; }
+  public TypeVariant(ListVariantFieldType p1) { listvariantfieldtype_ = p1; }
 
   public <R,A> R accept(stella.Absyn.Type.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
@@ -13,13 +13,13 @@ public class TypeVariant  extends Type {
     if (this == o) return true;
     if (o instanceof stella.Absyn.TypeVariant) {
       stella.Absyn.TypeVariant x = (stella.Absyn.TypeVariant)o;
-      return this.listfieldtype_.equals(x.listfieldtype_);
+      return this.listvariantfieldtype_.equals(x.listvariantfieldtype_);
     }
     return false;
   }
 
   public int hashCode() {
-    return this.listfieldtype_.hashCode();
+    return this.listvariantfieldtype_.hashCode();
   }
 
 

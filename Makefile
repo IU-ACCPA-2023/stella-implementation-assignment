@@ -1,4 +1,4 @@
-LANGUAGE=Java
+LANGUAGE=C++
 
 all: build
 

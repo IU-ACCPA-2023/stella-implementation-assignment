@@ -4,9 +4,9 @@ package stella.Absyn;
 
 public class PatternVariant  extends Pattern {
   public final String stellaident_;
-  public final Pattern pattern_;
+  public final PatternData patterndata_;
   public int line_num, col_num, offset;
-  public PatternVariant(String p1, Pattern p2) { stellaident_ = p1; pattern_ = p2; }
+  public PatternVariant(String p1, PatternData p2) { stellaident_ = p1; patterndata_ = p2; }
 
   public <R,A> R accept(stella.Absyn.Pattern.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
@@ -14,13 +14,13 @@ public class PatternVariant  extends Pattern {
     if (this == o) return true;
     if (o instanceof stella.Absyn.PatternVariant) {
       stella.Absyn.PatternVariant x = (stella.Absyn.PatternVariant)o;
-      return this.stellaident_.equals(x.stellaident_) && this.pattern_.equals(x.pattern_);
+      return this.stellaident_.equals(x.stellaident_) && this.patterndata_.equals(x.patterndata_);
     }
     return false;
   }
 
   public int hashCode() {
-    return 37*(this.stellaident_.hashCode())+this.pattern_.hashCode();
+    return 37*(this.stellaident_.hashCode())+this.patterndata_.hashCode();
   }
 
 

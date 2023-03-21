@@ -100,6 +100,24 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visitDefault(stella.Absyn.MatchCase p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
+    /* OptionalTyping */
+    public R visit(stella.Absyn.NoTyping p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.SomeTyping p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.OptionalTyping p, A arg) {
+      throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
+    }
+    /* PatternData */
+    public R visit(stella.Absyn.NoPatternData p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.SomePatternData p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.PatternData p, A arg) {
+      throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
+    }
+    /* ExprData */
+    public R visit(stella.Absyn.NoExprData p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.SomeExprData p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.ExprData p, A arg) {
+      throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
+    }
     /* Pattern */
     public R visit(stella.Absyn.PatternVariant p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternTuple p, A arg) { return visitDefault(p, arg); }
@@ -127,6 +145,7 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     /* Type */
     public R visit(stella.Absyn.TypeFun p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.TypeRec p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeSum p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.TypeTuple p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.TypeRecord p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.TypeVariant p, A arg) { return visitDefault(p, arg); }
@@ -138,9 +157,14 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visitDefault(stella.Absyn.Type p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
-    /* FieldType */
-    public R visit(stella.Absyn.AFieldType p, A arg) { return visitDefault(p, arg); }
-    public R visitDefault(stella.Absyn.FieldType p, A arg) {
+    /* VariantFieldType */
+    public R visit(stella.Absyn.AVariantFieldType p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.VariantFieldType p, A arg) {
+      throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
+    }
+    /* RecordFieldType */
+    public R visit(stella.Absyn.ARecordFieldType p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.RecordFieldType p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
     /* Typing */

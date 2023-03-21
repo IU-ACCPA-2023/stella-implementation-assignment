@@ -39,8 +39,8 @@ IDENT [a-zA-Z0-9'_]
 
 %%  /* Rules. */
 
-<INITIAL>";"      	 return _SEMI;
 <INITIAL>","      	 return _COMMA;
+<INITIAL>";"      	 return _SEMI;
 <INITIAL>"("      	 return _LPAREN;
 <INITIAL>")"      	 return _RPAREN;
 <INITIAL>"{"      	 return _LBRACE;
@@ -49,22 +49,24 @@ IDENT [a-zA-Z0-9'_]
 <INITIAL>":"      	 return _COLON;
 <INITIAL>"->"      	 return _RARROW;
 <INITIAL>"=>"      	 return _RDARROW;
-<INITIAL>"<"      	 return _LT;
-<INITIAL>">"      	 return _GT;
+<INITIAL>"<|"      	 return _SYMB_10;
+<INITIAL>"|>"      	 return _SYMB_11;
 <INITIAL>"["      	 return _LBRACK;
 <INITIAL>"]"      	 return _RBRACK;
+<INITIAL>"<"      	 return _LT;
 <INITIAL>"<="      	 return _LDARROW;
+<INITIAL>">"      	 return _GT;
 <INITIAL>">="      	 return _GTEQ;
 <INITIAL>"=="      	 return _DEQ;
 <INITIAL>"!="      	 return _BANGEQ;
 <INITIAL>"+"      	 return _PLUS;
 <INITIAL>"*"      	 return _STAR;
-<INITIAL>"List::head"      	 return _SYMB_20;
-<INITIAL>"List::isempty"      	 return _SYMB_21;
-<INITIAL>"List::tail"      	 return _SYMB_22;
-<INITIAL>"Nat::pred"      	 return _SYMB_23;
-<INITIAL>"Nat::iszero"      	 return _SYMB_24;
-<INITIAL>"Nat::rec"      	 return _SYMB_25;
+<INITIAL>"List::head"      	 return _SYMB_22;
+<INITIAL>"List::isempty"      	 return _SYMB_23;
+<INITIAL>"List::tail"      	 return _SYMB_24;
+<INITIAL>"Nat::pred"      	 return _SYMB_25;
+<INITIAL>"Nat::iszero"      	 return _SYMB_26;
+<INITIAL>"Nat::rec"      	 return _SYMB_27;
 <INITIAL>"."      	 return _DOT;
 <INITIAL>"Bool"      	 return _KW_Bool;
 <INITIAL>"Nat"      	 return _KW_Nat;
@@ -89,7 +91,6 @@ IDENT [a-zA-Z0-9'_]
 <INITIAL>"or"      	 return _KW_or;
 <INITIAL>"record"      	 return _KW_record;
 <INITIAL>"return"      	 return _KW_return;
-<INITIAL>"struct"      	 return _KW_struct;
 <INITIAL>"succ"      	 return _KW_succ;
 <INITIAL>"then"      	 return _KW_then;
 <INITIAL>"throws"      	 return _KW_throws;
@@ -98,12 +99,12 @@ IDENT [a-zA-Z0-9'_]
 <INITIAL>"unfold"      	 return _KW_unfold;
 <INITIAL>"variant"      	 return _KW_variant;
 <INITIAL>"with"      	 return _KW_with;
-<INITIAL>"µ"      	 return _KW_59;
+<INITIAL>"µ"      	 return _KW_60;
 
 <INITIAL>"//"[^\n]* /* skip */; /* BNFC: comment "//" */
 
-<INITIAL>(\_|{LETTER})(\:|\_|({DIGIT}|{LETTER}))*    	 yylval->_string = strdup(yytext); return T_StellaIdent;
-<INITIAL>'(\ |\-|\_|({DIGIT}|{LETTER}))*'    	 yylval->_string = strdup(yytext); return T_ExtensionName;
+<INITIAL>(\_|{LETTER})(\!|\-|\:|\?|\_|({DIGIT}|{LETTER}))*    	 yylval->_string = strdup(yytext); return T_StellaIdent;
+<INITIAL>\#(\-|\_|({DIGIT}|{LETTER}))+    	 yylval->_string = strdup(yytext); return T_ExtensionName;
 <INITIAL>{DIGIT}+      	 yylval->_int = atoi(yytext); return _INTEGER_;
 <INITIAL>[ \t\r\n\f]      	 /* ignore white space. */;
 <INITIAL>.      	 return _ERROR_;

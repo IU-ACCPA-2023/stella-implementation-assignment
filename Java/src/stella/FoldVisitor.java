@@ -188,7 +188,7 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
     }
     public R visit(stella.Absyn.Variant p, A arg) {
       R r = leaf(arg);
-      r = combine(p.expr_.accept(this, arg), r, arg);
+      r = combine(p.exprdata_.accept(this, arg), r, arg);
       return r;
     }
     public R visit(stella.Absyn.Match p, A arg) {
@@ -341,10 +341,43 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       return r;
     }
 
+/* OptionalTyping */
+    public R visit(stella.Absyn.NoTyping p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(stella.Absyn.SomeTyping p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* PatternData */
+    public R visit(stella.Absyn.NoPatternData p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(stella.Absyn.SomePatternData p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.pattern_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* ExprData */
+    public R visit(stella.Absyn.NoExprData p, A arg) {
+      R r = leaf(arg);
+      return r;
+    }
+    public R visit(stella.Absyn.SomeExprData p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.expr_.accept(this, arg), r, arg);
+      return r;
+    }
+
 /* Pattern */
     public R visit(stella.Absyn.PatternVariant p, A arg) {
       R r = leaf(arg);
-      r = combine(p.pattern_.accept(this, arg), r, arg);
+      r = combine(p.patterndata_.accept(this, arg), r, arg);
       return r;
     }
     public R visit(stella.Absyn.PatternTuple p, A arg) {
@@ -428,6 +461,12 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       r = combine(p.type_.accept(this, arg), r, arg);
       return r;
     }
+    public R visit(stella.Absyn.TypeSum p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.type_1.accept(this, arg), r, arg);
+      r = combine(p.type_2.accept(this, arg), r, arg);
+      return r;
+    }
     public R visit(stella.Absyn.TypeTuple p, A arg) {
       R r = leaf(arg);
       for (stella.Absyn.Type x : p.listtype_)
@@ -438,7 +477,7 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
     }
     public R visit(stella.Absyn.TypeRecord p, A arg) {
       R r = leaf(arg);
-      for (stella.Absyn.FieldType x : p.listfieldtype_)
+      for (stella.Absyn.RecordFieldType x : p.listrecordfieldtype_)
       {
         r = combine(x.accept(this, arg), r, arg);
       }
@@ -446,7 +485,7 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
     }
     public R visit(stella.Absyn.TypeVariant p, A arg) {
       R r = leaf(arg);
-      for (stella.Absyn.FieldType x : p.listfieldtype_)
+      for (stella.Absyn.VariantFieldType x : p.listvariantfieldtype_)
       {
         r = combine(x.accept(this, arg), r, arg);
       }
@@ -474,8 +513,15 @@ public abstract class FoldVisitor<R,A> implements AllVisitor<R,A> {
       return r;
     }
 
-/* FieldType */
-    public R visit(stella.Absyn.AFieldType p, A arg) {
+/* VariantFieldType */
+    public R visit(stella.Absyn.AVariantFieldType p, A arg) {
+      R r = leaf(arg);
+      r = combine(p.optionaltyping_.accept(this, arg), r, arg);
+      return r;
+    }
+
+/* RecordFieldType */
+    public R visit(stella.Absyn.ARecordFieldType p, A arg) {
       R r = leaf(arg);
       r = combine(p.type_.accept(this, arg), r, arg);
       return r;

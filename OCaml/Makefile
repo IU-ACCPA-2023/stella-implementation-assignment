@@ -9,7 +9,7 @@ typecheck: src/Interpret
 interpret: src/Interpret
 	./src/Interpret $(STELLA_FILE)
 
-src/stella/TestStella: ../Stella.cf
+src/Stella/TestStella: ../Stella.cf
 	bnfc -o src/Stella/ -m --ocaml ../Stella.cf
 	cd src/Stella && (make; cd ../../)
 

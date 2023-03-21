@@ -4,9 +4,9 @@ package stella.Absyn;
 
 public class Variant  extends Expr {
   public final String stellaident_;
-  public final Expr expr_;
+  public final ExprData exprdata_;
   public int line_num, col_num, offset;
-  public Variant(String p1, Expr p2) { stellaident_ = p1; expr_ = p2; }
+  public Variant(String p1, ExprData p2) { stellaident_ = p1; exprdata_ = p2; }
 
   public <R,A> R accept(stella.Absyn.Expr.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
@@ -14,13 +14,13 @@ public class Variant  extends Expr {
     if (this == o) return true;
     if (o instanceof stella.Absyn.Variant) {
       stella.Absyn.Variant x = (stella.Absyn.Variant)o;
-      return this.stellaident_.equals(x.stellaident_) && this.expr_.equals(x.expr_);
+      return this.stellaident_.equals(x.stellaident_) && this.exprdata_.equals(x.exprdata_);
     }
     return false;
   }
 
   public int hashCode() {
-    return 37*(this.stellaident_.hashCode())+this.expr_.hashCode();
+    return 37*(this.stellaident_.hashCode())+this.exprdata_.hashCode();
   }
 
 

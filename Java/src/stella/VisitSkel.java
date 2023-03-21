@@ -202,7 +202,7 @@ public class VisitSkel
     public R visit(stella.Absyn.Variant p, A arg)
     { /* Code for Variant goes here */
       //p.stellaident_;
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      p.exprdata_.accept(new ExprDataVisitor<R,A>(), arg);
       return null;
     }
     public R visit(stella.Absyn.Match p, A arg)
@@ -357,12 +357,48 @@ public class VisitSkel
       return null;
     }
   }
+  public class OptionalTypingVisitor<R,A> implements stella.Absyn.OptionalTyping.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.NoTyping p, A arg)
+    { /* Code for NoTyping goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.SomeTyping p, A arg)
+    { /* Code for SomeTyping goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class PatternDataVisitor<R,A> implements stella.Absyn.PatternData.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.NoPatternData p, A arg)
+    { /* Code for NoPatternData goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.SomePatternData p, A arg)
+    { /* Code for SomePatternData goes here */
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class ExprDataVisitor<R,A> implements stella.Absyn.ExprData.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.NoExprData p, A arg)
+    { /* Code for NoExprData goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.SomeExprData p, A arg)
+    { /* Code for SomeExprData goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+  }
   public class PatternVisitor<R,A> implements stella.Absyn.Pattern.Visitor<R,A>
   {
     public R visit(stella.Absyn.PatternVariant p, A arg)
     { /* Code for PatternVariant goes here */
       //p.stellaident_;
-      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      p.patterndata_.accept(new PatternDataVisitor<R,A>(), arg);
       return null;
     }
     public R visit(stella.Absyn.PatternTuple p, A arg)
@@ -450,6 +486,12 @@ public class VisitSkel
       p.type_.accept(new TypeVisitor<R,A>(), arg);
       return null;
     }
+    public R visit(stella.Absyn.TypeSum p, A arg)
+    { /* Code for TypeSum goes here */
+      p.type_1.accept(new TypeVisitor<R,A>(), arg);
+      p.type_2.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
     public R visit(stella.Absyn.TypeTuple p, A arg)
     { /* Code for TypeTuple goes here */
       for (stella.Absyn.Type x: p.listtype_) {
@@ -459,15 +501,15 @@ public class VisitSkel
     }
     public R visit(stella.Absyn.TypeRecord p, A arg)
     { /* Code for TypeRecord goes here */
-      for (stella.Absyn.FieldType x: p.listfieldtype_) {
-        x.accept(new FieldTypeVisitor<R,A>(), arg);
+      for (stella.Absyn.RecordFieldType x: p.listrecordfieldtype_) {
+        x.accept(new RecordFieldTypeVisitor<R,A>(), arg);
       }
       return null;
     }
     public R visit(stella.Absyn.TypeVariant p, A arg)
     { /* Code for TypeVariant goes here */
-      for (stella.Absyn.FieldType x: p.listfieldtype_) {
-        x.accept(new FieldTypeVisitor<R,A>(), arg);
+      for (stella.Absyn.VariantFieldType x: p.listvariantfieldtype_) {
+        x.accept(new VariantFieldTypeVisitor<R,A>(), arg);
       }
       return null;
     }
@@ -494,10 +536,19 @@ public class VisitSkel
       return null;
     }
   }
-  public class FieldTypeVisitor<R,A> implements stella.Absyn.FieldType.Visitor<R,A>
+  public class VariantFieldTypeVisitor<R,A> implements stella.Absyn.VariantFieldType.Visitor<R,A>
   {
-    public R visit(stella.Absyn.AFieldType p, A arg)
-    { /* Code for AFieldType goes here */
+    public R visit(stella.Absyn.AVariantFieldType p, A arg)
+    { /* Code for AVariantFieldType goes here */
+      //p.stellaident_;
+      p.optionaltyping_.accept(new OptionalTypingVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class RecordFieldTypeVisitor<R,A> implements stella.Absyn.RecordFieldType.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.ARecordFieldType p, A arg)
+    { /* Code for ARecordFieldType goes here */
       //p.stellaident_;
       p.type_.accept(new TypeVisitor<R,A>(), arg);
       return null;

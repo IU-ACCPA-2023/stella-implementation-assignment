@@ -65,6 +65,7 @@ ExtensionName=64
 INTEGER=65
 WS=66
 ErrorToken=67
+Surrogate_id_SYMB_60=68
 ';'=1
 ','=2
 '('=3

@@ -22,11 +22,15 @@ public:
   void visitThrowType(ThrowType *p);
   void visitExpr(Expr *p);
   void visitMatchCase(MatchCase *p);
+  void visitOptionalTyping(OptionalTyping *p);
+  void visitPatternData(PatternData *p);
+  void visitExprData(ExprData *p);
   void visitPattern(Pattern *p);
   void visitLabelledPattern(LabelledPattern *p);
   void visitBinding(Binding *p);
   void visitType(Type *p);
-  void visitFieldType(FieldType *p);
+  void visitVariantFieldType(VariantFieldType *p);
+  void visitRecordFieldType(RecordFieldType *p);
   void visitTyping(Typing *p);
   void visitAProgram(AProgram *p);
   void visitLanguageCore(LanguageCore *p);
@@ -43,6 +47,12 @@ public:
   void visitIf(If *p);
   void visitLet(Let *p);
   void visitAMatchCase(AMatchCase *p);
+  void visitNoTyping(NoTyping *p);
+  void visitSomeTyping(SomeTyping *p);
+  void visitNoPatternData(NoPatternData *p);
+  void visitSomePatternData(SomePatternData *p);
+  void visitNoExprData(NoExprData *p);
+  void visitSomeExprData(SomeExprData *p);
   void visitPatternVariant(PatternVariant *p);
   void visitPatternTuple(PatternTuple *p);
   void visitPatternRecord(PatternRecord *p);
@@ -93,6 +103,7 @@ public:
   void visitVar(Var *p);
   void visitTypeFun(TypeFun *p);
   void visitTypeRec(TypeRec *p);
+  void visitTypeSum(TypeSum *p);
   void visitTypeTuple(TypeTuple *p);
   void visitTypeRecord(TypeRecord *p);
   void visitTypeVariant(TypeVariant *p);
@@ -101,8 +112,10 @@ public:
   void visitTypeNat(TypeNat *p);
   void visitTypeUnit(TypeUnit *p);
   void visitTypeVar(TypeVar *p);
-  void visitAFieldType(AFieldType *p);
+  void visitAVariantFieldType(AVariantFieldType *p);
+  void visitARecordFieldType(ARecordFieldType *p);
   void visitATyping(ATyping *p);
+  void visitListStellaIdent(ListStellaIdent *p);
   void visitListExtensionName(ListExtensionName *p);
   void visitListExtension(ListExtension *p);
   void visitListDecl(ListDecl *p);
@@ -115,7 +128,8 @@ public:
   void visitListLabelledPattern(ListLabelledPattern *p);
   void visitListBinding(ListBinding *p);
   void visitListType(ListType *p);
-  void visitListFieldType(ListFieldType *p);
+  void visitListVariantFieldType(ListVariantFieldType *p);
+  void visitListRecordFieldType(ListRecordFieldType *p);
 
   void visitInteger(Integer x);
   void visitChar(Char x);

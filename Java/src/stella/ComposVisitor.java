@@ -16,11 +16,15 @@ public class ComposVisitor<A> implements
   stella.Absyn.ThrowType.Visitor<stella.Absyn.ThrowType,A>,
   stella.Absyn.Expr.Visitor<stella.Absyn.Expr,A>,
   stella.Absyn.MatchCase.Visitor<stella.Absyn.MatchCase,A>,
+  stella.Absyn.OptionalTyping.Visitor<stella.Absyn.OptionalTyping,A>,
+  stella.Absyn.PatternData.Visitor<stella.Absyn.PatternData,A>,
+  stella.Absyn.ExprData.Visitor<stella.Absyn.ExprData,A>,
   stella.Absyn.Pattern.Visitor<stella.Absyn.Pattern,A>,
   stella.Absyn.LabelledPattern.Visitor<stella.Absyn.LabelledPattern,A>,
   stella.Absyn.Binding.Visitor<stella.Absyn.Binding,A>,
   stella.Absyn.Type.Visitor<stella.Absyn.Type,A>,
-  stella.Absyn.FieldType.Visitor<stella.Absyn.FieldType,A>,
+  stella.Absyn.VariantFieldType.Visitor<stella.Absyn.VariantFieldType,A>,
+  stella.Absyn.RecordFieldType.Visitor<stella.Absyn.RecordFieldType,A>,
   stella.Absyn.Typing.Visitor<stella.Absyn.Typing,A>
 {
     /* Program */
@@ -219,8 +223,8 @@ public class ComposVisitor<A> implements
     public stella.Absyn.Expr visit(stella.Absyn.Variant p, A arg)
     {
       String stellaident_ = p.stellaident_;
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Variant(stellaident_, expr_);
+      stella.Absyn.ExprData exprdata_ = p.exprdata_.accept(this, arg);
+      return new stella.Absyn.Variant(stellaident_, exprdata_);
     }
     public stella.Absyn.Expr visit(stella.Absyn.Match p, A arg)
     {
@@ -379,12 +383,45 @@ public class ComposVisitor<A> implements
       return new stella.Absyn.AMatchCase(pattern_, expr_);
     }
 
+    /* OptionalTyping */
+    public stella.Absyn.OptionalTyping visit(stella.Absyn.NoTyping p, A arg)
+    {
+      return new stella.Absyn.NoTyping();
+    }
+    public stella.Absyn.OptionalTyping visit(stella.Absyn.SomeTyping p, A arg)
+    {
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new stella.Absyn.SomeTyping(type_);
+    }
+
+    /* PatternData */
+    public stella.Absyn.PatternData visit(stella.Absyn.NoPatternData p, A arg)
+    {
+      return new stella.Absyn.NoPatternData();
+    }
+    public stella.Absyn.PatternData visit(stella.Absyn.SomePatternData p, A arg)
+    {
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      return new stella.Absyn.SomePatternData(pattern_);
+    }
+
+    /* ExprData */
+    public stella.Absyn.ExprData visit(stella.Absyn.NoExprData p, A arg)
+    {
+      return new stella.Absyn.NoExprData();
+    }
+    public stella.Absyn.ExprData visit(stella.Absyn.SomeExprData p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.SomeExprData(expr_);
+    }
+
     /* Pattern */
     public stella.Absyn.Pattern visit(stella.Absyn.PatternVariant p, A arg)
     {
       String stellaident_ = p.stellaident_;
-      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
-      return new stella.Absyn.PatternVariant(stellaident_, pattern_);
+      stella.Absyn.PatternData patterndata_ = p.patterndata_.accept(this, arg);
+      return new stella.Absyn.PatternVariant(stellaident_, patterndata_);
     }
     public stella.Absyn.Pattern visit(stella.Absyn.PatternTuple p, A arg)
     {
@@ -476,6 +513,12 @@ public class ComposVisitor<A> implements
       stella.Absyn.Type type_ = p.type_.accept(this, arg);
       return new stella.Absyn.TypeRec(stellaident_, type_);
     }
+    public stella.Absyn.Type visit(stella.Absyn.TypeSum p, A arg)
+    {
+      stella.Absyn.Type type_1 = p.type_1.accept(this, arg);
+      stella.Absyn.Type type_2 = p.type_2.accept(this, arg);
+      return new stella.Absyn.TypeSum(type_1, type_2);
+    }
     public stella.Absyn.Type visit(stella.Absyn.TypeTuple p, A arg)
     {
       stella.Absyn.ListType listtype_ = new stella.Absyn.ListType();
@@ -487,21 +530,21 @@ public class ComposVisitor<A> implements
     }
     public stella.Absyn.Type visit(stella.Absyn.TypeRecord p, A arg)
     {
-      stella.Absyn.ListFieldType listfieldtype_ = new stella.Absyn.ListFieldType();
-      for (stella.Absyn.FieldType x : p.listfieldtype_)
+      stella.Absyn.ListRecordFieldType listrecordfieldtype_ = new stella.Absyn.ListRecordFieldType();
+      for (stella.Absyn.RecordFieldType x : p.listrecordfieldtype_)
       {
-        listfieldtype_.add(x.accept(this,arg));
+        listrecordfieldtype_.add(x.accept(this,arg));
       }
-      return new stella.Absyn.TypeRecord(listfieldtype_);
+      return new stella.Absyn.TypeRecord(listrecordfieldtype_);
     }
     public stella.Absyn.Type visit(stella.Absyn.TypeVariant p, A arg)
     {
-      stella.Absyn.ListFieldType listfieldtype_ = new stella.Absyn.ListFieldType();
-      for (stella.Absyn.FieldType x : p.listfieldtype_)
+      stella.Absyn.ListVariantFieldType listvariantfieldtype_ = new stella.Absyn.ListVariantFieldType();
+      for (stella.Absyn.VariantFieldType x : p.listvariantfieldtype_)
       {
-        listfieldtype_.add(x.accept(this,arg));
+        listvariantfieldtype_.add(x.accept(this,arg));
       }
-      return new stella.Absyn.TypeVariant(listfieldtype_);
+      return new stella.Absyn.TypeVariant(listvariantfieldtype_);
     }
     public stella.Absyn.Type visit(stella.Absyn.TypeList p, A arg)
     {
@@ -526,12 +569,20 @@ public class ComposVisitor<A> implements
       return new stella.Absyn.TypeVar(stellaident_);
     }
 
-    /* FieldType */
-    public stella.Absyn.FieldType visit(stella.Absyn.AFieldType p, A arg)
+    /* VariantFieldType */
+    public stella.Absyn.VariantFieldType visit(stella.Absyn.AVariantFieldType p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      stella.Absyn.OptionalTyping optionaltyping_ = p.optionaltyping_.accept(this, arg);
+      return new stella.Absyn.AVariantFieldType(stellaident_, optionaltyping_);
+    }
+
+    /* RecordFieldType */
+    public stella.Absyn.RecordFieldType visit(stella.Absyn.ARecordFieldType p, A arg)
     {
       String stellaident_ = p.stellaident_;
       stella.Absyn.Type type_ = p.type_.accept(this, arg);
-      return new stella.Absyn.AFieldType(stellaident_, type_);
+      return new stella.Absyn.ARecordFieldType(stellaident_, type_);
     }
 
     /* Typing */

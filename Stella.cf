@@ -1,8 +1,10 @@
 comment "//" ;
 
-token StellaIdent ((letter | '_') (letter | digit | '_' | ':')*) ;
+token StellaIdent ((letter | '_') (letter | digit | '_' | '-' | '!' | '?' | ':')*) ;
 
-token ExtensionName ( {"'"} (letter | '_' | '-' | ' ' | digit)* {"'"} ) ;
+token ExtensionName ( {"#"} (letter | '_' | '-' | digit)+ ) ;
+
+separator StellaIdent "," ;
 
 AProgram.  Program ::= LanguageDecl [Extension] [Decl] ;
 
@@ -38,7 +40,16 @@ separator Expr "," ;
 AMatchCase.    MatchCase ::= Pattern "=>" Expr ;
 separator MatchCase ";" ;
 
-PatternVariant. Pattern ::= "<" StellaIdent "=" Pattern ">" ;
+NoTyping.     OptionalTyping ::= ;
+SomeTyping.   OptionalTyping ::= ":" Type ;
+
+NoPatternData.    PatternData ::= ;
+SomePatternData.  PatternData ::= "=" Pattern ;
+
+NoExprData.   ExprData ::= ;
+SomeExprData. ExprData ::= "=" Expr ;
+
+PatternVariant. Pattern ::= "<|" StellaIdent PatternData "|>" ;
 PatternTuple.   Pattern ::= "{" [Pattern] "}" ;
 PatternRecord.  Pattern ::= "record" "{" [LabelledPattern] "}" ;
 PatternList.    Pattern ::= "[" [Pattern] "]" ;
@@ -58,61 +69,62 @@ ABinding.      Binding ::= StellaIdent "=" Expr ;
 
 separator Binding "," ;
 
-LessThan.           Expr0 ::= Expr1 "<" Expr1 ;
-LessThanOrEqual.    Expr0 ::= Expr1 "<=" Expr1 ;
-GreaterThan.        Expr0 ::= Expr1 ">" Expr1 ;
-GreaterThanOrEqual. Expr0 ::= Expr1 ">=" Expr1 ;
-Equal.              Expr0 ::= Expr1 "==" Expr1 ;
-NotEqual.           Expr0 ::= Expr1 "!=" Expr1 ;
+LessThan.           Expr1 ::= Expr2 "<" Expr2 ;
+LessThanOrEqual.    Expr1 ::= Expr2 "<=" Expr2 ;
+GreaterThan.        Expr1 ::= Expr2 ">" Expr2 ;
+GreaterThanOrEqual. Expr1 ::= Expr2 ">=" Expr2 ;
+Equal.              Expr1 ::= Expr2 "==" Expr2 ;
+NotEqual.           Expr1 ::= Expr2 "!=" Expr2 ;
 
-TypeAsc.      Expr1 ::= Expr1 "as" Type ;
-Abstraction.  Expr1 ::= "fn" "(" [ParamDecl] ")" "{" "return" Expr ";" "}" ;
-Tuple.        Expr1 ::= "{" [Expr] "}" ;
-Record.       Expr1 ::= "record" "{" [Binding] "}" ;
-Variant.      Expr1 ::= "<" StellaIdent "=" Expr ">" ;
-Match.        Expr1 ::= "match" Expr1 "{" [MatchCase] "}" ;
-List.         Expr1 ::= "[" [Expr] "]" ;
-Add.          Expr1 ::= Expr1 "+" Expr2 ;
-LogicOr.      Expr1 ::= Expr1 "or" Expr2;
+TypeAsc.      Expr2 ::= Expr2 "as" Type ;
+Abstraction.  Expr2 ::= "fn" "(" [ParamDecl] ")" "{" "return" Expr ";" "}" ;
+Tuple.        Expr2 ::= "{" [Expr] "}" ;
+Record.       Expr2 ::= "record" "{" [Binding] "}" ;
+Variant.      Expr2 ::= "<|" StellaIdent ExprData "|>" ;
+Match.        Expr2 ::= "match" Expr1 "{" [MatchCase] "}" ;
+List.         Expr2 ::= "[" [Expr] "]" ;
+Add.          Expr2 ::= Expr2 "+" Expr3 ;
+LogicOr.      Expr2 ::= Expr2 "or" Expr3;
 
-Multiply.     Expr2 ::= Expr2 "*" Expr3 ;
-LogicAnd.     Expr2 ::= Expr2 "and" Expr3 ;
+Multiply.     Expr3 ::= Expr3 "*" Expr4 ;
+LogicAnd.     Expr3 ::= Expr3 "and" Expr4 ;
 
-Application.  Expr3 ::= Expr3 "(" [Expr] ")" ;
+Application.  Expr4 ::= Expr4 "(" [Expr] ")" ;
 
-ConsList.     Expr4 ::= "cons" "(" Expr "," Expr ")" ;
-Head.         Expr4 ::= "List::head" "(" Expr ")" ;
-IsEmpty.      Expr4 ::= "List::isempty" "(" Expr ")" ;
-Tail.         Expr4 ::= "List::tail" "(" Expr ")" ;
+ConsList.     Expr5 ::= "cons" "(" Expr "," Expr ")" ;
+Head.         Expr5 ::= "List::head" "(" Expr ")" ;
+IsEmpty.      Expr5 ::= "List::isempty" "(" Expr ")" ;
+Tail.         Expr5 ::= "List::tail" "(" Expr ")" ;
 
-Succ.         Expr4 ::= "succ" "(" Expr ")" ;
-LogicNot.     Expr4 ::= "not" "(" Expr ")" ;
-Pred.         Expr4 ::= "Nat::pred" "(" Expr ")" ;
-IsZero.       Expr4 ::= "Nat::iszero" "(" Expr ")" ;
+Succ.         Expr5 ::= "succ" "(" Expr ")" ;
+LogicNot.     Expr5 ::= "not" "(" Expr ")" ;
+Pred.         Expr5 ::= "Nat::pred" "(" Expr ")" ;
+IsZero.       Expr5 ::= "Nat::iszero" "(" Expr ")" ;
 
-Fix.          Expr4 ::= "fix" "(" Expr ")" ;
-NatRec.       Expr4 ::= "Nat::rec" "(" Expr "," Expr "," Expr ")" ;
+Fix.          Expr5 ::= "fix" "(" Expr ")" ;
+NatRec.       Expr5 ::= "Nat::rec" "(" Expr "," Expr "," Expr ")" ;
 
-Fold.         Expr4 ::= "fold" "[" Type "]" Expr5 ;
-Unfold.       Expr4 ::= "unfold" "[" Type "]" Expr5 ;
+Fold.         Expr5 ::= "fold" "[" Type "]" Expr6 ;
+Unfold.       Expr5 ::= "unfold" "[" Type "]" Expr6 ;
 
-DotRecord.    Expr5 ::= Expr5 "." StellaIdent ;
-DotTuple.     Expr5 ::= Expr5 "." Integer ;
-ConstTrue.    Expr5 ::= "true" ;
-ConstFalse.   Expr5 ::= "false" ;
-ConstInt.     Expr5 ::= Integer ;
-Var.          Expr5 ::= StellaIdent ;
+DotRecord.    Expr6 ::= Expr6 "." StellaIdent ;
+DotTuple.     Expr6 ::= Expr6 "." Integer ;
+ConstTrue.    Expr6 ::= "true" ;
+ConstFalse.   Expr6 ::= "false" ;
+ConstInt.     Expr6 ::= Integer ;
+Var.          Expr6 ::= StellaIdent ;
 
 TypeFun.      Type ::= "fn" "(" [Type] ")" "->" Type ;
 TypeRec.      Type ::= "µ" StellaIdent "." Type ;
-TypeTuple.    Type1 ::= "{" [Type] "}" ;
-TypeRecord.   Type1 ::= "struct" "{" [FieldType] "}" ;
-TypeVariant.  Type1 ::= "variant" "<" [FieldType] ">" ;
-TypeList.     Type1 ::= "[" Type "]" ;
-TypeBool.     Type2 ::= "Bool" ;
-TypeNat.      Type2 ::= "Nat" ;
-TypeUnit.     Type2 ::= "Unit" ;
-TypeVar.      Type2 ::= StellaIdent ;
+TypeSum.      Type1 ::= Type2 "+" Type2;
+TypeTuple.    Type2 ::= "{" [Type] "}" ;
+TypeRecord.   Type2 ::= "record" "{" [RecordFieldType] "}" ;
+TypeVariant.  Type2 ::= "variant" "<|" [VariantFieldType] "|>" ;
+TypeList.     Type2 ::= "[" Type "]" ;
+TypeBool.     Type3 ::= "Bool" ;
+TypeNat.      Type3 ::= "Nat" ;
+TypeUnit.     Type3 ::= "Unit" ;
+TypeVar.      Type3 ::= StellaIdent ;
 separator Type "," ;
 
 _. Expr   ::= Expr1 ;
@@ -120,14 +132,18 @@ _. Expr1  ::= Expr2 ;
 _. Expr2  ::= Expr3 ;
 _. Expr3  ::= Expr4 ;
 _. Expr4  ::= Expr5 ;
-_. Expr5  ::= "(" Expr ")" ;
+_. Expr5  ::= Expr6 ;
+_. Expr6  ::= "(" Expr ")" ;
 
-AFieldType.  FieldType ::= StellaIdent ":" Type ;
+AVariantFieldType.  VariantFieldType ::= StellaIdent OptionalTyping ;
+separator VariantFieldType "," ;
 
-separator FieldType "," ;
+ARecordFieldType.  RecordFieldType ::= StellaIdent ":" Type ;
+separator RecordFieldType "," ;
 
 _.  Type  ::= Type1 ;
 _.  Type1 ::= Type2 ;
-_.  Type2 ::= "(" Type ")" ;
+_.  Type2 ::= Type3 ;
+_.  Type3 ::= "(" Type ")" ;
 
 ATyping. Typing  ::= Expr ":" Type ;

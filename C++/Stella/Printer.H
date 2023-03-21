@@ -36,6 +36,8 @@ class PrintAbsyn : public Visitor
   ~PrintAbsyn(void);
   char *print(Visitable *v);
 
+  void visitListStellaIdent(ListStellaIdent *p);
+  void iterListStellaIdent(ListStellaIdent::const_iterator i, ListStellaIdent::const_iterator j);
   void visitProgram(Program *p); /* abstract class */
   void visitAProgram(AProgram *p);
   void visitLanguageDecl(LanguageDecl *p); /* abstract class */
@@ -114,6 +116,15 @@ class PrintAbsyn : public Visitor
   void visitAMatchCase(AMatchCase *p);
   void visitListMatchCase(ListMatchCase *p);
   void iterListMatchCase(ListMatchCase::const_iterator i, ListMatchCase::const_iterator j);
+  void visitOptionalTyping(OptionalTyping *p); /* abstract class */
+  void visitNoTyping(NoTyping *p);
+  void visitSomeTyping(SomeTyping *p);
+  void visitPatternData(PatternData *p); /* abstract class */
+  void visitNoPatternData(NoPatternData *p);
+  void visitSomePatternData(SomePatternData *p);
+  void visitExprData(ExprData *p); /* abstract class */
+  void visitNoExprData(NoExprData *p);
+  void visitSomeExprData(SomeExprData *p);
   void visitPattern(Pattern *p); /* abstract class */
   void visitPatternVariant(PatternVariant *p);
   void visitPatternTuple(PatternTuple *p);
@@ -138,6 +149,7 @@ class PrintAbsyn : public Visitor
   void visitType(Type *p); /* abstract class */
   void visitTypeFun(TypeFun *p);
   void visitTypeRec(TypeRec *p);
+  void visitTypeSum(TypeSum *p);
   void visitTypeTuple(TypeTuple *p);
   void visitTypeRecord(TypeRecord *p);
   void visitTypeVariant(TypeVariant *p);
@@ -148,10 +160,14 @@ class PrintAbsyn : public Visitor
   void visitTypeVar(TypeVar *p);
   void visitListType(ListType *p);
   void iterListType(ListType::const_iterator i, ListType::const_iterator j);
-  void visitFieldType(FieldType *p); /* abstract class */
-  void visitAFieldType(AFieldType *p);
-  void visitListFieldType(ListFieldType *p);
-  void iterListFieldType(ListFieldType::const_iterator i, ListFieldType::const_iterator j);
+  void visitVariantFieldType(VariantFieldType *p); /* abstract class */
+  void visitAVariantFieldType(AVariantFieldType *p);
+  void visitListVariantFieldType(ListVariantFieldType *p);
+  void iterListVariantFieldType(ListVariantFieldType::const_iterator i, ListVariantFieldType::const_iterator j);
+  void visitRecordFieldType(RecordFieldType *p); /* abstract class */
+  void visitARecordFieldType(ARecordFieldType *p);
+  void visitListRecordFieldType(ListRecordFieldType *p);
+  void iterListRecordFieldType(ListRecordFieldType::const_iterator i, ListRecordFieldType::const_iterator j);
   void visitTyping(Typing *p); /* abstract class */
   void visitATyping(ATyping *p);
 
@@ -224,6 +240,8 @@ class ShowAbsyn : public Visitor
   ~ShowAbsyn(void);
   char *show(Visitable *v);
 
+  void visitListStellaIdent(ListStellaIdent *p);
+  void iterListStellaIdent(ListStellaIdent::const_iterator i, ListStellaIdent::const_iterator j);
   void visitProgram(Program *p); /* abstract class */
   void visitAProgram(AProgram *p);
   void visitLanguageDecl(LanguageDecl *p); /* abstract class */
@@ -302,6 +320,15 @@ class ShowAbsyn : public Visitor
   void visitAMatchCase(AMatchCase *p);
   void visitListMatchCase(ListMatchCase *p);
   void iterListMatchCase(ListMatchCase::const_iterator i, ListMatchCase::const_iterator j);
+  void visitOptionalTyping(OptionalTyping *p); /* abstract class */
+  void visitNoTyping(NoTyping *p);
+  void visitSomeTyping(SomeTyping *p);
+  void visitPatternData(PatternData *p); /* abstract class */
+  void visitNoPatternData(NoPatternData *p);
+  void visitSomePatternData(SomePatternData *p);
+  void visitExprData(ExprData *p); /* abstract class */
+  void visitNoExprData(NoExprData *p);
+  void visitSomeExprData(SomeExprData *p);
   void visitPattern(Pattern *p); /* abstract class */
   void visitPatternVariant(PatternVariant *p);
   void visitPatternTuple(PatternTuple *p);
@@ -326,6 +353,7 @@ class ShowAbsyn : public Visitor
   void visitType(Type *p); /* abstract class */
   void visitTypeFun(TypeFun *p);
   void visitTypeRec(TypeRec *p);
+  void visitTypeSum(TypeSum *p);
   void visitTypeTuple(TypeTuple *p);
   void visitTypeRecord(TypeRecord *p);
   void visitTypeVariant(TypeVariant *p);
@@ -336,10 +364,14 @@ class ShowAbsyn : public Visitor
   void visitTypeVar(TypeVar *p);
   void visitListType(ListType *p);
   void iterListType(ListType::const_iterator i, ListType::const_iterator j);
-  void visitFieldType(FieldType *p); /* abstract class */
-  void visitAFieldType(AFieldType *p);
-  void visitListFieldType(ListFieldType *p);
-  void iterListFieldType(ListFieldType::const_iterator i, ListFieldType::const_iterator j);
+  void visitVariantFieldType(VariantFieldType *p); /* abstract class */
+  void visitAVariantFieldType(AVariantFieldType *p);
+  void visitListVariantFieldType(ListVariantFieldType *p);
+  void iterListVariantFieldType(ListVariantFieldType::const_iterator i, ListVariantFieldType::const_iterator j);
+  void visitRecordFieldType(RecordFieldType *p); /* abstract class */
+  void visitARecordFieldType(ARecordFieldType *p);
+  void visitListRecordFieldType(ListRecordFieldType *p);
+  void iterListRecordFieldType(ListRecordFieldType::const_iterator i, ListRecordFieldType::const_iterator j);
   void visitTyping(Typing *p); /* abstract class */
   void visitATyping(ATyping *p);
 

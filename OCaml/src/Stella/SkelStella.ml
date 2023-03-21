@@ -68,7 +68,7 @@ and transExpr (x : expr) : result = match x with
   | Abstraction (paramdecls, expr) -> failure x
   | Tuple exprs -> failure x
   | Record bindings -> failure x
-  | Variant (stellaident, expr) -> failure x
+  | Variant (stellaident, exprdata) -> failure x
   | Match (expr, matchcases) -> failure x
   | List exprs -> failure x
   | Add (expr0, expr) -> failure x
@@ -100,8 +100,23 @@ and transMatchCase (x : matchCase) : result = match x with
     AMatchCase (pattern, expr) -> failure x
 
 
+and transOptionalTyping (x : optionalTyping) : result = match x with
+    NoTyping  -> failure x
+  | SomeTyping type' -> failure x
+
+
+and transPatternData (x : patternData) : result = match x with
+    NoPatternData  -> failure x
+  | SomePatternData pattern -> failure x
+
+
+and transExprData (x : exprData) : result = match x with
+    NoExprData  -> failure x
+  | SomeExprData expr -> failure x
+
+
 and transPattern (x : pattern) : result = match x with
-    PatternVariant (stellaident, pattern) -> failure x
+    PatternVariant (stellaident, patterndata) -> failure x
   | PatternTuple patterns -> failure x
   | PatternRecord labelledpatterns -> failure x
   | PatternList patterns -> failure x
@@ -124,9 +139,10 @@ and transBinding (x : binding) : result = match x with
 and transType (x : typeT) : result = match x with
     TypeFun (types, type') -> failure x
   | TypeRec (stellaident, type') -> failure x
+  | TypeSum (type'0, type') -> failure x
   | TypeTuple types -> failure x
-  | TypeRecord fieldtypes -> failure x
-  | TypeVariant fieldtypes -> failure x
+  | TypeRecord recordfieldtypes -> failure x
+  | TypeVariant variantfieldtypes -> failure x
   | TypeList type' -> failure x
   | TypeBool  -> failure x
   | TypeNat  -> failure x
@@ -134,8 +150,12 @@ and transType (x : typeT) : result = match x with
   | TypeVar stellaident -> failure x
 
 
-and transFieldType (x : fieldType) : result = match x with
-    AFieldType (stellaident, type') -> failure x
+and transVariantFieldType (x : variantFieldType) : result = match x with
+    AVariantFieldType (stellaident, optionaltyping) -> failure x
+
+
+and transRecordFieldType (x : recordFieldType) : result = match x with
+    ARecordFieldType (stellaident, type') -> failure x
 
 
 and transTyping (x : typing) : result = match x with

@@ -135,6 +135,24 @@ char *PrintAbsyn::print(Visitable *v)
   return buf_;
 }
 
+void PrintAbsyn::visitListStellaIdent(ListStellaIdent *liststellaident)
+{
+  iterListStellaIdent(liststellaident->begin(), liststellaident->end());
+}
+
+void PrintAbsyn::iterListStellaIdent(ListStellaIdent::const_iterator i, ListStellaIdent::const_iterator j)
+{
+  if (i == j) return;
+  if (i == j-1)
+  { /* last */
+    visitStellaIdent(*i);
+  }
+  else
+  { /* cons */
+    visitStellaIdent(*i); render(','); iterListStellaIdent(i+1, j);
+  }
+}
+
 void PrintAbsyn::visitProgram(Program *p) {} //abstract class
 
 void PrintAbsyn::visitAProgram(AProgram *p)
@@ -434,98 +452,98 @@ void PrintAbsyn::visitLet(Let *p)
 void PrintAbsyn::visitLessThan(LessThan *p)
 {
   int oldi = _i_;
-  if (oldi > 0) render(STELLA__L_PAREN);
+  if (oldi > 1) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render('<');
-  _i_ = 1; p->expr_2->accept(this);
+  _i_ = 2; p->expr_2->accept(this);
 
-  if (oldi > 0) render(STELLA__R_PAREN);
+  if (oldi > 1) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitLessThanOrEqual(LessThanOrEqual *p)
 {
   int oldi = _i_;
-  if (oldi > 0) render(STELLA__L_PAREN);
+  if (oldi > 1) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render("<=");
-  _i_ = 1; p->expr_2->accept(this);
+  _i_ = 2; p->expr_2->accept(this);
 
-  if (oldi > 0) render(STELLA__R_PAREN);
+  if (oldi > 1) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitGreaterThan(GreaterThan *p)
 {
   int oldi = _i_;
-  if (oldi > 0) render(STELLA__L_PAREN);
+  if (oldi > 1) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render('>');
-  _i_ = 1; p->expr_2->accept(this);
+  _i_ = 2; p->expr_2->accept(this);
 
-  if (oldi > 0) render(STELLA__R_PAREN);
+  if (oldi > 1) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitGreaterThanOrEqual(GreaterThanOrEqual *p)
 {
   int oldi = _i_;
-  if (oldi > 0) render(STELLA__L_PAREN);
+  if (oldi > 1) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render(">=");
-  _i_ = 1; p->expr_2->accept(this);
+  _i_ = 2; p->expr_2->accept(this);
 
-  if (oldi > 0) render(STELLA__R_PAREN);
+  if (oldi > 1) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitEqual(Equal *p)
 {
   int oldi = _i_;
-  if (oldi > 0) render(STELLA__L_PAREN);
+  if (oldi > 1) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render("==");
-  _i_ = 1; p->expr_2->accept(this);
+  _i_ = 2; p->expr_2->accept(this);
 
-  if (oldi > 0) render(STELLA__R_PAREN);
+  if (oldi > 1) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitNotEqual(NotEqual *p)
 {
   int oldi = _i_;
-  if (oldi > 0) render(STELLA__L_PAREN);
+  if (oldi > 1) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render("!=");
-  _i_ = 1; p->expr_2->accept(this);
+  _i_ = 2; p->expr_2->accept(this);
 
-  if (oldi > 0) render(STELLA__R_PAREN);
+  if (oldi > 1) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeAsc(TypeAsc *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_->accept(this);
+  _i_ = 2; p->expr_->accept(this);
   render("as");
   _i_ = 0; p->type_->accept(this);
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitAbstraction(Abstraction *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render("fn");
   render('(');
@@ -537,56 +555,55 @@ void PrintAbsyn::visitAbstraction(Abstraction *p)
   render(';');
   render('}');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTuple(Tuple *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render('{');
   _i_ = 0; visitListExpr(p->listexpr_);
   render('}');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitRecord(Record *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render("record");
   render('{');
   _i_ = 0; visitListBinding(p->listbinding_);
   render('}');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitVariant(Variant *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
-  render('<');
+  render("<|");
   visitStellaIdent(p->stellaident_);
-  render('=');
-  _i_ = 0; p->expr_->accept(this);
-  render('>');
+  _i_ = 0; p->exprdata_->accept(this);
+  render("|>");
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitMatch(Match *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render("match");
   _i_ = 1; p->expr_->accept(this);
@@ -594,93 +611,93 @@ void PrintAbsyn::visitMatch(Match *p)
   _i_ = 0; visitListMatchCase(p->listmatchcase_);
   render('}');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitList(List *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render('[');
   _i_ = 0; visitListExpr(p->listexpr_);
   render(']');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitAdd(Add *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render('+');
-  _i_ = 2; p->expr_2->accept(this);
+  _i_ = 3; p->expr_2->accept(this);
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitLogicOr(LogicOr *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
-  _i_ = 1; p->expr_1->accept(this);
+  _i_ = 2; p->expr_1->accept(this);
   render("or");
-  _i_ = 2; p->expr_2->accept(this);
+  _i_ = 3; p->expr_2->accept(this);
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitMultiply(Multiply *p)
 {
   int oldi = _i_;
-  if (oldi > 2) render(STELLA__L_PAREN);
+  if (oldi > 3) render(STELLA__L_PAREN);
 
-  _i_ = 2; p->expr_1->accept(this);
+  _i_ = 3; p->expr_1->accept(this);
   render('*');
-  _i_ = 3; p->expr_2->accept(this);
+  _i_ = 4; p->expr_2->accept(this);
 
-  if (oldi > 2) render(STELLA__R_PAREN);
+  if (oldi > 3) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitLogicAnd(LogicAnd *p)
 {
   int oldi = _i_;
-  if (oldi > 2) render(STELLA__L_PAREN);
+  if (oldi > 3) render(STELLA__L_PAREN);
 
-  _i_ = 2; p->expr_1->accept(this);
+  _i_ = 3; p->expr_1->accept(this);
   render("and");
-  _i_ = 3; p->expr_2->accept(this);
+  _i_ = 4; p->expr_2->accept(this);
 
-  if (oldi > 2) render(STELLA__R_PAREN);
+  if (oldi > 3) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitApplication(Application *p)
 {
   int oldi = _i_;
-  if (oldi > 3) render(STELLA__L_PAREN);
+  if (oldi > 4) render(STELLA__L_PAREN);
 
-  _i_ = 3; p->expr_->accept(this);
+  _i_ = 4; p->expr_->accept(this);
   render('(');
   _i_ = 0; visitListExpr(p->listexpr_);
   render(')');
 
-  if (oldi > 3) render(STELLA__R_PAREN);
+  if (oldi > 4) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitConsList(ConsList *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("cons");
   render('(');
@@ -689,126 +706,126 @@ void PrintAbsyn::visitConsList(ConsList *p)
   _i_ = 0; p->expr_2->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitHead(Head *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("List::head");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitIsEmpty(IsEmpty *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("List::isempty");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTail(Tail *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("List::tail");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitSucc(Succ *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("succ");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitLogicNot(LogicNot *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("not");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitPred(Pred *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("Nat::pred");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitIsZero(IsZero *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("Nat::iszero");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitFix(Fix *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("fix");
   render('(');
   _i_ = 0; p->expr_->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitNatRec(NatRec *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("Nat::rec");
   render('(');
@@ -819,107 +836,107 @@ void PrintAbsyn::visitNatRec(NatRec *p)
   _i_ = 0; p->expr_3->accept(this);
   render(')');
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitFold(Fold *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("fold");
   render('[');
   _i_ = 0; p->type_->accept(this);
   render(']');
-  _i_ = 5; p->expr_->accept(this);
+  _i_ = 6; p->expr_->accept(this);
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitUnfold(Unfold *p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(STELLA__L_PAREN);
+  if (oldi > 5) render(STELLA__L_PAREN);
 
   render("unfold");
   render('[');
   _i_ = 0; p->type_->accept(this);
   render(']');
-  _i_ = 5; p->expr_->accept(this);
+  _i_ = 6; p->expr_->accept(this);
 
-  if (oldi > 4) render(STELLA__R_PAREN);
+  if (oldi > 5) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitDotRecord(DotRecord *p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(STELLA__L_PAREN);
+  if (oldi > 6) render(STELLA__L_PAREN);
 
-  _i_ = 5; p->expr_->accept(this);
+  _i_ = 6; p->expr_->accept(this);
   render('.');
   visitStellaIdent(p->stellaident_);
 
-  if (oldi > 5) render(STELLA__R_PAREN);
+  if (oldi > 6) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitDotTuple(DotTuple *p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(STELLA__L_PAREN);
+  if (oldi > 6) render(STELLA__L_PAREN);
 
-  _i_ = 5; p->expr_->accept(this);
+  _i_ = 6; p->expr_->accept(this);
   render('.');
   visitInteger(p->integer_);
 
-  if (oldi > 5) render(STELLA__R_PAREN);
+  if (oldi > 6) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitConstTrue(ConstTrue *p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(STELLA__L_PAREN);
+  if (oldi > 6) render(STELLA__L_PAREN);
 
   render("true");
 
-  if (oldi > 5) render(STELLA__R_PAREN);
+  if (oldi > 6) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitConstFalse(ConstFalse *p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(STELLA__L_PAREN);
+  if (oldi > 6) render(STELLA__L_PAREN);
 
   render("false");
 
-  if (oldi > 5) render(STELLA__R_PAREN);
+  if (oldi > 6) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitConstInt(ConstInt *p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(STELLA__L_PAREN);
+  if (oldi > 6) render(STELLA__L_PAREN);
 
   visitInteger(p->integer_);
 
-  if (oldi > 5) render(STELLA__R_PAREN);
+  if (oldi > 6) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitVar(Var *p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(STELLA__L_PAREN);
+  if (oldi > 6) render(STELLA__L_PAREN);
 
   visitStellaIdent(p->stellaident_);
 
-  if (oldi > 5) render(STELLA__R_PAREN);
+  if (oldi > 6) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
@@ -974,6 +991,78 @@ void PrintAbsyn::iterListMatchCase(ListMatchCase::const_iterator i, ListMatchCas
   }
 }
 
+void PrintAbsyn::visitOptionalTyping(OptionalTyping *p) {} //abstract class
+
+void PrintAbsyn::visitNoTyping(NoTyping *p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(STELLA__L_PAREN);
+
+
+  if (oldi > 0) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitSomeTyping(SomeTyping *p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(STELLA__L_PAREN);
+
+  render(':');
+  _i_ = 0; p->type_->accept(this);
+
+  if (oldi > 0) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitPatternData(PatternData *p) {} //abstract class
+
+void PrintAbsyn::visitNoPatternData(NoPatternData *p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(STELLA__L_PAREN);
+
+
+  if (oldi > 0) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitSomePatternData(SomePatternData *p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(STELLA__L_PAREN);
+
+  render('=');
+  _i_ = 0; p->pattern_->accept(this);
+
+  if (oldi > 0) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitExprData(ExprData *p) {} //abstract class
+
+void PrintAbsyn::visitNoExprData(NoExprData *p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(STELLA__L_PAREN);
+
+
+  if (oldi > 0) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitSomeExprData(SomeExprData *p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(STELLA__L_PAREN);
+
+  render('=');
+  _i_ = 0; p->expr_->accept(this);
+
+  if (oldi > 0) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
 void PrintAbsyn::visitPattern(Pattern *p) {} //abstract class
 
 void PrintAbsyn::visitPatternVariant(PatternVariant *p)
@@ -981,11 +1070,10 @@ void PrintAbsyn::visitPatternVariant(PatternVariant *p)
   int oldi = _i_;
   if (oldi > 0) render(STELLA__L_PAREN);
 
-  render('<');
+  render("<|");
   visitStellaIdent(p->stellaident_);
-  render('=');
-  _i_ = 0; p->pattern_->accept(this);
-  render('>');
+  _i_ = 0; p->patterndata_->accept(this);
+  render("|>");
 
   if (oldi > 0) render(STELLA__R_PAREN);
   _i_ = oldi;
@@ -1221,101 +1309,114 @@ void PrintAbsyn::visitTypeRec(TypeRec *p)
   _i_ = oldi;
 }
 
-void PrintAbsyn::visitTypeTuple(TypeTuple *p)
+void PrintAbsyn::visitTypeSum(TypeSum *p)
 {
   int oldi = _i_;
   if (oldi > 1) render(STELLA__L_PAREN);
+
+  _i_ = 2; p->type_1->accept(this);
+  render('+');
+  _i_ = 2; p->type_2->accept(this);
+
+  if (oldi > 1) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitTypeTuple(TypeTuple *p)
+{
+  int oldi = _i_;
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render('{');
   _i_ = 0; visitListType(p->listtype_);
   render('}');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeRecord(TypeRecord *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
-  render("struct");
+  render("record");
   render('{');
-  _i_ = 0; visitListFieldType(p->listfieldtype_);
+  _i_ = 0; visitListRecordFieldType(p->listrecordfieldtype_);
   render('}');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeVariant(TypeVariant *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render("variant");
-  render('<');
-  _i_ = 0; visitListFieldType(p->listfieldtype_);
-  render('>');
+  render("<|");
+  _i_ = 0; visitListVariantFieldType(p->listvariantfieldtype_);
+  render("|>");
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeList(TypeList *p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(STELLA__L_PAREN);
+  if (oldi > 2) render(STELLA__L_PAREN);
 
   render('[');
   _i_ = 0; p->type_->accept(this);
   render(']');
 
-  if (oldi > 1) render(STELLA__R_PAREN);
+  if (oldi > 2) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeBool(TypeBool *p)
 {
   int oldi = _i_;
-  if (oldi > 2) render(STELLA__L_PAREN);
+  if (oldi > 3) render(STELLA__L_PAREN);
 
   render("Bool");
 
-  if (oldi > 2) render(STELLA__R_PAREN);
+  if (oldi > 3) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeNat(TypeNat *p)
 {
   int oldi = _i_;
-  if (oldi > 2) render(STELLA__L_PAREN);
+  if (oldi > 3) render(STELLA__L_PAREN);
 
   render("Nat");
 
-  if (oldi > 2) render(STELLA__R_PAREN);
+  if (oldi > 3) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeUnit(TypeUnit *p)
 {
   int oldi = _i_;
-  if (oldi > 2) render(STELLA__L_PAREN);
+  if (oldi > 3) render(STELLA__L_PAREN);
 
   render("Unit");
 
-  if (oldi > 2) render(STELLA__R_PAREN);
+  if (oldi > 3) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
 void PrintAbsyn::visitTypeVar(TypeVar *p)
 {
   int oldi = _i_;
-  if (oldi > 2) render(STELLA__L_PAREN);
+  if (oldi > 3) render(STELLA__L_PAREN);
 
   visitStellaIdent(p->stellaident_);
 
-  if (oldi > 2) render(STELLA__R_PAREN);
+  if (oldi > 3) render(STELLA__R_PAREN);
   _i_ = oldi;
 }
 
@@ -1337,9 +1438,41 @@ void PrintAbsyn::iterListType(ListType::const_iterator i, ListType::const_iterat
   }
 }
 
-void PrintAbsyn::visitFieldType(FieldType *p) {} //abstract class
+void PrintAbsyn::visitVariantFieldType(VariantFieldType *p) {} //abstract class
 
-void PrintAbsyn::visitAFieldType(AFieldType *p)
+void PrintAbsyn::visitAVariantFieldType(AVariantFieldType *p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(STELLA__L_PAREN);
+
+  visitStellaIdent(p->stellaident_);
+  _i_ = 0; p->optionaltyping_->accept(this);
+
+  if (oldi > 0) render(STELLA__R_PAREN);
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitListVariantFieldType(ListVariantFieldType *listvariantfieldtype)
+{
+  iterListVariantFieldType(listvariantfieldtype->begin(), listvariantfieldtype->end());
+}
+
+void PrintAbsyn::iterListVariantFieldType(ListVariantFieldType::const_iterator i, ListVariantFieldType::const_iterator j)
+{
+  if (i == j) return;
+  if (i == j-1)
+  { /* last */
+    (*i)->accept(this);
+  }
+  else
+  { /* cons */
+    (*i)->accept(this); render(','); iterListVariantFieldType(i+1, j);
+  }
+}
+
+void PrintAbsyn::visitRecordFieldType(RecordFieldType *p) {} //abstract class
+
+void PrintAbsyn::visitARecordFieldType(ARecordFieldType *p)
 {
   int oldi = _i_;
   if (oldi > 0) render(STELLA__L_PAREN);
@@ -1352,12 +1485,12 @@ void PrintAbsyn::visitAFieldType(AFieldType *p)
   _i_ = oldi;
 }
 
-void PrintAbsyn::visitListFieldType(ListFieldType *listfieldtype)
+void PrintAbsyn::visitListRecordFieldType(ListRecordFieldType *listrecordfieldtype)
 {
-  iterListFieldType(listfieldtype->begin(), listfieldtype->end());
+  iterListRecordFieldType(listrecordfieldtype->begin(), listrecordfieldtype->end());
 }
 
-void PrintAbsyn::iterListFieldType(ListFieldType::const_iterator i, ListFieldType::const_iterator j)
+void PrintAbsyn::iterListRecordFieldType(ListRecordFieldType::const_iterator i, ListRecordFieldType::const_iterator j)
 {
   if (i == j) return;
   if (i == j-1)
@@ -1366,7 +1499,7 @@ void PrintAbsyn::iterListFieldType(ListFieldType::const_iterator i, ListFieldTyp
   }
   else
   { /* cons */
-    (*i)->accept(this); render(','); iterListFieldType(i+1, j);
+    (*i)->accept(this); render(','); iterListRecordFieldType(i+1, j);
   }
 }
 
@@ -1446,6 +1579,15 @@ char *ShowAbsyn::show(Visitable *v)
   bufReset();
   v->accept(this);
   return buf_;
+}
+
+void ShowAbsyn::visitListStellaIdent(ListStellaIdent *liststellaident)
+{
+  for (ListStellaIdent::const_iterator i = liststellaident->begin() ; i != liststellaident->end() ; ++i)
+  {
+    visitStellaIdent(*i) ;
+    if (i != liststellaident->end() - 1) bufAppend(", ");
+  }
 }
 
 void ShowAbsyn::visitProgram(Program *p) {} //abstract class
@@ -1796,7 +1938,7 @@ void ShowAbsyn::visitVariant(Variant *p)
   visitStellaIdent(p->stellaident_);
   bufAppend(' ');
   bufAppend('[');
-  if (p->expr_)  p->expr_->accept(this);
+  if (p->exprdata_)  p->exprdata_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -2104,6 +2246,54 @@ void ShowAbsyn::visitListMatchCase(ListMatchCase *listmatchcase)
   }
 }
 
+void ShowAbsyn::visitOptionalTyping(OptionalTyping *p) {} //abstract class
+
+void ShowAbsyn::visitNoTyping(NoTyping *p)
+{
+  bufAppend("NoTyping");
+}
+void ShowAbsyn::visitSomeTyping(SomeTyping *p)
+{
+  bufAppend('(');
+  bufAppend("SomeTyping");
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->type_)  p->type_->accept(this);
+  bufAppend(']');
+  bufAppend(')');
+}
+void ShowAbsyn::visitPatternData(PatternData *p) {} //abstract class
+
+void ShowAbsyn::visitNoPatternData(NoPatternData *p)
+{
+  bufAppend("NoPatternData");
+}
+void ShowAbsyn::visitSomePatternData(SomePatternData *p)
+{
+  bufAppend('(');
+  bufAppend("SomePatternData");
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->pattern_)  p->pattern_->accept(this);
+  bufAppend(']');
+  bufAppend(')');
+}
+void ShowAbsyn::visitExprData(ExprData *p) {} //abstract class
+
+void ShowAbsyn::visitNoExprData(NoExprData *p)
+{
+  bufAppend("NoExprData");
+}
+void ShowAbsyn::visitSomeExprData(SomeExprData *p)
+{
+  bufAppend('(');
+  bufAppend("SomeExprData");
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->expr_)  p->expr_->accept(this);
+  bufAppend(']');
+  bufAppend(')');
+}
 void ShowAbsyn::visitPattern(Pattern *p) {} //abstract class
 
 void ShowAbsyn::visitPatternVariant(PatternVariant *p)
@@ -2114,7 +2304,7 @@ void ShowAbsyn::visitPatternVariant(PatternVariant *p)
   visitStellaIdent(p->stellaident_);
   bufAppend(' ');
   bufAppend('[');
-  if (p->pattern_)  p->pattern_->accept(this);
+  if (p->patterndata_)  p->patterndata_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -2281,6 +2471,16 @@ void ShowAbsyn::visitTypeRec(TypeRec *p)
   bufAppend(']');
   bufAppend(')');
 }
+void ShowAbsyn::visitTypeSum(TypeSum *p)
+{
+  bufAppend('(');
+  bufAppend("TypeSum");
+  bufAppend(' ');
+  p->type_1->accept(this);
+  bufAppend(' ');
+  p->type_2->accept(this);
+  bufAppend(')');
+}
 void ShowAbsyn::visitTypeTuple(TypeTuple *p)
 {
   bufAppend('(');
@@ -2298,7 +2498,7 @@ void ShowAbsyn::visitTypeRecord(TypeRecord *p)
   bufAppend("TypeRecord");
   bufAppend(' ');
   bufAppend('[');
-  if (p->listfieldtype_)  p->listfieldtype_->accept(this);
+  if (p->listrecordfieldtype_)  p->listrecordfieldtype_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -2309,7 +2509,7 @@ void ShowAbsyn::visitTypeVariant(TypeVariant *p)
   bufAppend("TypeVariant");
   bufAppend(' ');
   bufAppend('[');
-  if (p->listfieldtype_)  p->listfieldtype_->accept(this);
+  if (p->listvariantfieldtype_)  p->listvariantfieldtype_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -2354,12 +2554,35 @@ void ShowAbsyn::visitListType(ListType *listtype)
   }
 }
 
-void ShowAbsyn::visitFieldType(FieldType *p) {} //abstract class
+void ShowAbsyn::visitVariantFieldType(VariantFieldType *p) {} //abstract class
 
-void ShowAbsyn::visitAFieldType(AFieldType *p)
+void ShowAbsyn::visitAVariantFieldType(AVariantFieldType *p)
 {
   bufAppend('(');
-  bufAppend("AFieldType");
+  bufAppend("AVariantFieldType");
+  bufAppend(' ');
+  visitStellaIdent(p->stellaident_);
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->optionaltyping_)  p->optionaltyping_->accept(this);
+  bufAppend(']');
+  bufAppend(')');
+}
+void ShowAbsyn::visitListVariantFieldType(ListVariantFieldType *listvariantfieldtype)
+{
+  for (ListVariantFieldType::const_iterator i = listvariantfieldtype->begin() ; i != listvariantfieldtype->end() ; ++i)
+  {
+    (*i)->accept(this);
+    if (i != listvariantfieldtype->end() - 1) bufAppend(", ");
+  }
+}
+
+void ShowAbsyn::visitRecordFieldType(RecordFieldType *p) {} //abstract class
+
+void ShowAbsyn::visitARecordFieldType(ARecordFieldType *p)
+{
+  bufAppend('(');
+  bufAppend("ARecordFieldType");
   bufAppend(' ');
   visitStellaIdent(p->stellaident_);
   bufAppend(' ');
@@ -2368,12 +2591,12 @@ void ShowAbsyn::visitAFieldType(AFieldType *p)
   bufAppend(']');
   bufAppend(')');
 }
-void ShowAbsyn::visitListFieldType(ListFieldType *listfieldtype)
+void ShowAbsyn::visitListRecordFieldType(ListRecordFieldType *listrecordfieldtype)
 {
-  for (ListFieldType::const_iterator i = listfieldtype->begin() ; i != listfieldtype->end() ; ++i)
+  for (ListRecordFieldType::const_iterator i = listrecordfieldtype->begin() ; i != listrecordfieldtype->end() ; ++i)
   {
     (*i)->accept(this);
-    if (i != listfieldtype->end() - 1) bufAppend(", ");
+    if (i != listrecordfieldtype->end() - 1) bufAppend(", ");
   }
 }
 

@@ -16,6 +16,18 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStart_ListStellaIdent(stellaParser.Start_ListStellaIdentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_ListStellaIdent(stellaParser.Start_ListStellaIdentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStart_Program(stellaParser.Start_ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -244,6 +256,42 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStart_OptionalTyping(stellaParser.Start_OptionalTypingContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_OptionalTyping(stellaParser.Start_OptionalTypingContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStart_PatternData(stellaParser.Start_PatternDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_PatternData(stellaParser.Start_PatternDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStart_ExprData(stellaParser.Start_ExprDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_ExprData(stellaParser.Start_ExprDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStart_Pattern(stellaParser.Start_PatternContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -316,18 +364,6 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStart_Expr0(stellaParser.Start_Expr0Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitStart_Expr0(stellaParser.Start_Expr0Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterStart_Expr1(stellaParser.Start_Expr1Context ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -388,6 +424,18 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStart_Expr6(stellaParser.Start_Expr6Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_Expr6(stellaParser.Start_Expr6Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStart_Type(stellaParser.Start_TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -424,6 +472,18 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStart_Type3(stellaParser.Start_Type3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_Type3(stellaParser.Start_Type3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStart_ListType(stellaParser.Start_ListTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -436,25 +496,49 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStart_FieldType(stellaParser.Start_FieldTypeContext ctx) { }
+	@Override public void enterStart_VariantFieldType(stellaParser.Start_VariantFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStart_FieldType(stellaParser.Start_FieldTypeContext ctx) { }
+	@Override public void exitStart_VariantFieldType(stellaParser.Start_VariantFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStart_ListFieldType(stellaParser.Start_ListFieldTypeContext ctx) { }
+	@Override public void enterStart_ListVariantFieldType(stellaParser.Start_ListVariantFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStart_ListFieldType(stellaParser.Start_ListFieldTypeContext ctx) { }
+	@Override public void exitStart_ListVariantFieldType(stellaParser.Start_ListVariantFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStart_RecordFieldType(stellaParser.Start_RecordFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_RecordFieldType(stellaParser.Start_RecordFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStart_ListRecordFieldType(stellaParser.Start_ListRecordFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart_ListRecordFieldType(stellaParser.Start_ListRecordFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -467,6 +551,18 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStart_Typing(stellaParser.Start_TypingContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterListStellaIdent(stellaParser.ListStellaIdentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitListStellaIdent(stellaParser.ListStellaIdentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -700,6 +796,42 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOptionalTyping(stellaParser.OptionalTypingContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOptionalTyping(stellaParser.OptionalTypingContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPatternData(stellaParser.PatternDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPatternData(stellaParser.PatternDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprData(stellaParser.ExprDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprData(stellaParser.ExprDataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPattern(stellaParser.PatternContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -772,18 +904,6 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr0(stellaParser.Expr0Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpr0(stellaParser.Expr0Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExpr1(stellaParser.Expr1Context ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -844,6 +964,18 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExpr6(stellaParser.Expr6Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpr6(stellaParser.Expr6Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterType(stellaParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -880,6 +1012,18 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterType3(stellaParser.Type3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType3(stellaParser.Type3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterListType(stellaParser.ListTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -892,25 +1036,49 @@ public class stellaParserBaseListener implements stellaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFieldType(stellaParser.FieldTypeContext ctx) { }
+	@Override public void enterVariantFieldType(stellaParser.VariantFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFieldType(stellaParser.FieldTypeContext ctx) { }
+	@Override public void exitVariantFieldType(stellaParser.VariantFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterListFieldType(stellaParser.ListFieldTypeContext ctx) { }
+	@Override public void enterListVariantFieldType(stellaParser.ListVariantFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitListFieldType(stellaParser.ListFieldTypeContext ctx) { }
+	@Override public void exitListVariantFieldType(stellaParser.ListVariantFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRecordFieldType(stellaParser.RecordFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRecordFieldType(stellaParser.RecordFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterListRecordFieldType(stellaParser.ListRecordFieldTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitListRecordFieldType(stellaParser.ListRecordFieldTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -35,11 +35,15 @@ class ReturnType;
 class ThrowType;
 class Expr;
 class MatchCase;
+class OptionalTyping;
+class PatternData;
+class ExprData;
 class Pattern;
 class LabelledPattern;
 class Binding;
 class Type;
-class FieldType;
+class VariantFieldType;
+class RecordFieldType;
 class Typing;
 class AProgram;
 class LanguageCore;
@@ -56,6 +60,12 @@ class SomeThrowType;
 class If;
 class Let;
 class AMatchCase;
+class NoTyping;
+class SomeTyping;
+class NoPatternData;
+class SomePatternData;
+class NoExprData;
+class SomeExprData;
 class PatternVariant;
 class PatternTuple;
 class PatternRecord;
@@ -106,6 +116,7 @@ class ConstInt;
 class Var;
 class TypeFun;
 class TypeRec;
+class TypeSum;
 class TypeTuple;
 class TypeRecord;
 class TypeVariant;
@@ -114,8 +125,10 @@ class TypeBool;
 class TypeNat;
 class TypeUnit;
 class TypeVar;
-class AFieldType;
+class AVariantFieldType;
+class ARecordFieldType;
 class ATyping;
+class ListStellaIdent;
 class ListExtensionName;
 class ListExtension;
 class ListDecl;
@@ -128,7 +141,8 @@ class ListPattern;
 class ListLabelledPattern;
 class ListBinding;
 class ListType;
-class ListFieldType;
+class ListVariantFieldType;
+class ListRecordFieldType;
 
 
 /********************   Visitor Interfaces    ********************/
@@ -147,11 +161,15 @@ public:
   virtual void visitThrowType(ThrowType *p) = 0;
   virtual void visitExpr(Expr *p) = 0;
   virtual void visitMatchCase(MatchCase *p) = 0;
+  virtual void visitOptionalTyping(OptionalTyping *p) = 0;
+  virtual void visitPatternData(PatternData *p) = 0;
+  virtual void visitExprData(ExprData *p) = 0;
   virtual void visitPattern(Pattern *p) = 0;
   virtual void visitLabelledPattern(LabelledPattern *p) = 0;
   virtual void visitBinding(Binding *p) = 0;
   virtual void visitType(Type *p) = 0;
-  virtual void visitFieldType(FieldType *p) = 0;
+  virtual void visitVariantFieldType(VariantFieldType *p) = 0;
+  virtual void visitRecordFieldType(RecordFieldType *p) = 0;
   virtual void visitTyping(Typing *p) = 0;
   virtual void visitAProgram(AProgram *p) = 0;
   virtual void visitLanguageCore(LanguageCore *p) = 0;
@@ -168,6 +186,12 @@ public:
   virtual void visitIf(If *p) = 0;
   virtual void visitLet(Let *p) = 0;
   virtual void visitAMatchCase(AMatchCase *p) = 0;
+  virtual void visitNoTyping(NoTyping *p) = 0;
+  virtual void visitSomeTyping(SomeTyping *p) = 0;
+  virtual void visitNoPatternData(NoPatternData *p) = 0;
+  virtual void visitSomePatternData(SomePatternData *p) = 0;
+  virtual void visitNoExprData(NoExprData *p) = 0;
+  virtual void visitSomeExprData(SomeExprData *p) = 0;
   virtual void visitPatternVariant(PatternVariant *p) = 0;
   virtual void visitPatternTuple(PatternTuple *p) = 0;
   virtual void visitPatternRecord(PatternRecord *p) = 0;
@@ -218,6 +242,7 @@ public:
   virtual void visitVar(Var *p) = 0;
   virtual void visitTypeFun(TypeFun *p) = 0;
   virtual void visitTypeRec(TypeRec *p) = 0;
+  virtual void visitTypeSum(TypeSum *p) = 0;
   virtual void visitTypeTuple(TypeTuple *p) = 0;
   virtual void visitTypeRecord(TypeRecord *p) = 0;
   virtual void visitTypeVariant(TypeVariant *p) = 0;
@@ -226,8 +251,10 @@ public:
   virtual void visitTypeNat(TypeNat *p) = 0;
   virtual void visitTypeUnit(TypeUnit *p) = 0;
   virtual void visitTypeVar(TypeVar *p) = 0;
-  virtual void visitAFieldType(AFieldType *p) = 0;
+  virtual void visitAVariantFieldType(AVariantFieldType *p) = 0;
+  virtual void visitARecordFieldType(ARecordFieldType *p) = 0;
   virtual void visitATyping(ATyping *p) = 0;
+  virtual void visitListStellaIdent(ListStellaIdent *p) = 0;
   virtual void visitListExtensionName(ListExtensionName *p) = 0;
   virtual void visitListExtension(ListExtension *p) = 0;
   virtual void visitListDecl(ListDecl *p) = 0;
@@ -240,7 +267,8 @@ public:
   virtual void visitListLabelledPattern(ListLabelledPattern *p) = 0;
   virtual void visitListBinding(ListBinding *p) = 0;
   virtual void visitListType(ListType *p) = 0;
-  virtual void visitListFieldType(ListFieldType *p) = 0;
+  virtual void visitListVariantFieldType(ListVariantFieldType *p) = 0;
+  virtual void visitListRecordFieldType(ListRecordFieldType *p) = 0;
 
 
   virtual void visitInteger(Integer x) = 0;
@@ -341,6 +369,27 @@ public:
   int line_number, char_number;
 };
 
+class OptionalTyping : public Visitable
+{
+public:
+  virtual OptionalTyping *clone() const = 0;
+  int line_number, char_number;
+};
+
+class PatternData : public Visitable
+{
+public:
+  virtual PatternData *clone() const = 0;
+  int line_number, char_number;
+};
+
+class ExprData : public Visitable
+{
+public:
+  virtual ExprData *clone() const = 0;
+  int line_number, char_number;
+};
+
 class Pattern : public Visitable
 {
 public:
@@ -369,10 +418,17 @@ public:
   int line_number, char_number;
 };
 
-class FieldType : public Visitable
+class VariantFieldType : public Visitable
 {
 public:
-  virtual FieldType *clone() const = 0;
+  virtual VariantFieldType *clone() const = 0;
+  int line_number, char_number;
+};
+
+class RecordFieldType : public Visitable
+{
+public:
+  virtual RecordFieldType *clone() const = 0;
   int line_number, char_number;
 };
 
@@ -743,11 +799,11 @@ class Variant : public Expr
 {
 public:
   StellaIdent stellaident_;
-  Expr *expr_;
+  ExprData *exprdata_;
 
   Variant(const Variant &);
   Variant &operator=(const Variant &);
-  Variant(StellaIdent p1, Expr *p2);
+  Variant(StellaIdent p1, ExprData *p2);
   ~Variant();
   virtual void accept(Visitor *v);
   virtual Variant *clone() const;
@@ -1130,15 +1186,96 @@ public:
   void swap(AMatchCase &);
 };
 
+class NoTyping : public OptionalTyping
+{
+public:
+
+  NoTyping(const NoTyping &);
+  NoTyping &operator=(const NoTyping &);
+  NoTyping();
+  ~NoTyping();
+  virtual void accept(Visitor *v);
+  virtual NoTyping *clone() const;
+  void swap(NoTyping &);
+};
+
+class SomeTyping : public OptionalTyping
+{
+public:
+  Type *type_;
+
+  SomeTyping(const SomeTyping &);
+  SomeTyping &operator=(const SomeTyping &);
+  SomeTyping(Type *p1);
+  ~SomeTyping();
+  virtual void accept(Visitor *v);
+  virtual SomeTyping *clone() const;
+  void swap(SomeTyping &);
+};
+
+class NoPatternData : public PatternData
+{
+public:
+
+  NoPatternData(const NoPatternData &);
+  NoPatternData &operator=(const NoPatternData &);
+  NoPatternData();
+  ~NoPatternData();
+  virtual void accept(Visitor *v);
+  virtual NoPatternData *clone() const;
+  void swap(NoPatternData &);
+};
+
+class SomePatternData : public PatternData
+{
+public:
+  Pattern *pattern_;
+
+  SomePatternData(const SomePatternData &);
+  SomePatternData &operator=(const SomePatternData &);
+  SomePatternData(Pattern *p1);
+  ~SomePatternData();
+  virtual void accept(Visitor *v);
+  virtual SomePatternData *clone() const;
+  void swap(SomePatternData &);
+};
+
+class NoExprData : public ExprData
+{
+public:
+
+  NoExprData(const NoExprData &);
+  NoExprData &operator=(const NoExprData &);
+  NoExprData();
+  ~NoExprData();
+  virtual void accept(Visitor *v);
+  virtual NoExprData *clone() const;
+  void swap(NoExprData &);
+};
+
+class SomeExprData : public ExprData
+{
+public:
+  Expr *expr_;
+
+  SomeExprData(const SomeExprData &);
+  SomeExprData &operator=(const SomeExprData &);
+  SomeExprData(Expr *p1);
+  ~SomeExprData();
+  virtual void accept(Visitor *v);
+  virtual SomeExprData *clone() const;
+  void swap(SomeExprData &);
+};
+
 class PatternVariant : public Pattern
 {
 public:
   StellaIdent stellaident_;
-  Pattern *pattern_;
+  PatternData *patterndata_;
 
   PatternVariant(const PatternVariant &);
   PatternVariant &operator=(const PatternVariant &);
-  PatternVariant(StellaIdent p1, Pattern *p2);
+  PatternVariant(StellaIdent p1, PatternData *p2);
   ~PatternVariant();
   virtual void accept(Visitor *v);
   virtual PatternVariant *clone() const;
@@ -1330,6 +1467,21 @@ public:
   void swap(TypeRec &);
 };
 
+class TypeSum : public Type
+{
+public:
+  Type *type_1;
+  Type *type_2;
+
+  TypeSum(const TypeSum &);
+  TypeSum &operator=(const TypeSum &);
+  TypeSum(Type *p1, Type *p2);
+  ~TypeSum();
+  virtual void accept(Visitor *v);
+  virtual TypeSum *clone() const;
+  void swap(TypeSum &);
+};
+
 class TypeTuple : public Type
 {
 public:
@@ -1347,11 +1499,11 @@ public:
 class TypeRecord : public Type
 {
 public:
-  ListFieldType *listfieldtype_;
+  ListRecordFieldType *listrecordfieldtype_;
 
   TypeRecord(const TypeRecord &);
   TypeRecord &operator=(const TypeRecord &);
-  TypeRecord(ListFieldType *p1);
+  TypeRecord(ListRecordFieldType *p1);
   ~TypeRecord();
   virtual void accept(Visitor *v);
   virtual TypeRecord *clone() const;
@@ -1361,11 +1513,11 @@ public:
 class TypeVariant : public Type
 {
 public:
-  ListFieldType *listfieldtype_;
+  ListVariantFieldType *listvariantfieldtype_;
 
   TypeVariant(const TypeVariant &);
   TypeVariant &operator=(const TypeVariant &);
-  TypeVariant(ListFieldType *p1);
+  TypeVariant(ListVariantFieldType *p1);
   ~TypeVariant();
   virtual void accept(Visitor *v);
   virtual TypeVariant *clone() const;
@@ -1439,19 +1591,34 @@ public:
   void swap(TypeVar &);
 };
 
-class AFieldType : public FieldType
+class AVariantFieldType : public VariantFieldType
+{
+public:
+  StellaIdent stellaident_;
+  OptionalTyping *optionaltyping_;
+
+  AVariantFieldType(const AVariantFieldType &);
+  AVariantFieldType &operator=(const AVariantFieldType &);
+  AVariantFieldType(StellaIdent p1, OptionalTyping *p2);
+  ~AVariantFieldType();
+  virtual void accept(Visitor *v);
+  virtual AVariantFieldType *clone() const;
+  void swap(AVariantFieldType &);
+};
+
+class ARecordFieldType : public RecordFieldType
 {
 public:
   StellaIdent stellaident_;
   Type *type_;
 
-  AFieldType(const AFieldType &);
-  AFieldType &operator=(const AFieldType &);
-  AFieldType(StellaIdent p1, Type *p2);
-  ~AFieldType();
+  ARecordFieldType(const ARecordFieldType &);
+  ARecordFieldType &operator=(const ARecordFieldType &);
+  ARecordFieldType(StellaIdent p1, Type *p2);
+  ~ARecordFieldType();
   virtual void accept(Visitor *v);
-  virtual AFieldType *clone() const;
-  void swap(AFieldType &);
+  virtual ARecordFieldType *clone() const;
+  void swap(ARecordFieldType &);
 };
 
 class ATyping : public Typing
@@ -1470,6 +1637,15 @@ public:
 };
 
 
+
+class ListStellaIdent : public Visitable, public std::vector<StellaIdent>
+{
+public:
+  virtual void accept(Visitor *v);
+  virtual ListStellaIdent *clone() const;
+};
+
+ListStellaIdent* consListStellaIdent(StellaIdent x, ListStellaIdent* xs);
 
 class ListExtensionName : public Visitable, public std::vector<ExtensionName>
 {
@@ -1579,14 +1755,23 @@ public:
 
 ListType* consListType(Type* x, ListType* xs);
 
-class ListFieldType : public Visitable, public std::vector<FieldType*>
+class ListVariantFieldType : public Visitable, public std::vector<VariantFieldType*>
 {
 public:
   virtual void accept(Visitor *v);
-  virtual ListFieldType *clone() const;
+  virtual ListVariantFieldType *clone() const;
 };
 
-ListFieldType* consListFieldType(FieldType* x, ListFieldType* xs);
+ListVariantFieldType* consListVariantFieldType(VariantFieldType* x, ListVariantFieldType* xs);
+
+class ListRecordFieldType : public Visitable, public std::vector<RecordFieldType*>
+{
+public:
+  virtual void accept(Visitor *v);
+  virtual ListRecordFieldType *clone() const;
+};
+
+ListRecordFieldType* consListRecordFieldType(RecordFieldType* x, ListRecordFieldType* xs);
 
 
 

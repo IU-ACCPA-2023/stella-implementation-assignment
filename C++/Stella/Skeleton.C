@@ -22,11 +22,15 @@ void Skeleton::visitReturnType(ReturnType *t) {} //abstract class
 void Skeleton::visitThrowType(ThrowType *t) {} //abstract class
 void Skeleton::visitExpr(Expr *t) {} //abstract class
 void Skeleton::visitMatchCase(MatchCase *t) {} //abstract class
+void Skeleton::visitOptionalTyping(OptionalTyping *t) {} //abstract class
+void Skeleton::visitPatternData(PatternData *t) {} //abstract class
+void Skeleton::visitExprData(ExprData *t) {} //abstract class
 void Skeleton::visitPattern(Pattern *t) {} //abstract class
 void Skeleton::visitLabelledPattern(LabelledPattern *t) {} //abstract class
 void Skeleton::visitBinding(Binding *t) {} //abstract class
 void Skeleton::visitType(Type *t) {} //abstract class
-void Skeleton::visitFieldType(FieldType *t) {} //abstract class
+void Skeleton::visitVariantFieldType(VariantFieldType *t) {} //abstract class
+void Skeleton::visitRecordFieldType(RecordFieldType *t) {} //abstract class
 void Skeleton::visitTyping(Typing *t) {} //abstract class
 
 void Skeleton::visitAProgram(AProgram *a_program)
@@ -244,7 +248,7 @@ void Skeleton::visitVariant(Variant *variant)
   /* Code For Variant Goes Here */
 
   visitStellaIdent(variant->stellaident_);
-  if (variant->expr_) variant->expr_->accept(this);
+  if (variant->exprdata_) variant->exprdata_->accept(this);
 
 }
 
@@ -468,12 +472,57 @@ void Skeleton::visitAMatchCase(AMatchCase *a_match_case)
 
 }
 
+void Skeleton::visitNoTyping(NoTyping *no_typing)
+{
+  /* Code For NoTyping Goes Here */
+
+
+}
+
+void Skeleton::visitSomeTyping(SomeTyping *some_typing)
+{
+  /* Code For SomeTyping Goes Here */
+
+  if (some_typing->type_) some_typing->type_->accept(this);
+
+}
+
+void Skeleton::visitNoPatternData(NoPatternData *no_pattern_data)
+{
+  /* Code For NoPatternData Goes Here */
+
+
+}
+
+void Skeleton::visitSomePatternData(SomePatternData *some_pattern_data)
+{
+  /* Code For SomePatternData Goes Here */
+
+  if (some_pattern_data->pattern_) some_pattern_data->pattern_->accept(this);
+
+}
+
+void Skeleton::visitNoExprData(NoExprData *no_expr_data)
+{
+  /* Code For NoExprData Goes Here */
+
+
+}
+
+void Skeleton::visitSomeExprData(SomeExprData *some_expr_data)
+{
+  /* Code For SomeExprData Goes Here */
+
+  if (some_expr_data->expr_) some_expr_data->expr_->accept(this);
+
+}
+
 void Skeleton::visitPatternVariant(PatternVariant *pattern_variant)
 {
   /* Code For PatternVariant Goes Here */
 
   visitStellaIdent(pattern_variant->stellaident_);
-  if (pattern_variant->pattern_) pattern_variant->pattern_->accept(this);
+  if (pattern_variant->patterndata_) pattern_variant->patterndata_->accept(this);
 
 }
 
@@ -584,6 +633,15 @@ void Skeleton::visitTypeRec(TypeRec *type_rec)
 
 }
 
+void Skeleton::visitTypeSum(TypeSum *type_sum)
+{
+  /* Code For TypeSum Goes Here */
+
+  if (type_sum->type_1) type_sum->type_1->accept(this);
+  if (type_sum->type_2) type_sum->type_2->accept(this);
+
+}
+
 void Skeleton::visitTypeTuple(TypeTuple *type_tuple)
 {
   /* Code For TypeTuple Goes Here */
@@ -596,7 +654,7 @@ void Skeleton::visitTypeRecord(TypeRecord *type_record)
 {
   /* Code For TypeRecord Goes Here */
 
-  if (type_record->listfieldtype_) type_record->listfieldtype_->accept(this);
+  if (type_record->listrecordfieldtype_) type_record->listrecordfieldtype_->accept(this);
 
 }
 
@@ -604,7 +662,7 @@ void Skeleton::visitTypeVariant(TypeVariant *type_variant)
 {
   /* Code For TypeVariant Goes Here */
 
-  if (type_variant->listfieldtype_) type_variant->listfieldtype_->accept(this);
+  if (type_variant->listvariantfieldtype_) type_variant->listvariantfieldtype_->accept(this);
 
 }
 
@@ -645,12 +703,21 @@ void Skeleton::visitTypeVar(TypeVar *type_var)
 
 }
 
-void Skeleton::visitAFieldType(AFieldType *a_field_type)
+void Skeleton::visitAVariantFieldType(AVariantFieldType *a_variant_field_type)
 {
-  /* Code For AFieldType Goes Here */
+  /* Code For AVariantFieldType Goes Here */
 
-  visitStellaIdent(a_field_type->stellaident_);
-  if (a_field_type->type_) a_field_type->type_->accept(this);
+  visitStellaIdent(a_variant_field_type->stellaident_);
+  if (a_variant_field_type->optionaltyping_) a_variant_field_type->optionaltyping_->accept(this);
+
+}
+
+void Skeleton::visitARecordFieldType(ARecordFieldType *a_record_field_type)
+{
+  /* Code For ARecordFieldType Goes Here */
+
+  visitStellaIdent(a_record_field_type->stellaident_);
+  if (a_record_field_type->type_) a_record_field_type->type_->accept(this);
 
 }
 
@@ -663,6 +730,14 @@ void Skeleton::visitATyping(ATyping *a_typing)
 
 }
 
+
+void Skeleton::visitListStellaIdent(ListStellaIdent *list_stella_ident)
+{
+  for (ListStellaIdent::iterator i = list_stella_ident->begin() ; i != list_stella_ident->end() ; ++i)
+  {
+    visitStellaIdent(*i) ;
+  }
+}
 
 void Skeleton::visitListExtensionName(ListExtensionName *list_extension_name)
 {
@@ -760,9 +835,17 @@ void Skeleton::visitListType(ListType *list_type)
   }
 }
 
-void Skeleton::visitListFieldType(ListFieldType *list_field_type)
+void Skeleton::visitListVariantFieldType(ListVariantFieldType *list_variant_field_type)
 {
-  for (ListFieldType::iterator i = list_field_type->begin() ; i != list_field_type->end() ; ++i)
+  for (ListVariantFieldType::iterator i = list_variant_field_type->begin() ; i != list_variant_field_type->end() ; ++i)
+  {
+    (*i)->accept(this);
+  }
+}
+
+void Skeleton::visitListRecordFieldType(ListRecordFieldType *list_record_field_type)
+{
+  for (ListRecordFieldType::iterator i = list_record_field_type->begin() ; i != list_record_field_type->end() ; ++i)
   {
     (*i)->accept(this);
   }

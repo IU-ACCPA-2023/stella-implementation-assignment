@@ -1132,17 +1132,17 @@ Record *Record::clone() const
 
 
 /********************   Variant    ********************/
-Variant::Variant(StellaIdent p1, Expr *p2)
+Variant::Variant(StellaIdent p1, ExprData *p2)
 {
   stellaident_ = p1;
-  expr_ = p2;
+  exprdata_ = p2;
 
 }
 
 Variant::Variant(const Variant & other)
 {
   stellaident_ = other.stellaident_;
-  expr_ = other.expr_->clone();
+  exprdata_ = other.exprdata_->clone();
 
 }
 
@@ -1156,13 +1156,13 @@ Variant &Variant::operator=(const Variant & other)
 void Variant::swap(Variant & other)
 {
   std::swap(stellaident_, other.stellaident_);
-  std::swap(expr_, other.expr_);
+  std::swap(exprdata_, other.exprdata_);
 
 }
 
 Variant::~Variant()
 {
-  delete(expr_);
+  delete(exprdata_);
 
 }
 
@@ -2366,18 +2366,270 @@ AMatchCase *AMatchCase::clone() const
 
 
 
+/********************   NoTyping    ********************/
+NoTyping::NoTyping()
+{
+
+}
+
+NoTyping::NoTyping(const NoTyping & other)
+{
+
+}
+
+NoTyping &NoTyping::operator=(const NoTyping & other)
+{
+  NoTyping tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void NoTyping::swap(NoTyping & other)
+{
+
+}
+
+NoTyping::~NoTyping()
+{
+
+}
+
+void NoTyping::accept(Visitor *v)
+{
+  v->visitNoTyping(this);
+}
+
+NoTyping *NoTyping::clone() const
+{
+  return new NoTyping(*this);
+}
+
+
+
+/********************   SomeTyping    ********************/
+SomeTyping::SomeTyping(Type *p1)
+{
+  type_ = p1;
+
+}
+
+SomeTyping::SomeTyping(const SomeTyping & other)
+{
+  type_ = other.type_->clone();
+
+}
+
+SomeTyping &SomeTyping::operator=(const SomeTyping & other)
+{
+  SomeTyping tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SomeTyping::swap(SomeTyping & other)
+{
+  std::swap(type_, other.type_);
+
+}
+
+SomeTyping::~SomeTyping()
+{
+  delete(type_);
+
+}
+
+void SomeTyping::accept(Visitor *v)
+{
+  v->visitSomeTyping(this);
+}
+
+SomeTyping *SomeTyping::clone() const
+{
+  return new SomeTyping(*this);
+}
+
+
+
+/********************   NoPatternData    ********************/
+NoPatternData::NoPatternData()
+{
+
+}
+
+NoPatternData::NoPatternData(const NoPatternData & other)
+{
+
+}
+
+NoPatternData &NoPatternData::operator=(const NoPatternData & other)
+{
+  NoPatternData tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void NoPatternData::swap(NoPatternData & other)
+{
+
+}
+
+NoPatternData::~NoPatternData()
+{
+
+}
+
+void NoPatternData::accept(Visitor *v)
+{
+  v->visitNoPatternData(this);
+}
+
+NoPatternData *NoPatternData::clone() const
+{
+  return new NoPatternData(*this);
+}
+
+
+
+/********************   SomePatternData    ********************/
+SomePatternData::SomePatternData(Pattern *p1)
+{
+  pattern_ = p1;
+
+}
+
+SomePatternData::SomePatternData(const SomePatternData & other)
+{
+  pattern_ = other.pattern_->clone();
+
+}
+
+SomePatternData &SomePatternData::operator=(const SomePatternData & other)
+{
+  SomePatternData tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SomePatternData::swap(SomePatternData & other)
+{
+  std::swap(pattern_, other.pattern_);
+
+}
+
+SomePatternData::~SomePatternData()
+{
+  delete(pattern_);
+
+}
+
+void SomePatternData::accept(Visitor *v)
+{
+  v->visitSomePatternData(this);
+}
+
+SomePatternData *SomePatternData::clone() const
+{
+  return new SomePatternData(*this);
+}
+
+
+
+/********************   NoExprData    ********************/
+NoExprData::NoExprData()
+{
+
+}
+
+NoExprData::NoExprData(const NoExprData & other)
+{
+
+}
+
+NoExprData &NoExprData::operator=(const NoExprData & other)
+{
+  NoExprData tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void NoExprData::swap(NoExprData & other)
+{
+
+}
+
+NoExprData::~NoExprData()
+{
+
+}
+
+void NoExprData::accept(Visitor *v)
+{
+  v->visitNoExprData(this);
+}
+
+NoExprData *NoExprData::clone() const
+{
+  return new NoExprData(*this);
+}
+
+
+
+/********************   SomeExprData    ********************/
+SomeExprData::SomeExprData(Expr *p1)
+{
+  expr_ = p1;
+
+}
+
+SomeExprData::SomeExprData(const SomeExprData & other)
+{
+  expr_ = other.expr_->clone();
+
+}
+
+SomeExprData &SomeExprData::operator=(const SomeExprData & other)
+{
+  SomeExprData tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void SomeExprData::swap(SomeExprData & other)
+{
+  std::swap(expr_, other.expr_);
+
+}
+
+SomeExprData::~SomeExprData()
+{
+  delete(expr_);
+
+}
+
+void SomeExprData::accept(Visitor *v)
+{
+  v->visitSomeExprData(this);
+}
+
+SomeExprData *SomeExprData::clone() const
+{
+  return new SomeExprData(*this);
+}
+
+
+
 /********************   PatternVariant    ********************/
-PatternVariant::PatternVariant(StellaIdent p1, Pattern *p2)
+PatternVariant::PatternVariant(StellaIdent p1, PatternData *p2)
 {
   stellaident_ = p1;
-  pattern_ = p2;
+  patterndata_ = p2;
 
 }
 
 PatternVariant::PatternVariant(const PatternVariant & other)
 {
   stellaident_ = other.stellaident_;
-  pattern_ = other.pattern_->clone();
+  patterndata_ = other.patterndata_->clone();
 
 }
 
@@ -2391,13 +2643,13 @@ PatternVariant &PatternVariant::operator=(const PatternVariant & other)
 void PatternVariant::swap(PatternVariant & other)
 {
   std::swap(stellaident_, other.stellaident_);
-  std::swap(pattern_, other.pattern_);
+  std::swap(patterndata_, other.patterndata_);
 
 }
 
 PatternVariant::~PatternVariant()
 {
-  delete(pattern_);
+  delete(patterndata_);
 
 }
 
@@ -2992,6 +3244,54 @@ TypeRec *TypeRec::clone() const
 
 
 
+/********************   TypeSum    ********************/
+TypeSum::TypeSum(Type *p1, Type *p2)
+{
+  type_1 = p1;
+  type_2 = p2;
+
+}
+
+TypeSum::TypeSum(const TypeSum & other)
+{
+  type_1 = other.type_1->clone();
+  type_2 = other.type_2->clone();
+
+}
+
+TypeSum &TypeSum::operator=(const TypeSum & other)
+{
+  TypeSum tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void TypeSum::swap(TypeSum & other)
+{
+  std::swap(type_1, other.type_1);
+  std::swap(type_2, other.type_2);
+
+}
+
+TypeSum::~TypeSum()
+{
+  delete(type_1);
+  delete(type_2);
+
+}
+
+void TypeSum::accept(Visitor *v)
+{
+  v->visitTypeSum(this);
+}
+
+TypeSum *TypeSum::clone() const
+{
+  return new TypeSum(*this);
+}
+
+
+
 /********************   TypeTuple    ********************/
 TypeTuple::TypeTuple(ListType *p1)
 {
@@ -3037,15 +3337,15 @@ TypeTuple *TypeTuple::clone() const
 
 
 /********************   TypeRecord    ********************/
-TypeRecord::TypeRecord(ListFieldType *p1)
+TypeRecord::TypeRecord(ListRecordFieldType *p1)
 {
-  listfieldtype_ = p1;
+  listrecordfieldtype_ = p1;
 
 }
 
 TypeRecord::TypeRecord(const TypeRecord & other)
 {
-  listfieldtype_ = other.listfieldtype_->clone();
+  listrecordfieldtype_ = other.listrecordfieldtype_->clone();
 
 }
 
@@ -3058,13 +3358,13 @@ TypeRecord &TypeRecord::operator=(const TypeRecord & other)
 
 void TypeRecord::swap(TypeRecord & other)
 {
-  std::swap(listfieldtype_, other.listfieldtype_);
+  std::swap(listrecordfieldtype_, other.listrecordfieldtype_);
 
 }
 
 TypeRecord::~TypeRecord()
 {
-  delete(listfieldtype_);
+  delete(listrecordfieldtype_);
 
 }
 
@@ -3081,15 +3381,15 @@ TypeRecord *TypeRecord::clone() const
 
 
 /********************   TypeVariant    ********************/
-TypeVariant::TypeVariant(ListFieldType *p1)
+TypeVariant::TypeVariant(ListVariantFieldType *p1)
 {
-  listfieldtype_ = p1;
+  listvariantfieldtype_ = p1;
 
 }
 
 TypeVariant::TypeVariant(const TypeVariant & other)
 {
-  listfieldtype_ = other.listfieldtype_->clone();
+  listvariantfieldtype_ = other.listvariantfieldtype_->clone();
 
 }
 
@@ -3102,13 +3402,13 @@ TypeVariant &TypeVariant::operator=(const TypeVariant & other)
 
 void TypeVariant::swap(TypeVariant & other)
 {
-  std::swap(listfieldtype_, other.listfieldtype_);
+  std::swap(listvariantfieldtype_, other.listvariantfieldtype_);
 
 }
 
 TypeVariant::~TypeVariant()
 {
-  delete(listfieldtype_);
+  delete(listvariantfieldtype_);
 
 }
 
@@ -3331,49 +3631,96 @@ TypeVar *TypeVar::clone() const
 
 
 
-/********************   AFieldType    ********************/
-AFieldType::AFieldType(StellaIdent p1, Type *p2)
+/********************   AVariantFieldType    ********************/
+AVariantFieldType::AVariantFieldType(StellaIdent p1, OptionalTyping *p2)
+{
+  stellaident_ = p1;
+  optionaltyping_ = p2;
+
+}
+
+AVariantFieldType::AVariantFieldType(const AVariantFieldType & other)
+{
+  stellaident_ = other.stellaident_;
+  optionaltyping_ = other.optionaltyping_->clone();
+
+}
+
+AVariantFieldType &AVariantFieldType::operator=(const AVariantFieldType & other)
+{
+  AVariantFieldType tmp(other);
+  swap(tmp);
+  return *this;
+}
+
+void AVariantFieldType::swap(AVariantFieldType & other)
+{
+  std::swap(stellaident_, other.stellaident_);
+  std::swap(optionaltyping_, other.optionaltyping_);
+
+}
+
+AVariantFieldType::~AVariantFieldType()
+{
+  delete(optionaltyping_);
+
+}
+
+void AVariantFieldType::accept(Visitor *v)
+{
+  v->visitAVariantFieldType(this);
+}
+
+AVariantFieldType *AVariantFieldType::clone() const
+{
+  return new AVariantFieldType(*this);
+}
+
+
+
+/********************   ARecordFieldType    ********************/
+ARecordFieldType::ARecordFieldType(StellaIdent p1, Type *p2)
 {
   stellaident_ = p1;
   type_ = p2;
 
 }
 
-AFieldType::AFieldType(const AFieldType & other)
+ARecordFieldType::ARecordFieldType(const ARecordFieldType & other)
 {
   stellaident_ = other.stellaident_;
   type_ = other.type_->clone();
 
 }
 
-AFieldType &AFieldType::operator=(const AFieldType & other)
+ARecordFieldType &ARecordFieldType::operator=(const ARecordFieldType & other)
 {
-  AFieldType tmp(other);
+  ARecordFieldType tmp(other);
   swap(tmp);
   return *this;
 }
 
-void AFieldType::swap(AFieldType & other)
+void ARecordFieldType::swap(ARecordFieldType & other)
 {
   std::swap(stellaident_, other.stellaident_);
   std::swap(type_, other.type_);
 
 }
 
-AFieldType::~AFieldType()
+ARecordFieldType::~ARecordFieldType()
 {
   delete(type_);
 
 }
 
-void AFieldType::accept(Visitor *v)
+void ARecordFieldType::accept(Visitor *v)
 {
-  v->visitAFieldType(this);
+  v->visitARecordFieldType(this);
 }
 
-AFieldType *AFieldType::clone() const
+ARecordFieldType *ARecordFieldType::clone() const
 {
-  return new AFieldType(*this);
+  return new ARecordFieldType(*this);
 }
 
 
@@ -3425,6 +3772,24 @@ ATyping *ATyping::clone() const
 }
 
 
+
+
+/********************   ListStellaIdent    ********************/
+
+void ListStellaIdent::accept(Visitor *v)
+{
+  v->visitListStellaIdent(this);
+}
+
+ListStellaIdent *ListStellaIdent::clone() const
+{
+  return new ListStellaIdent(*this);
+}
+
+ListStellaIdent* consListStellaIdent(StellaIdent x, ListStellaIdent* xs) {
+  xs->insert(xs->begin(), x);
+  return xs;
+}
 
 
 /********************   ListExtensionName    ********************/
@@ -3643,19 +4008,37 @@ ListType* consListType(Type* x, ListType* xs) {
 }
 
 
-/********************   ListFieldType    ********************/
+/********************   ListVariantFieldType    ********************/
 
-void ListFieldType::accept(Visitor *v)
+void ListVariantFieldType::accept(Visitor *v)
 {
-  v->visitListFieldType(this);
+  v->visitListVariantFieldType(this);
 }
 
-ListFieldType *ListFieldType::clone() const
+ListVariantFieldType *ListVariantFieldType::clone() const
 {
-  return new ListFieldType(*this);
+  return new ListVariantFieldType(*this);
 }
 
-ListFieldType* consListFieldType(FieldType* x, ListFieldType* xs) {
+ListVariantFieldType* consListVariantFieldType(VariantFieldType* x, ListVariantFieldType* xs) {
+  xs->insert(xs->begin(), x);
+  return xs;
+}
+
+
+/********************   ListRecordFieldType    ********************/
+
+void ListRecordFieldType::accept(Visitor *v)
+{
+  v->visitListRecordFieldType(this);
+}
+
+ListRecordFieldType *ListRecordFieldType::clone() const
+{
+  return new ListRecordFieldType(*this);
+}
+
+ListRecordFieldType* consListRecordFieldType(RecordFieldType* x, ListRecordFieldType* xs) {
   xs->insert(xs->begin(), x);
   return xs;
 }

@@ -67,43 +67,43 @@ extern int Stelladebug;
     _SEMI = 268,                   /* _SEMI  */
     _LT = 269,                     /* _LT  */
     _LDARROW = 270,                /* _LDARROW  */
-    _EQ = 271,                     /* _EQ  */
-    _DEQ = 272,                    /* _DEQ  */
-    _RDARROW = 273,                /* _RDARROW  */
-    _GT = 274,                     /* _GT  */
-    _GTEQ = 275,                   /* _GTEQ  */
-    _KW_Bool = 276,                /* _KW_Bool  */
-    _SYMB_20 = 277,                /* _SYMB_20  */
-    _SYMB_21 = 278,                /* _SYMB_21  */
-    _SYMB_22 = 279,                /* _SYMB_22  */
-    _KW_Nat = 280,                 /* _KW_Nat  */
-    _SYMB_24 = 281,                /* _SYMB_24  */
-    _SYMB_23 = 282,                /* _SYMB_23  */
+    _SYMB_10 = 271,                /* _SYMB_10  */
+    _EQ = 272,                     /* _EQ  */
+    _DEQ = 273,                    /* _DEQ  */
+    _RDARROW = 274,                /* _RDARROW  */
+    _GT = 275,                     /* _GT  */
+    _GTEQ = 276,                   /* _GTEQ  */
+    _KW_Bool = 277,                /* _KW_Bool  */
+    _SYMB_22 = 278,                /* _SYMB_22  */
+    _SYMB_23 = 279,                /* _SYMB_23  */
+    _SYMB_24 = 280,                /* _SYMB_24  */
+    _KW_Nat = 281,                 /* _KW_Nat  */
+    _SYMB_26 = 282,                /* _SYMB_26  */
     _SYMB_25 = 283,                /* _SYMB_25  */
-    _KW_Unit = 284,                /* _KW_Unit  */
-    _LBRACK = 285,                 /* _LBRACK  */
-    _RBRACK = 286,                 /* _RBRACK  */
-    _KW_and = 287,                 /* _KW_and  */
-    _KW_as = 288,                  /* _KW_as  */
-    _KW_cons = 289,                /* _KW_cons  */
-    _KW_core = 290,                /* _KW_core  */
-    _KW_else = 291,                /* _KW_else  */
-    _KW_extend = 292,              /* _KW_extend  */
-    _KW_false = 293,               /* _KW_false  */
-    _KW_fix = 294,                 /* _KW_fix  */
-    _KW_fn = 295,                  /* _KW_fn  */
-    _KW_fold = 296,                /* _KW_fold  */
-    _KW_if = 297,                  /* _KW_if  */
-    _KW_in = 298,                  /* _KW_in  */
-    _KW_inline = 299,              /* _KW_inline  */
-    _KW_language = 300,            /* _KW_language  */
-    _KW_let = 301,                 /* _KW_let  */
-    _KW_match = 302,               /* _KW_match  */
-    _KW_not = 303,                 /* _KW_not  */
-    _KW_or = 304,                  /* _KW_or  */
-    _KW_record = 305,              /* _KW_record  */
-    _KW_return = 306,              /* _KW_return  */
-    _KW_struct = 307,              /* _KW_struct  */
+    _SYMB_27 = 284,                /* _SYMB_27  */
+    _KW_Unit = 285,                /* _KW_Unit  */
+    _LBRACK = 286,                 /* _LBRACK  */
+    _RBRACK = 287,                 /* _RBRACK  */
+    _KW_and = 288,                 /* _KW_and  */
+    _KW_as = 289,                  /* _KW_as  */
+    _KW_cons = 290,                /* _KW_cons  */
+    _KW_core = 291,                /* _KW_core  */
+    _KW_else = 292,                /* _KW_else  */
+    _KW_extend = 293,              /* _KW_extend  */
+    _KW_false = 294,               /* _KW_false  */
+    _KW_fix = 295,                 /* _KW_fix  */
+    _KW_fn = 296,                  /* _KW_fn  */
+    _KW_fold = 297,                /* _KW_fold  */
+    _KW_if = 298,                  /* _KW_if  */
+    _KW_in = 299,                  /* _KW_in  */
+    _KW_inline = 300,              /* _KW_inline  */
+    _KW_language = 301,            /* _KW_language  */
+    _KW_let = 302,                 /* _KW_let  */
+    _KW_match = 303,               /* _KW_match  */
+    _KW_not = 304,                 /* _KW_not  */
+    _KW_or = 305,                  /* _KW_or  */
+    _KW_record = 306,              /* _KW_record  */
+    _KW_return = 307,              /* _KW_return  */
     _KW_succ = 308,                /* _KW_succ  */
     _KW_then = 309,                /* _KW_then  */
     _KW_throws = 310,              /* _KW_throws  */
@@ -113,11 +113,12 @@ extern int Stelladebug;
     _KW_variant = 314,             /* _KW_variant  */
     _KW_with = 315,                /* _KW_with  */
     _LBRACE = 316,                 /* _LBRACE  */
-    _RBRACE = 317,                 /* _RBRACE  */
-    _KW_59 = 318,                  /* _KW_59  */
-    T_ExtensionName = 319,         /* T_ExtensionName  */
-    T_StellaIdent = 320,           /* T_StellaIdent  */
-    _INTEGER_ = 321                /* _INTEGER_  */
+    _SYMB_11 = 317,                /* _SYMB_11  */
+    _RBRACE = 318,                 /* _RBRACE  */
+    _KW_60 = 319,                  /* _KW_60  */
+    T_ExtensionName = 320,         /* T_ExtensionName  */
+    T_StellaIdent = 321,           /* T_StellaIdent  */
+    _INTEGER_ = 322                /* _INTEGER_  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -132,6 +133,7 @@ union YYSTYPE
   char   _char;
   double _double;
   char*  _string;
+  Stella::ListStellaIdent* liststellaident_;
   Stella::Program* program_;
   Stella::LanguageDecl* languagedecl_;
   Stella::Extension* extension_;
@@ -151,6 +153,9 @@ union YYSTYPE
   Stella::ListExpr* listexpr_;
   Stella::MatchCase* matchcase_;
   Stella::ListMatchCase* listmatchcase_;
+  Stella::OptionalTyping* optionaltyping_;
+  Stella::PatternData* patterndata_;
+  Stella::ExprData* exprdata_;
   Stella::Pattern* pattern_;
   Stella::ListPattern* listpattern_;
   Stella::LabelledPattern* labelledpattern_;
@@ -159,11 +164,13 @@ union YYSTYPE
   Stella::ListBinding* listbinding_;
   Stella::Type* type_;
   Stella::ListType* listtype_;
-  Stella::FieldType* fieldtype_;
-  Stella::ListFieldType* listfieldtype_;
+  Stella::VariantFieldType* variantfieldtype_;
+  Stella::ListVariantFieldType* listvariantfieldtype_;
+  Stella::RecordFieldType* recordfieldtype_;
+  Stella::ListRecordFieldType* listrecordfieldtype_;
   Stella::Typing* typing_;
 
-#line 167 "Bison.H"
+#line 174 "Bison.H"
 
 };
 typedef union YYSTYPE YYSTYPE;

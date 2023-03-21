@@ -3,9 +3,9 @@
 package stella.Absyn;
 
 public class TypeRecord  extends Type {
-  public final ListFieldType listfieldtype_;
+  public final ListRecordFieldType listrecordfieldtype_;
   public int line_num, col_num, offset;
-  public TypeRecord(ListFieldType p1) { listfieldtype_ = p1; }
+  public TypeRecord(ListRecordFieldType p1) { listrecordfieldtype_ = p1; }
 
   public <R,A> R accept(stella.Absyn.Type.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
@@ -13,13 +13,13 @@ public class TypeRecord  extends Type {
     if (this == o) return true;
     if (o instanceof stella.Absyn.TypeRecord) {
       stella.Absyn.TypeRecord x = (stella.Absyn.TypeRecord)o;
-      return this.listfieldtype_.equals(x.listfieldtype_);
+      return this.listrecordfieldtype_.equals(x.listrecordfieldtype_);
     }
     return false;
   }
 
   public int hashCode() {
-    return this.listfieldtype_.hashCode();
+    return this.listrecordfieldtype_.hashCode();
   }
 
 

@@ -93,7 +93,7 @@ and showExpr (e : AbsStella.expr) : showable = match e with
   |    AbsStella.Abstraction (paramdecls, expr) -> s2s "Abstraction" >> c2s ' ' >> c2s '(' >> showList showParamDecl paramdecls  >> s2s ", " >>  showExpr expr >> c2s ')'
   |    AbsStella.Tuple exprs -> s2s "Tuple" >> c2s ' ' >> c2s '(' >> showList showExpr exprs >> c2s ')'
   |    AbsStella.Record bindings -> s2s "Record" >> c2s ' ' >> c2s '(' >> showList showBinding bindings >> c2s ')'
-  |    AbsStella.Variant (stellaident, expr) -> s2s "Variant" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showExpr expr >> c2s ')'
+  |    AbsStella.Variant (stellaident, exprdata) -> s2s "Variant" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showExprData exprdata >> c2s ')'
   |    AbsStella.Match (expr, matchcases) -> s2s "Match" >> c2s ' ' >> c2s '(' >> showExpr expr  >> s2s ", " >>  showList showMatchCase matchcases >> c2s ')'
   |    AbsStella.List exprs -> s2s "List" >> c2s ' ' >> c2s '(' >> showList showExpr exprs >> c2s ')'
   |    AbsStella.Add (expr0, expr) -> s2s "Add" >> c2s ' ' >> c2s '(' >> showExpr expr0  >> s2s ", " >>  showExpr expr >> c2s ')'
@@ -125,8 +125,23 @@ and showMatchCase (e : AbsStella.matchCase) : showable = match e with
        AbsStella.AMatchCase (pattern, expr) -> s2s "AMatchCase" >> c2s ' ' >> c2s '(' >> showPattern pattern  >> s2s ", " >>  showExpr expr >> c2s ')'
 
 
+and showOptionalTyping (e : AbsStella.optionalTyping) : showable = match e with
+       AbsStella.NoTyping  -> s2s "NoTyping"
+  |    AbsStella.SomeTyping type' -> s2s "SomeTyping" >> c2s ' ' >> c2s '(' >> showTypeT type' >> c2s ')'
+
+
+and showPatternData (e : AbsStella.patternData) : showable = match e with
+       AbsStella.NoPatternData  -> s2s "NoPatternData"
+  |    AbsStella.SomePatternData pattern -> s2s "SomePatternData" >> c2s ' ' >> c2s '(' >> showPattern pattern >> c2s ')'
+
+
+and showExprData (e : AbsStella.exprData) : showable = match e with
+       AbsStella.NoExprData  -> s2s "NoExprData"
+  |    AbsStella.SomeExprData expr -> s2s "SomeExprData" >> c2s ' ' >> c2s '(' >> showExpr expr >> c2s ')'
+
+
 and showPattern (e : AbsStella.pattern) : showable = match e with
-       AbsStella.PatternVariant (stellaident, pattern) -> s2s "PatternVariant" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showPattern pattern >> c2s ')'
+       AbsStella.PatternVariant (stellaident, patterndata) -> s2s "PatternVariant" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showPatternData patterndata >> c2s ')'
   |    AbsStella.PatternTuple patterns -> s2s "PatternTuple" >> c2s ' ' >> c2s '(' >> showList showPattern patterns >> c2s ')'
   |    AbsStella.PatternRecord labelledpatterns -> s2s "PatternRecord" >> c2s ' ' >> c2s '(' >> showList showLabelledPattern labelledpatterns >> c2s ')'
   |    AbsStella.PatternList patterns -> s2s "PatternList" >> c2s ' ' >> c2s '(' >> showList showPattern patterns >> c2s ')'
@@ -149,9 +164,10 @@ and showBinding (e : AbsStella.binding) : showable = match e with
 and showTypeT (e : AbsStella.typeT) : showable = match e with
        AbsStella.TypeFun (types, type') -> s2s "TypeFun" >> c2s ' ' >> c2s '(' >> showList showTypeT types  >> s2s ", " >>  showTypeT type' >> c2s ')'
   |    AbsStella.TypeRec (stellaident, type') -> s2s "TypeRec" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showTypeT type' >> c2s ')'
+  |    AbsStella.TypeSum (type'0, type') -> s2s "TypeSum" >> c2s ' ' >> c2s '(' >> showTypeT type'0  >> s2s ", " >>  showTypeT type' >> c2s ')'
   |    AbsStella.TypeTuple types -> s2s "TypeTuple" >> c2s ' ' >> c2s '(' >> showList showTypeT types >> c2s ')'
-  |    AbsStella.TypeRecord fieldtypes -> s2s "TypeRecord" >> c2s ' ' >> c2s '(' >> showList showFieldType fieldtypes >> c2s ')'
-  |    AbsStella.TypeVariant fieldtypes -> s2s "TypeVariant" >> c2s ' ' >> c2s '(' >> showList showFieldType fieldtypes >> c2s ')'
+  |    AbsStella.TypeRecord recordfieldtypes -> s2s "TypeRecord" >> c2s ' ' >> c2s '(' >> showList showRecordFieldType recordfieldtypes >> c2s ')'
+  |    AbsStella.TypeVariant variantfieldtypes -> s2s "TypeVariant" >> c2s ' ' >> c2s '(' >> showList showVariantFieldType variantfieldtypes >> c2s ')'
   |    AbsStella.TypeList type' -> s2s "TypeList" >> c2s ' ' >> c2s '(' >> showTypeT type' >> c2s ')'
   |    AbsStella.TypeBool  -> s2s "TypeBool"
   |    AbsStella.TypeNat  -> s2s "TypeNat"
@@ -159,8 +175,12 @@ and showTypeT (e : AbsStella.typeT) : showable = match e with
   |    AbsStella.TypeVar stellaident -> s2s "TypeVar" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident >> c2s ')'
 
 
-and showFieldType (e : AbsStella.fieldType) : showable = match e with
-       AbsStella.AFieldType (stellaident, type') -> s2s "AFieldType" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showTypeT type' >> c2s ')'
+and showVariantFieldType (e : AbsStella.variantFieldType) : showable = match e with
+       AbsStella.AVariantFieldType (stellaident, optionaltyping) -> s2s "AVariantFieldType" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showOptionalTyping optionaltyping >> c2s ')'
+
+
+and showRecordFieldType (e : AbsStella.recordFieldType) : showable = match e with
+       AbsStella.ARecordFieldType (stellaident, type') -> s2s "ARecordFieldType" >> c2s ' ' >> c2s '(' >> showStellaIdent stellaident  >> s2s ", " >>  showTypeT type' >> c2s ')'
 
 
 and showTyping (e : AbsStella.typing) : showable = match e with
