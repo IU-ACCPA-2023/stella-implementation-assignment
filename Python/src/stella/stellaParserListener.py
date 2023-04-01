@@ -8,21 +8,21 @@ else:
 # This class defines a complete listener for a parse tree produced by stellaParser.
 class stellaParserListener(ParseTreeListener):
 
-    # Enter a parse tree produced by stellaParser#start_ListStellaIdent.
-    def enterStart_ListStellaIdent(self, ctx:stellaParser.Start_ListStellaIdentContext):
-        pass
-
-    # Exit a parse tree produced by stellaParser#start_ListStellaIdent.
-    def exitStart_ListStellaIdent(self, ctx:stellaParser.Start_ListStellaIdentContext):
-        pass
-
-
     # Enter a parse tree produced by stellaParser#start_Program.
     def enterStart_Program(self, ctx:stellaParser.Start_ProgramContext):
         pass
 
     # Exit a parse tree produced by stellaParser#start_Program.
     def exitStart_Program(self, ctx:stellaParser.Start_ProgramContext):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#start_ListStellaIdent.
+    def enterStart_ListStellaIdent(self, ctx:stellaParser.Start_ListStellaIdentContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_ListStellaIdent.
+    def exitStart_ListStellaIdent(self, ctx:stellaParser.Start_ListStellaIdentContext):
         pass
 
 
@@ -152,21 +152,21 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by stellaParser#start_Expr.
-    def enterStart_Expr(self, ctx:stellaParser.Start_ExprContext):
+    # Enter a parse tree produced by stellaParser#start_Type9.
+    def enterStart_Type9(self, ctx:stellaParser.Start_Type9Context):
         pass
 
-    # Exit a parse tree produced by stellaParser#start_Expr.
-    def exitStart_Expr(self, ctx:stellaParser.Start_ExprContext):
+    # Exit a parse tree produced by stellaParser#start_Type9.
+    def exitStart_Type9(self, ctx:stellaParser.Start_Type9Context):
         pass
 
 
-    # Enter a parse tree produced by stellaParser#start_ListExpr.
-    def enterStart_ListExpr(self, ctx:stellaParser.Start_ListExprContext):
+    # Enter a parse tree produced by stellaParser#start_ListType9.
+    def enterStart_ListType9(self, ctx:stellaParser.Start_ListType9Context):
         pass
 
-    # Exit a parse tree produced by stellaParser#start_ListExpr.
-    def exitStart_ListExpr(self, ctx:stellaParser.Start_ListExprContext):
+    # Exit a parse tree produced by stellaParser#start_ListType9.
+    def exitStart_ListType9(self, ctx:stellaParser.Start_ListType9Context):
         pass
 
 
@@ -269,6 +269,24 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by stellaParser#start_Expr.
+    def enterStart_Expr(self, ctx:stellaParser.Start_ExprContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_Expr.
+    def exitStart_Expr(self, ctx:stellaParser.Start_ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#start_ListExpr.
+    def enterStart_ListExpr(self, ctx:stellaParser.Start_ListExprContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_ListExpr.
+    def exitStart_ListExpr(self, ctx:stellaParser.Start_ListExprContext):
+        pass
+
+
     # Enter a parse tree produced by stellaParser#start_Expr1.
     def enterStart_Expr1(self, ctx:stellaParser.Start_Expr1Context):
         pass
@@ -278,12 +296,39 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by stellaParser#start_PatternBinding.
+    def enterStart_PatternBinding(self, ctx:stellaParser.Start_PatternBindingContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_PatternBinding.
+    def exitStart_PatternBinding(self, ctx:stellaParser.Start_PatternBindingContext):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#start_ListPatternBinding.
+    def enterStart_ListPatternBinding(self, ctx:stellaParser.Start_ListPatternBindingContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_ListPatternBinding.
+    def exitStart_ListPatternBinding(self, ctx:stellaParser.Start_ListPatternBindingContext):
+        pass
+
+
     # Enter a parse tree produced by stellaParser#start_Expr2.
     def enterStart_Expr2(self, ctx:stellaParser.Start_Expr2Context):
         pass
 
     # Exit a parse tree produced by stellaParser#start_Expr2.
     def exitStart_Expr2(self, ctx:stellaParser.Start_Expr2Context):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#start_ListExpr2.
+    def enterStart_ListExpr2(self, ctx:stellaParser.Start_ListExpr2Context):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_ListExpr2.
+    def exitStart_ListExpr2(self, ctx:stellaParser.Start_ListExpr2Context):
         pass
 
 
@@ -305,21 +350,21 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by stellaParser#start_Expr5.
-    def enterStart_Expr5(self, ctx:stellaParser.Start_Expr5Context):
-        pass
-
-    # Exit a parse tree produced by stellaParser#start_Expr5.
-    def exitStart_Expr5(self, ctx:stellaParser.Start_Expr5Context):
-        pass
-
-
     # Enter a parse tree produced by stellaParser#start_Expr6.
     def enterStart_Expr6(self, ctx:stellaParser.Start_Expr6Context):
         pass
 
     # Exit a parse tree produced by stellaParser#start_Expr6.
     def exitStart_Expr6(self, ctx:stellaParser.Start_Expr6Context):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#start_Expr7.
+    def enterStart_Expr7(self, ctx:stellaParser.Start_Expr7Context):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_Expr7.
+    def exitStart_Expr7(self, ctx:stellaParser.Start_Expr7Context):
         pass
 
 
@@ -368,6 +413,15 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by stellaParser#start_Expr5.
+    def enterStart_Expr5(self, ctx:stellaParser.Start_Expr5Context):
+        pass
+
+    # Exit a parse tree produced by stellaParser#start_Expr5.
+    def exitStart_Expr5(self, ctx:stellaParser.Start_Expr5Context):
+        pass
+
+
     # Enter a parse tree produced by stellaParser#start_VariantFieldType.
     def enterStart_VariantFieldType(self, ctx:stellaParser.Start_VariantFieldTypeContext):
         pass
@@ -413,21 +467,21 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by stellaParser#listStellaIdent.
-    def enterListStellaIdent(self, ctx:stellaParser.ListStellaIdentContext):
-        pass
-
-    # Exit a parse tree produced by stellaParser#listStellaIdent.
-    def exitListStellaIdent(self, ctx:stellaParser.ListStellaIdentContext):
-        pass
-
-
     # Enter a parse tree produced by stellaParser#program.
     def enterProgram(self, ctx:stellaParser.ProgramContext):
         pass
 
     # Exit a parse tree produced by stellaParser#program.
     def exitProgram(self, ctx:stellaParser.ProgramContext):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#listStellaIdent.
+    def enterListStellaIdent(self, ctx:stellaParser.ListStellaIdentContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#listStellaIdent.
+    def exitListStellaIdent(self, ctx:stellaParser.ListStellaIdentContext):
         pass
 
 
@@ -557,21 +611,21 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by stellaParser#expr.
-    def enterExpr(self, ctx:stellaParser.ExprContext):
+    # Enter a parse tree produced by stellaParser#type9.
+    def enterType9(self, ctx:stellaParser.Type9Context):
         pass
 
-    # Exit a parse tree produced by stellaParser#expr.
-    def exitExpr(self, ctx:stellaParser.ExprContext):
+    # Exit a parse tree produced by stellaParser#type9.
+    def exitType9(self, ctx:stellaParser.Type9Context):
         pass
 
 
-    # Enter a parse tree produced by stellaParser#listExpr.
-    def enterListExpr(self, ctx:stellaParser.ListExprContext):
+    # Enter a parse tree produced by stellaParser#listType9.
+    def enterListType9(self, ctx:stellaParser.ListType9Context):
         pass
 
-    # Exit a parse tree produced by stellaParser#listExpr.
-    def exitListExpr(self, ctx:stellaParser.ListExprContext):
+    # Exit a parse tree produced by stellaParser#listType9.
+    def exitListType9(self, ctx:stellaParser.ListType9Context):
         pass
 
 
@@ -674,6 +728,24 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by stellaParser#expr.
+    def enterExpr(self, ctx:stellaParser.ExprContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#expr.
+    def exitExpr(self, ctx:stellaParser.ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#listExpr.
+    def enterListExpr(self, ctx:stellaParser.ListExprContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#listExpr.
+    def exitListExpr(self, ctx:stellaParser.ListExprContext):
+        pass
+
+
     # Enter a parse tree produced by stellaParser#expr1.
     def enterExpr1(self, ctx:stellaParser.Expr1Context):
         pass
@@ -683,12 +755,39 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by stellaParser#patternBinding.
+    def enterPatternBinding(self, ctx:stellaParser.PatternBindingContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#patternBinding.
+    def exitPatternBinding(self, ctx:stellaParser.PatternBindingContext):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#listPatternBinding.
+    def enterListPatternBinding(self, ctx:stellaParser.ListPatternBindingContext):
+        pass
+
+    # Exit a parse tree produced by stellaParser#listPatternBinding.
+    def exitListPatternBinding(self, ctx:stellaParser.ListPatternBindingContext):
+        pass
+
+
     # Enter a parse tree produced by stellaParser#expr2.
     def enterExpr2(self, ctx:stellaParser.Expr2Context):
         pass
 
     # Exit a parse tree produced by stellaParser#expr2.
     def exitExpr2(self, ctx:stellaParser.Expr2Context):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#listExpr2.
+    def enterListExpr2(self, ctx:stellaParser.ListExpr2Context):
+        pass
+
+    # Exit a parse tree produced by stellaParser#listExpr2.
+    def exitListExpr2(self, ctx:stellaParser.ListExpr2Context):
         pass
 
 
@@ -710,21 +809,21 @@ class stellaParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by stellaParser#expr5.
-    def enterExpr5(self, ctx:stellaParser.Expr5Context):
-        pass
-
-    # Exit a parse tree produced by stellaParser#expr5.
-    def exitExpr5(self, ctx:stellaParser.Expr5Context):
-        pass
-
-
     # Enter a parse tree produced by stellaParser#expr6.
     def enterExpr6(self, ctx:stellaParser.Expr6Context):
         pass
 
     # Exit a parse tree produced by stellaParser#expr6.
     def exitExpr6(self, ctx:stellaParser.Expr6Context):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#expr7.
+    def enterExpr7(self, ctx:stellaParser.Expr7Context):
+        pass
+
+    # Exit a parse tree produced by stellaParser#expr7.
+    def exitExpr7(self, ctx:stellaParser.Expr7Context):
         pass
 
 
@@ -770,6 +869,15 @@ class stellaParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by stellaParser#listType.
     def exitListType(self, ctx:stellaParser.ListTypeContext):
+        pass
+
+
+    # Enter a parse tree produced by stellaParser#expr5.
+    def enterExpr5(self, ctx:stellaParser.Expr5Context):
+        pass
+
+    # Exit a parse tree produced by stellaParser#expr5.
+    def exitExpr5(self, ctx:stellaParser.Expr5Context):
         pass
 
 

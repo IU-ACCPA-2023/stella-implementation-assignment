@@ -2,11 +2,11 @@
 
 open Lexing
 
-let parse (c : in_channel) : AbsStella.stellaIdent list =
+let parse (c : in_channel) : AbsStella.program =
     let lexbuf = Lexing.from_channel c
     in
     try
-      ParStella.pStellaIdent_list LexStella.token lexbuf
+      ParStella.pProgram LexStella.token lexbuf
     with
       Parsing.Parse_error ->
         let start_pos = Lexing.lexeme_start_p lexbuf
@@ -14,11 +14,11 @@ let parse (c : in_channel) : AbsStella.stellaIdent list =
         in  raise (BNFC_Util.Parse_error (start_pos, end_pos))
 ;;
 
-let showTree (t : AbsStella.stellaIdent list) : string =
+let showTree (t : AbsStella.program) : string =
     "[Abstract syntax]\n\n"^
-    (fun x -> ShowStella.show (ShowStella.showList ShowStella.showStellaIdent x)) t^
-    "\n\n"^ "[Linearized tree]\n\n"^
-    PrintStella.printTree PrintStella.prtStellaIdentListBNFC t^ "\n"
+    (fun x -> ShowStella.show (ShowStella.showProgram x)) t^ "\n\n"^
+    "[Linearized tree]\n\n"^
+    PrintStella.printTree PrintStella.prtProgram t^ "\n"
 ;;
 
 let main () =

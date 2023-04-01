@@ -5,21 +5,21 @@ import antlr4 from 'antlr4';
 // This class defines a complete listener for a parse tree produced by stellaParser.
 export default class stellaParserListener extends antlr4.tree.ParseTreeListener {
 
-	// Enter a parse tree produced by stellaParser#start_ListStellaIdent.
-	enterStart_ListStellaIdent(ctx) {
-	}
-
-	// Exit a parse tree produced by stellaParser#start_ListStellaIdent.
-	exitStart_ListStellaIdent(ctx) {
-	}
-
-
 	// Enter a parse tree produced by stellaParser#start_Program.
 	enterStart_Program(ctx) {
 	}
 
 	// Exit a parse tree produced by stellaParser#start_Program.
 	exitStart_Program(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#start_ListStellaIdent.
+	enterStart_ListStellaIdent(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_ListStellaIdent.
+	exitStart_ListStellaIdent(ctx) {
 	}
 
 
@@ -149,21 +149,21 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by stellaParser#start_Expr.
-	enterStart_Expr(ctx) {
+	// Enter a parse tree produced by stellaParser#start_Type9.
+	enterStart_Type9(ctx) {
 	}
 
-	// Exit a parse tree produced by stellaParser#start_Expr.
-	exitStart_Expr(ctx) {
+	// Exit a parse tree produced by stellaParser#start_Type9.
+	exitStart_Type9(ctx) {
 	}
 
 
-	// Enter a parse tree produced by stellaParser#start_ListExpr.
-	enterStart_ListExpr(ctx) {
+	// Enter a parse tree produced by stellaParser#start_ListType9.
+	enterStart_ListType9(ctx) {
 	}
 
-	// Exit a parse tree produced by stellaParser#start_ListExpr.
-	exitStart_ListExpr(ctx) {
+	// Exit a parse tree produced by stellaParser#start_ListType9.
+	exitStart_ListType9(ctx) {
 	}
 
 
@@ -266,6 +266,24 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
+	// Enter a parse tree produced by stellaParser#start_Expr.
+	enterStart_Expr(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_Expr.
+	exitStart_Expr(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#start_ListExpr.
+	enterStart_ListExpr(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_ListExpr.
+	exitStart_ListExpr(ctx) {
+	}
+
+
 	// Enter a parse tree produced by stellaParser#start_Expr1.
 	enterStart_Expr1(ctx) {
 	}
@@ -275,12 +293,39 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
+	// Enter a parse tree produced by stellaParser#start_PatternBinding.
+	enterStart_PatternBinding(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_PatternBinding.
+	exitStart_PatternBinding(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#start_ListPatternBinding.
+	enterStart_ListPatternBinding(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_ListPatternBinding.
+	exitStart_ListPatternBinding(ctx) {
+	}
+
+
 	// Enter a parse tree produced by stellaParser#start_Expr2.
 	enterStart_Expr2(ctx) {
 	}
 
 	// Exit a parse tree produced by stellaParser#start_Expr2.
 	exitStart_Expr2(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#start_ListExpr2.
+	enterStart_ListExpr2(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_ListExpr2.
+	exitStart_ListExpr2(ctx) {
 	}
 
 
@@ -302,21 +347,21 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by stellaParser#start_Expr5.
-	enterStart_Expr5(ctx) {
-	}
-
-	// Exit a parse tree produced by stellaParser#start_Expr5.
-	exitStart_Expr5(ctx) {
-	}
-
-
 	// Enter a parse tree produced by stellaParser#start_Expr6.
 	enterStart_Expr6(ctx) {
 	}
 
 	// Exit a parse tree produced by stellaParser#start_Expr6.
 	exitStart_Expr6(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#start_Expr7.
+	enterStart_Expr7(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_Expr7.
+	exitStart_Expr7(ctx) {
 	}
 
 
@@ -365,6 +410,15 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
+	// Enter a parse tree produced by stellaParser#start_Expr5.
+	enterStart_Expr5(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#start_Expr5.
+	exitStart_Expr5(ctx) {
+	}
+
+
 	// Enter a parse tree produced by stellaParser#start_VariantFieldType.
 	enterStart_VariantFieldType(ctx) {
 	}
@@ -410,21 +464,21 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by stellaParser#listStellaIdent.
-	enterListStellaIdent(ctx) {
-	}
-
-	// Exit a parse tree produced by stellaParser#listStellaIdent.
-	exitListStellaIdent(ctx) {
-	}
-
-
 	// Enter a parse tree produced by stellaParser#program.
 	enterProgram(ctx) {
 	}
 
 	// Exit a parse tree produced by stellaParser#program.
 	exitProgram(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#listStellaIdent.
+	enterListStellaIdent(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#listStellaIdent.
+	exitListStellaIdent(ctx) {
 	}
 
 
@@ -554,21 +608,21 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by stellaParser#expr.
-	enterExpr(ctx) {
+	// Enter a parse tree produced by stellaParser#type9.
+	enterType9(ctx) {
 	}
 
-	// Exit a parse tree produced by stellaParser#expr.
-	exitExpr(ctx) {
+	// Exit a parse tree produced by stellaParser#type9.
+	exitType9(ctx) {
 	}
 
 
-	// Enter a parse tree produced by stellaParser#listExpr.
-	enterListExpr(ctx) {
+	// Enter a parse tree produced by stellaParser#listType9.
+	enterListType9(ctx) {
 	}
 
-	// Exit a parse tree produced by stellaParser#listExpr.
-	exitListExpr(ctx) {
+	// Exit a parse tree produced by stellaParser#listType9.
+	exitListType9(ctx) {
 	}
 
 
@@ -671,6 +725,24 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
+	// Enter a parse tree produced by stellaParser#expr.
+	enterExpr(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#expr.
+	exitExpr(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#listExpr.
+	enterListExpr(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#listExpr.
+	exitListExpr(ctx) {
+	}
+
+
 	// Enter a parse tree produced by stellaParser#expr1.
 	enterExpr1(ctx) {
 	}
@@ -680,12 +752,39 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
+	// Enter a parse tree produced by stellaParser#patternBinding.
+	enterPatternBinding(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#patternBinding.
+	exitPatternBinding(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#listPatternBinding.
+	enterListPatternBinding(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#listPatternBinding.
+	exitListPatternBinding(ctx) {
+	}
+
+
 	// Enter a parse tree produced by stellaParser#expr2.
 	enterExpr2(ctx) {
 	}
 
 	// Exit a parse tree produced by stellaParser#expr2.
 	exitExpr2(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#listExpr2.
+	enterListExpr2(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#listExpr2.
+	exitListExpr2(ctx) {
 	}
 
 
@@ -707,21 +806,21 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by stellaParser#expr5.
-	enterExpr5(ctx) {
-	}
-
-	// Exit a parse tree produced by stellaParser#expr5.
-	exitExpr5(ctx) {
-	}
-
-
 	// Enter a parse tree produced by stellaParser#expr6.
 	enterExpr6(ctx) {
 	}
 
 	// Exit a parse tree produced by stellaParser#expr6.
 	exitExpr6(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#expr7.
+	enterExpr7(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#expr7.
+	exitExpr7(ctx) {
 	}
 
 
@@ -767,6 +866,15 @@ export default class stellaParserListener extends antlr4.tree.ParseTreeListener 
 
 	// Exit a parse tree produced by stellaParser#listType.
 	exitListType(ctx) {
+	}
+
+
+	// Enter a parse tree produced by stellaParser#expr5.
+	enterExpr5(ctx) {
+	}
+
+	// Exit a parse tree produced by stellaParser#expr5.
+	exitExpr5(ctx) {
 	}
 
 

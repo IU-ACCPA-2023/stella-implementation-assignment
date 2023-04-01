@@ -8,11 +8,11 @@ options {
 }
 
 
-start_ListStellaIdent returns [ stella.Absyn.ListStellaIdent result ]
-  : x=listStellaIdent EOF
-  ;
 start_Program returns [ stella.Absyn.Program result ]
   : x=program EOF
+  ;
+start_ListStellaIdent returns [ stella.Absyn.ListStellaIdent result ]
+  : x=listStellaIdent EOF
   ;
 start_LanguageDecl returns [ stella.Absyn.LanguageDecl result ]
   : x=languageDecl EOF
@@ -56,11 +56,11 @@ start_ReturnType returns [ stella.Absyn.ReturnType result ]
 start_ThrowType returns [ stella.Absyn.ThrowType result ]
   : x=throwType EOF
   ;
-start_Expr returns [ stella.Absyn.Expr result ]
-  : x=expr EOF
+start_Type9 returns [ stella.Absyn.Type result ]
+  : x=type9 EOF
   ;
-start_ListExpr returns [ stella.Absyn.ListExpr result ]
-  : x=listExpr EOF
+start_ListType9 returns [ stella.Absyn.ListType result ]
+  : x=listType9 EOF
   ;
 start_MatchCase returns [ stella.Absyn.MatchCase result ]
   : x=matchCase EOF
@@ -95,11 +95,26 @@ start_Binding returns [ stella.Absyn.Binding result ]
 start_ListBinding returns [ stella.Absyn.ListBinding result ]
   : x=listBinding EOF
   ;
+start_Expr returns [ stella.Absyn.Expr result ]
+  : x=expr EOF
+  ;
+start_ListExpr returns [ stella.Absyn.ListExpr result ]
+  : x=listExpr EOF
+  ;
 start_Expr1 returns [ stella.Absyn.Expr result ]
   : x=expr1 EOF
   ;
+start_PatternBinding returns [ stella.Absyn.PatternBinding result ]
+  : x=patternBinding EOF
+  ;
+start_ListPatternBinding returns [ stella.Absyn.ListPatternBinding result ]
+  : x=listPatternBinding EOF
+  ;
 start_Expr2 returns [ stella.Absyn.Expr result ]
   : x=expr2 EOF
+  ;
+start_ListExpr2 returns [ stella.Absyn.ListExpr result ]
+  : x=listExpr2 EOF
   ;
 start_Expr3 returns [ stella.Absyn.Expr result ]
   : x=expr3 EOF
@@ -107,11 +122,11 @@ start_Expr3 returns [ stella.Absyn.Expr result ]
 start_Expr4 returns [ stella.Absyn.Expr result ]
   : x=expr4 EOF
   ;
-start_Expr5 returns [ stella.Absyn.Expr result ]
-  : x=expr5 EOF
-  ;
 start_Expr6 returns [ stella.Absyn.Expr result ]
   : x=expr6 EOF
+  ;
+start_Expr7 returns [ stella.Absyn.Expr result ]
+  : x=expr7 EOF
   ;
 start_Type returns [ stella.Absyn.Type result ]
   : x=type EOF
@@ -127,6 +142,9 @@ start_Type3 returns [ stella.Absyn.Type result ]
   ;
 start_ListType returns [ stella.Absyn.ListType result ]
   : x=listType EOF
+  ;
+start_Expr5 returns [ stella.Absyn.Expr result ]
+  : x=expr5 EOF
   ;
 start_VariantFieldType returns [ stella.Absyn.VariantFieldType result ]
   : x=variantFieldType EOF
@@ -144,19 +162,19 @@ start_Typing returns [ stella.Absyn.Typing result ]
   : x=typing EOF
   ;
 
+program returns [ stella.Absyn.Program result ]
+  : p_1_1=languageDecl p_1_2=listExtension p_1_3=listDecl
+  ;
 listStellaIdent returns [ stella.Absyn.ListStellaIdent result ]
   :  /* empty */
   | p_2_1=StellaIdent
   | p_3_1=StellaIdent Surrogate_id_SYMB_0 p_3_3=listStellaIdent
   ;
-program returns [ stella.Absyn.Program result ]
-  : p_1_1=languageDecl p_1_2=listExtension p_1_3=listDecl
-  ;
 languageDecl returns [ stella.Absyn.LanguageDecl result ]
-  : Surrogate_id_SYMB_45 Surrogate_id_SYMB_35 Surrogate_id_SYMB_1
+  : Surrogate_id_SYMB_50 Surrogate_id_SYMB_38 Surrogate_id_SYMB_1
   ;
 extension returns [ stella.Absyn.Extension result ]
-  : Surrogate_id_SYMB_37 Surrogate_id_SYMB_59 p_1_3=listExtensionName
+  : Surrogate_id_SYMB_40 Surrogate_id_SYMB_64 p_1_3=listExtensionName
   ;
 listExtensionName returns [ stella.Absyn.ListExtensionName result ]
   :  /* empty */
@@ -168,8 +186,8 @@ listExtension returns [ stella.Absyn.ListExtension result ]
   | p_2_1=listExtension p_2_2=extension Surrogate_id_SYMB_1
   ;
 decl returns [ stella.Absyn.Decl result ]
-  : p_1_1=listAnnotation Surrogate_id_SYMB_40 p_1_3=StellaIdent Surrogate_id_SYMB_2 p_1_5=listParamDecl Surrogate_id_SYMB_3 p_1_7=returnType p_1_8=throwType Surrogate_id_SYMB_4 p_1_10=listDecl Surrogate_id_SYMB_51 p_1_12=expr Surrogate_id_SYMB_1 Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_56 p_2_2=StellaIdent Surrogate_id_SYMB_6 p_2_4=type
+  : p_1_1=listAnnotation Surrogate_id_SYMB_43 p_1_3=StellaIdent Surrogate_id_SYMB_2 p_1_5=listParamDecl Surrogate_id_SYMB_3 p_1_7=returnType p_1_8=throwType Surrogate_id_SYMB_4 p_1_10=listDecl Surrogate_id_SYMB_56 p_1_12=expr Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_61 p_2_2=StellaIdent Surrogate_id_SYMB_6 p_2_4=type
   ;
 listDecl returns [ stella.Absyn.ListDecl result ]
   :  /* empty */
@@ -183,7 +201,7 @@ listLocalDecl returns [ stella.Absyn.ListLocalDecl result ]
   | p_2_1=listLocalDecl p_2_2=localDecl Surrogate_id_SYMB_1
   ;
 annotation returns [ stella.Absyn.Annotation result ]
-  : Surrogate_id_SYMB_44
+  : Surrogate_id_SYMB_48
   ;
 listAnnotation returns [ stella.Absyn.ListAnnotation result ]
   :  /* empty */
@@ -203,17 +221,14 @@ returnType returns [ stella.Absyn.ReturnType result ]
   ;
 throwType returns [ stella.Absyn.ThrowType result ]
   :  /* empty */
-  | Surrogate_id_SYMB_54 p_2_2=listType
+  | Surrogate_id_SYMB_59 p_2_2=listType9
   ;
-expr returns [ stella.Absyn.Expr result ]
-  : Surrogate_id_SYMB_42 p_1_2=expr Surrogate_id_SYMB_53 p_1_4=expr Surrogate_id_SYMB_36 p_1_6=expr
-  | Surrogate_id_SYMB_46 p_2_2=StellaIdent Surrogate_id_SYMB_6 p_2_4=expr Surrogate_id_SYMB_43 p_2_6=expr
-  | p_3_1=expr1
+type9 returns [ stella.Absyn.Type result ]
+  : p_1_1=type
   ;
-listExpr returns [ stella.Absyn.ListExpr result ]
-  :  /* empty */
-  | p_2_1=expr
-  | p_3_1=expr Surrogate_id_SYMB_0 p_3_3=listExpr
+listType9 returns [ stella.Absyn.ListType result ]
+  : p_1_1=type9
+  | p_2_1=type9 Surrogate_id_SYMB_0 p_2_3=listType9
   ;
 matchCase returns [ stella.Absyn.MatchCase result ]
   : p_1_1=pattern Surrogate_id_SYMB_9 p_1_3=expr
@@ -221,7 +236,7 @@ matchCase returns [ stella.Absyn.MatchCase result ]
 listMatchCase returns [ stella.Absyn.ListMatchCase result ]
   :  /* empty */
   | p_2_1=matchCase
-  | p_3_1=matchCase Surrogate_id_SYMB_1 p_3_3=listMatchCase
+  | p_3_1=matchCase Surrogate_id_SYMB_10 p_3_3=listMatchCase
   ;
 optionalTyping returns [ stella.Absyn.OptionalTyping result ]
   :  /* empty */
@@ -236,17 +251,20 @@ exprData returns [ stella.Absyn.ExprData result ]
   | Surrogate_id_SYMB_6 p_2_2=expr
   ;
 pattern returns [ stella.Absyn.Pattern result ]
-  : Surrogate_id_SYMB_10 p_1_2=StellaIdent p_1_3=patternData Surrogate_id_SYMB_11
-  | Surrogate_id_SYMB_4 p_2_2=listPattern Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_50 Surrogate_id_SYMB_4 p_3_3=listLabelledPattern Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_12 p_4_2=listPattern Surrogate_id_SYMB_13
-  | Surrogate_id_SYMB_34 Surrogate_id_SYMB_2 p_5_3=pattern Surrogate_id_SYMB_0 p_5_5=pattern Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_38
-  | Surrogate_id_SYMB_55
-  | p_8_1=INTEGER
-  | Surrogate_id_SYMB_52 Surrogate_id_SYMB_2 p_9_3=pattern Surrogate_id_SYMB_3
-  | p_10_1=StellaIdent
-  | Surrogate_id_SYMB_2 p_11_2=pattern Surrogate_id_SYMB_3
+  : Surrogate_id_SYMB_11 p_1_2=StellaIdent p_1_3=patternData Surrogate_id_SYMB_12
+  | Surrogate_id_SYMB_47 Surrogate_id_SYMB_2 p_2_3=pattern Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_49 Surrogate_id_SYMB_2 p_3_3=pattern Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_4 p_4_2=listPattern Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_4 p_5_2=listLabelledPattern Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_13 p_6_2=listPattern Surrogate_id_SYMB_14
+  | Surrogate_id_SYMB_2 p_7_2=pattern Surrogate_id_SYMB_0 p_7_4=pattern Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_41
+  | Surrogate_id_SYMB_60
+  | Surrogate_id_SYMB_63
+  | p_11_1=INTEGER
+  | Surrogate_id_SYMB_57 Surrogate_id_SYMB_2 p_12_3=pattern Surrogate_id_SYMB_3
+  | p_13_1=StellaIdent
+  | Surrogate_id_SYMB_2 p_14_2=pattern Surrogate_id_SYMB_3
   ;
 listPattern returns [ stella.Absyn.ListPattern result ]
   :  /* empty */
@@ -257,92 +275,119 @@ labelledPattern returns [ stella.Absyn.LabelledPattern result ]
   : p_1_1=StellaIdent Surrogate_id_SYMB_6 p_1_3=pattern
   ;
 listLabelledPattern returns [ stella.Absyn.ListLabelledPattern result ]
-  :  /* empty */
-  | p_2_1=labelledPattern
-  | p_3_1=labelledPattern Surrogate_id_SYMB_0 p_3_3=listLabelledPattern
+  : p_1_1=labelledPattern
+  | p_2_1=labelledPattern Surrogate_id_SYMB_0 p_2_3=listLabelledPattern
   ;
 binding returns [ stella.Absyn.Binding result ]
   : p_1_1=StellaIdent Surrogate_id_SYMB_6 p_1_3=expr
   ;
 listBinding returns [ stella.Absyn.ListBinding result ]
+  : p_1_1=binding
+  | p_2_1=binding Surrogate_id_SYMB_0 p_2_3=listBinding
+  ;
+expr returns [ stella.Absyn.Expr result ]
+  : p_1_1=expr1 Surrogate_id_SYMB_1 p_1_3=expr
+  | p_2_1=expr1 Surrogate_id_SYMB_1
+  | p_3_1=expr1
+  ;
+listExpr returns [ stella.Absyn.ListExpr result ]
   :  /* empty */
-  | p_2_1=binding
-  | p_3_1=binding Surrogate_id_SYMB_0 p_3_3=listBinding
+  | p_2_1=expr
+  | p_3_1=expr Surrogate_id_SYMB_0 p_3_3=listExpr
   ;
 expr1 returns [ stella.Absyn.Expr result ]
-  : p_1_1=expr2 Surrogate_id_SYMB_14 p_1_3=expr2
-  | p_2_1=expr2 Surrogate_id_SYMB_15 p_2_3=expr2
-  | p_3_1=expr2 Surrogate_id_SYMB_16 p_3_3=expr2
-  | p_4_1=expr2 Surrogate_id_SYMB_17 p_4_3=expr2
-  | p_5_1=expr2 Surrogate_id_SYMB_18 p_5_3=expr2
-  | p_6_1=expr2 Surrogate_id_SYMB_19 p_6_3=expr2
-  | p_7_1=expr2
+  : Surrogate_id_SYMB_45 p_1_2=expr1 Surrogate_id_SYMB_58 p_1_4=expr1 Surrogate_id_SYMB_39 p_1_6=expr1
+  | Surrogate_id_SYMB_51 p_2_2=listPatternBinding Surrogate_id_SYMB_46 p_2_4=expr1
+  | Surrogate_id_SYMB_52 p_3_2=listPatternBinding Surrogate_id_SYMB_46 p_3_4=expr1
+  | p_4_1=expr2
+  ;
+patternBinding returns [ stella.Absyn.PatternBinding result ]
+  : p_1_1=pattern Surrogate_id_SYMB_6 p_1_3=expr
+  ;
+listPatternBinding returns [ stella.Absyn.ListPatternBinding result ]
+  : p_1_1=patternBinding
+  | p_2_1=patternBinding Surrogate_id_SYMB_0 p_2_3=listPatternBinding
   ;
 expr2 returns [ stella.Absyn.Expr result ]
-  : p_1_1=expr2 Surrogate_id_SYMB_33 p_1_3=type
-  | Surrogate_id_SYMB_40 Surrogate_id_SYMB_2 p_2_3=listParamDecl Surrogate_id_SYMB_3 Surrogate_id_SYMB_4 Surrogate_id_SYMB_51 p_2_7=expr Surrogate_id_SYMB_1 Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_4 p_3_2=listExpr Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_50 Surrogate_id_SYMB_4 p_4_3=listBinding Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_10 p_5_2=StellaIdent p_5_3=exprData Surrogate_id_SYMB_11
-  | Surrogate_id_SYMB_47 p_6_2=expr1 Surrogate_id_SYMB_4 p_6_4=listMatchCase Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_12 p_7_2=listExpr Surrogate_id_SYMB_13
-  | p_8_1=expr2 Surrogate_id_SYMB_20 p_8_3=expr3
-  | p_9_1=expr2 Surrogate_id_SYMB_49 p_9_3=expr3
-  | p_10_1=expr3
+  : p_1_1=expr3 Surrogate_id_SYMB_15 p_1_3=expr3
+  | p_2_1=expr3 Surrogate_id_SYMB_16 p_2_3=expr3
+  | p_3_1=expr3 Surrogate_id_SYMB_17 p_3_3=expr3
+  | p_4_1=expr3 Surrogate_id_SYMB_18 p_4_3=expr3
+  | p_5_1=expr3 Surrogate_id_SYMB_19 p_5_3=expr3
+  | p_6_1=expr3 Surrogate_id_SYMB_20 p_6_3=expr3
+  | p_7_1=expr3
+  ;
+listExpr2 returns [ stella.Absyn.ListExpr result ]
+  : p_1_1=expr2 Surrogate_id_SYMB_1
+  | p_2_1=expr2 Surrogate_id_SYMB_1 p_2_3=listExpr2
   ;
 expr3 returns [ stella.Absyn.Expr result ]
-  : p_1_1=expr3 Surrogate_id_SYMB_21 p_1_3=expr4
-  | p_2_1=expr3 Surrogate_id_SYMB_32 p_2_3=expr4
-  | p_3_1=expr4
+  : p_1_1=expr3 Surrogate_id_SYMB_36 p_1_3=type2
+  | Surrogate_id_SYMB_43 Surrogate_id_SYMB_2 p_2_3=listParamDecl Surrogate_id_SYMB_3 Surrogate_id_SYMB_4 Surrogate_id_SYMB_56 p_2_7=expr Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_11 p_3_2=StellaIdent p_3_3=exprData Surrogate_id_SYMB_12
+  | Surrogate_id_SYMB_53 p_4_2=expr2 Surrogate_id_SYMB_4 p_4_4=listMatchCase Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_13 p_5_2=listExpr Surrogate_id_SYMB_14
+  | p_6_1=expr3 Surrogate_id_SYMB_21 p_6_3=expr4
+  | p_7_1=expr3 Surrogate_id_SYMB_22 p_7_3=expr4
+  | p_8_1=expr3 Surrogate_id_SYMB_55 p_8_3=expr4
+  | p_9_1=expr4
   ;
 expr4 returns [ stella.Absyn.Expr result ]
-  : p_1_1=expr4 Surrogate_id_SYMB_2 p_1_3=listExpr Surrogate_id_SYMB_3
-  | p_2_1=expr5
-  ;
-expr5 returns [ stella.Absyn.Expr result ]
-  : Surrogate_id_SYMB_34 Surrogate_id_SYMB_2 p_1_3=expr Surrogate_id_SYMB_0 p_1_5=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_22 Surrogate_id_SYMB_2 p_2_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_23 Surrogate_id_SYMB_2 p_3_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_24 Surrogate_id_SYMB_2 p_4_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_52 Surrogate_id_SYMB_2 p_5_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_48 Surrogate_id_SYMB_2 p_6_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_25 Surrogate_id_SYMB_2 p_7_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_26 Surrogate_id_SYMB_2 p_8_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_39 Surrogate_id_SYMB_2 p_9_3=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_27 Surrogate_id_SYMB_2 p_10_3=expr Surrogate_id_SYMB_0 p_10_5=expr Surrogate_id_SYMB_0 p_10_7=expr Surrogate_id_SYMB_3
-  | Surrogate_id_SYMB_41 Surrogate_id_SYMB_12 p_11_3=type Surrogate_id_SYMB_13 p_11_5=expr6
-  | Surrogate_id_SYMB_57 Surrogate_id_SYMB_12 p_12_3=type Surrogate_id_SYMB_13 p_12_5=expr6
-  | p_13_1=expr6
+  : p_1_1=expr4 Surrogate_id_SYMB_23 p_1_3=expr5
+  | p_2_1=expr4 Surrogate_id_SYMB_24 p_2_3=expr5
+  | p_3_1=expr4 Surrogate_id_SYMB_35 p_3_3=expr5
+  | p_4_1=expr5
   ;
 expr6 returns [ stella.Absyn.Expr result ]
-  : p_1_1=expr6 Surrogate_id_SYMB_28 p_1_3=StellaIdent
-  | p_2_1=expr6 Surrogate_id_SYMB_28 p_2_3=INTEGER
-  | Surrogate_id_SYMB_55
-  | Surrogate_id_SYMB_38
-  | p_5_1=INTEGER
-  | p_6_1=StellaIdent
-  | Surrogate_id_SYMB_2 p_7_2=expr Surrogate_id_SYMB_3
+  : p_1_1=expr6 Surrogate_id_SYMB_2 p_1_3=listExpr Surrogate_id_SYMB_3
+  | p_2_1=expr6 Surrogate_id_SYMB_25 p_2_3=StellaIdent
+  | p_3_1=expr6 Surrogate_id_SYMB_25 p_3_3=INTEGER
+  | Surrogate_id_SYMB_4 p_4_2=listExpr Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_4 p_5_2=listBinding Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_37 Surrogate_id_SYMB_2 p_6_3=expr Surrogate_id_SYMB_0 p_6_5=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_26 Surrogate_id_SYMB_2 p_7_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_27 Surrogate_id_SYMB_2 p_8_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_28 Surrogate_id_SYMB_2 p_9_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_47 Surrogate_id_SYMB_2 p_10_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_49 Surrogate_id_SYMB_2 p_11_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_57 Surrogate_id_SYMB_2 p_12_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_54 Surrogate_id_SYMB_2 p_13_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_29 Surrogate_id_SYMB_2 p_14_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_30 Surrogate_id_SYMB_2 p_15_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_42 Surrogate_id_SYMB_2 p_16_3=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_31 Surrogate_id_SYMB_2 p_17_3=expr Surrogate_id_SYMB_0 p_17_5=expr Surrogate_id_SYMB_0 p_17_7=expr Surrogate_id_SYMB_3
+  | Surrogate_id_SYMB_44 Surrogate_id_SYMB_13 p_18_3=type Surrogate_id_SYMB_14 p_18_5=expr7
+  | Surrogate_id_SYMB_62 Surrogate_id_SYMB_13 p_19_3=type Surrogate_id_SYMB_14 p_19_5=expr7
+  | p_20_1=expr7
+  ;
+expr7 returns [ stella.Absyn.Expr result ]
+  : Surrogate_id_SYMB_60
+  | Surrogate_id_SYMB_41
+  | Surrogate_id_SYMB_63
+  | p_4_1=INTEGER
+  | p_5_1=StellaIdent
+  | Surrogate_id_SYMB_2 p_6_2=expr Surrogate_id_SYMB_3
   ;
 type returns [ stella.Absyn.Type result ]
-  : Surrogate_id_SYMB_40 Surrogate_id_SYMB_2 p_1_3=listType Surrogate_id_SYMB_3 Surrogate_id_SYMB_8 p_1_6=type
-  | Surrogate_id_SYMB_60 p_2_2=StellaIdent Surrogate_id_SYMB_28 p_2_4=type
+  : Surrogate_id_SYMB_43 Surrogate_id_SYMB_2 p_1_3=listType Surrogate_id_SYMB_3 Surrogate_id_SYMB_8 p_1_6=type
+  | Surrogate_id_SYMB_65 p_2_2=StellaIdent Surrogate_id_SYMB_25 p_2_4=type
   | p_3_1=type1
   ;
 type1 returns [ stella.Absyn.Type result ]
-  : p_1_1=type2 Surrogate_id_SYMB_20 p_1_3=type2
+  : p_1_1=type2 Surrogate_id_SYMB_21 p_1_3=type2
   | p_2_1=type2
   ;
 type2 returns [ stella.Absyn.Type result ]
   : Surrogate_id_SYMB_4 p_1_2=listType Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_50 Surrogate_id_SYMB_4 p_2_3=listRecordFieldType Surrogate_id_SYMB_5
-  | Surrogate_id_SYMB_58 Surrogate_id_SYMB_10 p_3_3=listVariantFieldType Surrogate_id_SYMB_11
-  | Surrogate_id_SYMB_12 p_4_2=type Surrogate_id_SYMB_13
+  | Surrogate_id_SYMB_4 p_2_2=listRecordFieldType Surrogate_id_SYMB_5
+  | Surrogate_id_SYMB_11 p_3_2=listVariantFieldType Surrogate_id_SYMB_12
+  | Surrogate_id_SYMB_13 p_4_2=type Surrogate_id_SYMB_14
   | p_5_1=type3
   ;
 type3 returns [ stella.Absyn.Type result ]
-  : Surrogate_id_SYMB_29
-  | Surrogate_id_SYMB_30
-  | Surrogate_id_SYMB_31
+  : Surrogate_id_SYMB_32
+  | Surrogate_id_SYMB_33
+  | Surrogate_id_SYMB_34
   | p_4_1=StellaIdent
   | Surrogate_id_SYMB_2 p_5_2=type Surrogate_id_SYMB_3
   ;
@@ -350,6 +395,9 @@ listType returns [ stella.Absyn.ListType result ]
   :  /* empty */
   | p_2_1=type
   | p_3_1=type Surrogate_id_SYMB_0 p_3_3=listType
+  ;
+expr5 returns [ stella.Absyn.Expr result ]
+  : p_1_1=expr6
   ;
 variantFieldType returns [ stella.Absyn.VariantFieldType result ]
   : p_1_1=StellaIdent p_1_2=optionalTyping
@@ -363,9 +411,8 @@ recordFieldType returns [ stella.Absyn.RecordFieldType result ]
   : p_1_1=StellaIdent Surrogate_id_SYMB_7 p_1_3=type
   ;
 listRecordFieldType returns [ stella.Absyn.ListRecordFieldType result ]
-  :  /* empty */
-  | p_2_1=recordFieldType
-  | p_3_1=recordFieldType Surrogate_id_SYMB_0 p_3_3=listRecordFieldType
+  : p_1_1=recordFieldType
+  | p_2_1=recordFieldType Surrogate_id_SYMB_0 p_2_3=listRecordFieldType
   ;
 typing returns [ stella.Absyn.Typing result ]
   : p_1_1=expr Surrogate_id_SYMB_7 p_1_3=type
