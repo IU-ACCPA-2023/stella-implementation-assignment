@@ -1,6 +1,8 @@
 # stella-implementation-assignment
 Template for an assignment of implementing Stella programming language.
 
+**⚠️ DEPRECATED: use language-specific templates at https://github.com/IU-ACCPA-2023 ⚠️**
+
 [Documentation](doc/) for this language and its syntax structure can be found in the corresponding folder.
 
 This template contains skeleton implementations for an interpreter of Stella implemented in several languages:
