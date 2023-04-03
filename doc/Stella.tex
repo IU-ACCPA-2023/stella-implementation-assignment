@@ -54,12 +54,13 @@ The reserved words used in Stella are the following: \\
 {\reserved{core}} &{\reserved{else}} &{\reserved{extend}} \\
 {\reserved{false}} &{\reserved{fix}} &{\reserved{fn}} \\
 {\reserved{fold}} &{\reserved{if}} &{\reserved{in}} \\
-{\reserved{inline}} &{\reserved{language}} &{\reserved{let}} \\
+{\reserved{inl}} &{\reserved{inline}} &{\reserved{inr}} \\
+{\reserved{language}} &{\reserved{let}} &{\reserved{letrec}} \\
 {\reserved{match}} &{\reserved{not}} &{\reserved{or}} \\
-{\reserved{record}} &{\reserved{return}} &{\reserved{succ}} \\
-{\reserved{then}} &{\reserved{throws}} &{\reserved{true}} \\
-{\reserved{type}} &{\reserved{unfold}} &{\reserved{variant}} \\
-{\reserved{with}} &{\reserved{µ}} & \\
+{\reserved{return}} &{\reserved{succ}} &{\reserved{then}} \\
+{\reserved{throws}} &{\reserved{true}} &{\reserved{type}} \\
+{\reserved{unfold}} &{\reserved{unit}} &{\reserved{with}} \\
+{\reserved{µ}} & & \\
 \end{tabular}\\
 
 The symbols used in Stella are the following: \\
@@ -68,17 +69,18 @@ The symbols used in Stella are the following: \\
 {\symb{,}} &{\symb{;}} &{\symb{(}} \\
 {\symb{)}} &{\symb{\{}} &{\symb{\}}} \\
 {\symb{{$=$}}} &{\symb{:}} &{\symb{{$-$}{$>$}}} \\
-{\symb{{$=$}{$>$}}} &{\symb{{$<$}{$|$}}} &{\symb{{$|$}{$>$}}} \\
-{\symb{[}} &{\symb{]}} &{\symb{{$<$}}} \\
-{\symb{{$<$}{$=$}}} &{\symb{{$>$}}} &{\symb{{$>$}{$=$}}} \\
-{\symb{{$=$}{$=$}}} &{\symb{!{$=$}}} &{\symb{{$+$}}} \\
-{\symb{*}} &{\symb{List::head}} &{\symb{List::isempty}} \\
-{\symb{List::tail}} &{\symb{Nat::pred}} &{\symb{Nat::iszero}} \\
-{\symb{Nat::rec}} &{\symb{.}} & \\
+{\symb{{$=$}{$>$}}} &{\symb{{$|$}}} &{\symb{{$<$}{$|$}}} \\
+{\symb{{$|$}{$>$}}} &{\symb{[}} &{\symb{]}} \\
+{\symb{{$<$}}} &{\symb{{$<$}{$=$}}} &{\symb{{$>$}}} \\
+{\symb{{$>$}{$=$}}} &{\symb{{$=$}{$=$}}} &{\symb{!{$=$}}} \\
+{\symb{{$+$}}} &{\symb{{$-$}}} &{\symb{*}} \\
+{\symb{/}} &{\symb{.}} &{\symb{List::head}} \\
+{\symb{List::isempty}} &{\symb{List::tail}} &{\symb{Nat::pred}} \\
+{\symb{Nat::iszero}} &{\symb{Nat::rec}} & \\
 \end{tabular}\\
 
 \subsection*{Comments}
-Single-line comments begin with {\symb{//}}. \\There are no multiple-line comments in the grammar.
+Single-line comments begin with {\symb{//}}. \\Multiple-line comments are  enclosed with {\symb{/*}} and {\symb{*/}}.
 
 \section*{The syntactic structure of Stella}
 
@@ -88,13 +90,13 @@ and {\emptyP} (empty rule) belong to the BNF notation.
 All other symbols are terminals.\\
 
 \begin{tabular}{lll}
-{\nonterminal{ListStellaIdent}} & {\arrow}  &{\emptyP} \\
- & {\delimit}  &{\nonterminal{StellaIdent}}  \\
- & {\delimit}  &{\nonterminal{StellaIdent}} {\terminal{,}} {\nonterminal{ListStellaIdent}}  \\
+{\nonterminal{Program}} & {\arrow}  &{\nonterminal{LanguageDecl}} {\nonterminal{ListExtension}} {\nonterminal{ListDecl}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Program}} & {\arrow}  &{\nonterminal{LanguageDecl}} {\nonterminal{ListExtension}} {\nonterminal{ListDecl}}  \\
+{\nonterminal{ListStellaIdent}} & {\arrow}  &{\emptyP} \\
+ & {\delimit}  &{\nonterminal{StellaIdent}}  \\
+ & {\delimit}  &{\nonterminal{StellaIdent}} {\terminal{,}} {\nonterminal{ListStellaIdent}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
@@ -117,7 +119,7 @@ All other symbols are terminals.\\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Decl}} & {\arrow}  &{\nonterminal{ListAnnotation}} {\terminal{fn}} {\nonterminal{StellaIdent}} {\terminal{(}} {\nonterminal{ListParamDecl}} {\terminal{)}} {\nonterminal{ReturnType}} {\nonterminal{ThrowType}} {\terminal{\{}} {\nonterminal{ListDecl}} {\terminal{return}} {\nonterminal{Expr}} {\terminal{;}} {\terminal{\}}}  \\
+{\nonterminal{Decl}} & {\arrow}  &{\nonterminal{ListAnnotation}} {\terminal{fn}} {\nonterminal{StellaIdent}} {\terminal{(}} {\nonterminal{ListParamDecl}} {\terminal{)}} {\nonterminal{ReturnType}} {\nonterminal{ThrowType}} {\terminal{\{}} {\nonterminal{ListDecl}} {\terminal{return}} {\nonterminal{Expr}} {\terminal{\}}}  \\
  & {\delimit}  &{\terminal{type}} {\nonterminal{StellaIdent}} {\terminal{{$=$}}} {\nonterminal{Type}}  \\
 \end{tabular}\\
 
@@ -161,19 +163,16 @@ All other symbols are terminals.\\
 
 \begin{tabular}{lll}
 {\nonterminal{ThrowType}} & {\arrow}  &{\emptyP} \\
- & {\delimit}  &{\terminal{throws}} {\nonterminal{ListType}}  \\
+ & {\delimit}  &{\terminal{throws}} {\nonterminal{ListType9}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expr}} & {\arrow}  &{\terminal{if}} {\nonterminal{Expr}} {\terminal{then}} {\nonterminal{Expr}} {\terminal{else}} {\nonterminal{Expr}}  \\
- & {\delimit}  &{\terminal{let}} {\nonterminal{StellaIdent}} {\terminal{{$=$}}} {\nonterminal{Expr}} {\terminal{in}} {\nonterminal{Expr}}  \\
- & {\delimit}  &{\nonterminal{Expr1}}  \\
+{\nonterminal{Type9}} & {\arrow}  &{\nonterminal{Type}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{ListExpr}} & {\arrow}  &{\emptyP} \\
- & {\delimit}  &{\nonterminal{Expr}}  \\
- & {\delimit}  &{\nonterminal{Expr}} {\terminal{,}} {\nonterminal{ListExpr}}  \\
+{\nonterminal{ListType9}} & {\arrow}  &{\nonterminal{Type9}}  \\
+ & {\delimit}  &{\nonterminal{Type9}} {\terminal{,}} {\nonterminal{ListType9}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
@@ -183,7 +182,7 @@ All other symbols are terminals.\\
 \begin{tabular}{lll}
 {\nonterminal{ListMatchCase}} & {\arrow}  &{\emptyP} \\
  & {\delimit}  &{\nonterminal{MatchCase}}  \\
- & {\delimit}  &{\nonterminal{MatchCase}} {\terminal{;}} {\nonterminal{ListMatchCase}}  \\
+ & {\delimit}  &{\nonterminal{MatchCase}} {\terminal{{$|$}}} {\nonterminal{ListMatchCase}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
@@ -203,12 +202,15 @@ All other symbols are terminals.\\
 
 \begin{tabular}{lll}
 {\nonterminal{Pattern}} & {\arrow}  &{\terminal{{$<$}{$|$}}} {\nonterminal{StellaIdent}} {\nonterminal{PatternData}} {\terminal{{$|$}{$>$}}}  \\
+ & {\delimit}  &{\terminal{inl}} {\terminal{(}} {\nonterminal{Pattern}} {\terminal{)}}  \\
+ & {\delimit}  &{\terminal{inr}} {\terminal{(}} {\nonterminal{Pattern}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{\{}} {\nonterminal{ListPattern}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{record}} {\terminal{\{}} {\nonterminal{ListLabelledPattern}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{\{}} {\nonterminal{ListLabelledPattern}} {\terminal{\}}}  \\
  & {\delimit}  &{\terminal{[}} {\nonterminal{ListPattern}} {\terminal{]}}  \\
- & {\delimit}  &{\terminal{cons}} {\terminal{(}} {\nonterminal{Pattern}} {\terminal{,}} {\nonterminal{Pattern}} {\terminal{)}}  \\
+ & {\delimit}  &{\terminal{(}} {\nonterminal{Pattern}} {\terminal{,}} {\nonterminal{Pattern}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{false}}  \\
  & {\delimit}  &{\terminal{true}}  \\
+ & {\delimit}  &{\terminal{unit}}  \\
  & {\delimit}  &{\nonterminal{Integer}}  \\
  & {\delimit}  &{\terminal{succ}} {\terminal{(}} {\nonterminal{Pattern}} {\terminal{)}}  \\
  & {\delimit}  &{\nonterminal{StellaIdent}}  \\
@@ -226,8 +228,7 @@ All other symbols are terminals.\\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{ListLabelledPattern}} & {\arrow}  &{\emptyP} \\
- & {\delimit}  &{\nonterminal{LabelledPattern}}  \\
+{\nonterminal{ListLabelledPattern}} & {\arrow}  &{\nonterminal{LabelledPattern}}  \\
  & {\delimit}  &{\nonterminal{LabelledPattern}} {\terminal{,}} {\nonterminal{ListLabelledPattern}}  \\
 \end{tabular}\\
 
@@ -236,66 +237,99 @@ All other symbols are terminals.\\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{ListBinding}} & {\arrow}  &{\emptyP} \\
- & {\delimit}  &{\nonterminal{Binding}}  \\
+{\nonterminal{ListBinding}} & {\arrow}  &{\nonterminal{Binding}}  \\
  & {\delimit}  &{\nonterminal{Binding}} {\terminal{,}} {\nonterminal{ListBinding}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expr1}} & {\arrow}  &{\nonterminal{Expr2}} {\terminal{{$<$}}} {\nonterminal{Expr2}}  \\
- & {\delimit}  &{\nonterminal{Expr2}} {\terminal{{$<$}{$=$}}} {\nonterminal{Expr2}}  \\
- & {\delimit}  &{\nonterminal{Expr2}} {\terminal{{$>$}}} {\nonterminal{Expr2}}  \\
- & {\delimit}  &{\nonterminal{Expr2}} {\terminal{{$>$}{$=$}}} {\nonterminal{Expr2}}  \\
- & {\delimit}  &{\nonterminal{Expr2}} {\terminal{{$=$}{$=$}}} {\nonterminal{Expr2}}  \\
- & {\delimit}  &{\nonterminal{Expr2}} {\terminal{!{$=$}}} {\nonterminal{Expr2}}  \\
+{\nonterminal{Expr}} & {\arrow}  &{\nonterminal{Expr1}} {\terminal{;}} {\nonterminal{Expr}}  \\
+ & {\delimit}  &{\nonterminal{Expr1}} {\terminal{;}}  \\
+ & {\delimit}  &{\nonterminal{Expr1}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
+{\nonterminal{ListExpr}} & {\arrow}  &{\emptyP} \\
+ & {\delimit}  &{\nonterminal{Expr}}  \\
+ & {\delimit}  &{\nonterminal{Expr}} {\terminal{,}} {\nonterminal{ListExpr}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
+{\nonterminal{Expr1}} & {\arrow}  &{\terminal{if}} {\nonterminal{Expr1}} {\terminal{then}} {\nonterminal{Expr1}} {\terminal{else}} {\nonterminal{Expr1}}  \\
+ & {\delimit}  &{\terminal{let}} {\nonterminal{ListPatternBinding}} {\terminal{in}} {\nonterminal{Expr1}}  \\
+ & {\delimit}  &{\terminal{letrec}} {\nonterminal{ListPatternBinding}} {\terminal{in}} {\nonterminal{Expr1}}  \\
  & {\delimit}  &{\nonterminal{Expr2}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expr2}} & {\arrow}  &{\nonterminal{Expr2}} {\terminal{as}} {\nonterminal{Type}}  \\
- & {\delimit}  &{\terminal{fn}} {\terminal{(}} {\nonterminal{ListParamDecl}} {\terminal{)}} {\terminal{\{}} {\terminal{return}} {\nonterminal{Expr}} {\terminal{;}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{\{}} {\nonterminal{ListExpr}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{record}} {\terminal{\{}} {\nonterminal{ListBinding}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{{$<$}{$|$}}} {\nonterminal{StellaIdent}} {\nonterminal{ExprData}} {\terminal{{$|$}{$>$}}}  \\
- & {\delimit}  &{\terminal{match}} {\nonterminal{Expr1}} {\terminal{\{}} {\nonterminal{ListMatchCase}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{[}} {\nonterminal{ListExpr}} {\terminal{]}}  \\
- & {\delimit}  &{\nonterminal{Expr2}} {\terminal{{$+$}}} {\nonterminal{Expr3}}  \\
- & {\delimit}  &{\nonterminal{Expr2}} {\terminal{or}} {\nonterminal{Expr3}}  \\
+{\nonterminal{PatternBinding}} & {\arrow}  &{\nonterminal{Pattern}} {\terminal{{$=$}}} {\nonterminal{Expr}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
+{\nonterminal{ListPatternBinding}} & {\arrow}  &{\nonterminal{PatternBinding}}  \\
+ & {\delimit}  &{\nonterminal{PatternBinding}} {\terminal{,}} {\nonterminal{ListPatternBinding}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
+{\nonterminal{Expr2}} & {\arrow}  &{\nonterminal{Expr3}} {\terminal{{$<$}}} {\nonterminal{Expr3}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{{$<$}{$=$}}} {\nonterminal{Expr3}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{{$>$}}} {\nonterminal{Expr3}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{{$>$}{$=$}}} {\nonterminal{Expr3}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{{$=$}{$=$}}} {\nonterminal{Expr3}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{!{$=$}}} {\nonterminal{Expr3}}  \\
  & {\delimit}  &{\nonterminal{Expr3}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expr3}} & {\arrow}  &{\nonterminal{Expr3}} {\terminal{*}} {\nonterminal{Expr4}}  \\
- & {\delimit}  &{\nonterminal{Expr3}} {\terminal{and}} {\nonterminal{Expr4}}  \\
+{\nonterminal{ListExpr2}} & {\arrow}  &{\nonterminal{Expr2}} {\terminal{;}}  \\
+ & {\delimit}  &{\nonterminal{Expr2}} {\terminal{;}} {\nonterminal{ListExpr2}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
+{\nonterminal{Expr3}} & {\arrow}  &{\nonterminal{Expr3}} {\terminal{as}} {\nonterminal{Type2}}  \\
+ & {\delimit}  &{\terminal{fn}} {\terminal{(}} {\nonterminal{ListParamDecl}} {\terminal{)}} {\terminal{\{}} {\terminal{return}} {\nonterminal{Expr}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{{$<$}{$|$}}} {\nonterminal{StellaIdent}} {\nonterminal{ExprData}} {\terminal{{$|$}{$>$}}}  \\
+ & {\delimit}  &{\terminal{match}} {\nonterminal{Expr2}} {\terminal{\{}} {\nonterminal{ListMatchCase}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{[}} {\nonterminal{ListExpr}} {\terminal{]}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{{$+$}}} {\nonterminal{Expr4}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{{$-$}}} {\nonterminal{Expr4}}  \\
+ & {\delimit}  &{\nonterminal{Expr3}} {\terminal{or}} {\nonterminal{Expr4}}  \\
  & {\delimit}  &{\nonterminal{Expr4}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expr4}} & {\arrow}  &{\nonterminal{Expr4}} {\terminal{(}} {\nonterminal{ListExpr}} {\terminal{)}}  \\
+{\nonterminal{Expr4}} & {\arrow}  &{\nonterminal{Expr4}} {\terminal{*}} {\nonterminal{Expr5}}  \\
+ & {\delimit}  &{\nonterminal{Expr4}} {\terminal{/}} {\nonterminal{Expr5}}  \\
+ & {\delimit}  &{\nonterminal{Expr4}} {\terminal{and}} {\nonterminal{Expr5}}  \\
  & {\delimit}  &{\nonterminal{Expr5}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expr5}} & {\arrow}  &{\terminal{cons}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{,}} {\nonterminal{Expr}} {\terminal{)}}  \\
+{\nonterminal{Expr6}} & {\arrow}  &{\nonterminal{Expr6}} {\terminal{(}} {\nonterminal{ListExpr}} {\terminal{)}}  \\
+ & {\delimit}  &{\nonterminal{Expr6}} {\terminal{.}} {\nonterminal{StellaIdent}}  \\
+ & {\delimit}  &{\nonterminal{Expr6}} {\terminal{.}} {\nonterminal{Integer}}  \\
+ & {\delimit}  &{\terminal{\{}} {\nonterminal{ListExpr}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{\{}} {\nonterminal{ListBinding}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{cons}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{,}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{List::head}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{List::isempty}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{List::tail}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
+ & {\delimit}  &{\terminal{inl}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
+ & {\delimit}  &{\terminal{inr}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{succ}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{not}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{Nat::pred}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{Nat::iszero}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{fix}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{Nat::rec}} {\terminal{(}} {\nonterminal{Expr}} {\terminal{,}} {\nonterminal{Expr}} {\terminal{,}} {\nonterminal{Expr}} {\terminal{)}}  \\
- & {\delimit}  &{\terminal{fold}} {\terminal{[}} {\nonterminal{Type}} {\terminal{]}} {\nonterminal{Expr6}}  \\
- & {\delimit}  &{\terminal{unfold}} {\terminal{[}} {\nonterminal{Type}} {\terminal{]}} {\nonterminal{Expr6}}  \\
- & {\delimit}  &{\nonterminal{Expr6}}  \\
+ & {\delimit}  &{\terminal{fold}} {\terminal{[}} {\nonterminal{Type}} {\terminal{]}} {\nonterminal{Expr7}}  \\
+ & {\delimit}  &{\terminal{unfold}} {\terminal{[}} {\nonterminal{Type}} {\terminal{]}} {\nonterminal{Expr7}}  \\
+ & {\delimit}  &{\nonterminal{Expr7}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expr6}} & {\arrow}  &{\nonterminal{Expr6}} {\terminal{.}} {\nonterminal{StellaIdent}}  \\
- & {\delimit}  &{\nonterminal{Expr6}} {\terminal{.}} {\nonterminal{Integer}}  \\
- & {\delimit}  &{\terminal{true}}  \\
+{\nonterminal{Expr7}} & {\arrow}  &{\terminal{true}}  \\
  & {\delimit}  &{\terminal{false}}  \\
+ & {\delimit}  &{\terminal{unit}}  \\
  & {\delimit}  &{\nonterminal{Integer}}  \\
  & {\delimit}  &{\nonterminal{StellaIdent}}  \\
  & {\delimit}  &{\terminal{(}} {\nonterminal{Expr}} {\terminal{)}}  \\
@@ -314,8 +348,8 @@ All other symbols are terminals.\\
 
 \begin{tabular}{lll}
 {\nonterminal{Type2}} & {\arrow}  &{\terminal{\{}} {\nonterminal{ListType}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{record}} {\terminal{\{}} {\nonterminal{ListRecordFieldType}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{variant}} {\terminal{{$<$}{$|$}}} {\nonterminal{ListVariantFieldType}} {\terminal{{$|$}{$>$}}}  \\
+ & {\delimit}  &{\terminal{\{}} {\nonterminal{ListRecordFieldType}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{{$<$}{$|$}}} {\nonterminal{ListVariantFieldType}} {\terminal{{$|$}{$>$}}}  \\
  & {\delimit}  &{\terminal{[}} {\nonterminal{Type}} {\terminal{]}}  \\
  & {\delimit}  &{\nonterminal{Type3}}  \\
 \end{tabular}\\
@@ -335,6 +369,10 @@ All other symbols are terminals.\\
 \end{tabular}\\
 
 \begin{tabular}{lll}
+{\nonterminal{Expr5}} & {\arrow}  &{\nonterminal{Expr6}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
 {\nonterminal{VariantFieldType}} & {\arrow}  &{\nonterminal{StellaIdent}} {\nonterminal{OptionalTyping}}  \\
 \end{tabular}\\
 
@@ -349,8 +387,7 @@ All other symbols are terminals.\\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{ListRecordFieldType}} & {\arrow}  &{\emptyP} \\
- & {\delimit}  &{\nonterminal{RecordFieldType}}  \\
+{\nonterminal{ListRecordFieldType}} & {\arrow}  &{\nonterminal{RecordFieldType}}  \\
  & {\delimit}  &{\nonterminal{RecordFieldType}} {\terminal{,}} {\nonterminal{ListRecordFieldType}}  \\
 \end{tabular}\\
 
