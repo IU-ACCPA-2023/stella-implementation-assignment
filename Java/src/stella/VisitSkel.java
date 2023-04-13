@@ -68,6 +68,17 @@ public class VisitSkel
       p.type_.accept(new TypeVisitor<R,A>(), arg);
       return null;
     }
+    public R visit(stella.Absyn.DeclExceptionType p, A arg)
+    { /* Code for DeclExceptionType goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.DeclExceptionVariant p, A arg)
+    { /* Code for DeclExceptionVariant goes here */
+      //p.stellaident_;
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
   }
   public class LocalDeclVisitor<R,A> implements stella.Absyn.LocalDecl.Visitor<R,A>
   {
@@ -116,357 +127,6 @@ public class VisitSkel
       for (stella.Absyn.Type x: p.listtype_) {
         x.accept(new TypeVisitor<R,A>(), arg);
       }
-      return null;
-    }
-  }
-  public class ExprVisitor<R,A> implements stella.Absyn.Expr.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.If p, A arg)
-    { /* Code for If goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_3.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Let p, A arg)
-    { /* Code for Let goes here */
-      //p.stellaident_;
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.LessThan p, A arg)
-    { /* Code for LessThan goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.LessThanOrEqual p, A arg)
-    { /* Code for LessThanOrEqual goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.GreaterThan p, A arg)
-    { /* Code for GreaterThan goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.GreaterThanOrEqual p, A arg)
-    { /* Code for GreaterThanOrEqual goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Equal p, A arg)
-    { /* Code for Equal goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.NotEqual p, A arg)
-    { /* Code for NotEqual goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.TypeAsc p, A arg)
-    { /* Code for TypeAsc goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      p.type_.accept(new TypeVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Abstraction p, A arg)
-    { /* Code for Abstraction goes here */
-      for (stella.Absyn.ParamDecl x: p.listparamdecl_) {
-        x.accept(new ParamDeclVisitor<R,A>(), arg);
-      }
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Tuple p, A arg)
-    { /* Code for Tuple goes here */
-      for (stella.Absyn.Expr x: p.listexpr_) {
-        x.accept(new ExprVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.Record p, A arg)
-    { /* Code for Record goes here */
-      for (stella.Absyn.Binding x: p.listbinding_) {
-        x.accept(new BindingVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.Variant p, A arg)
-    { /* Code for Variant goes here */
-      //p.stellaident_;
-      p.exprdata_.accept(new ExprDataVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Match p, A arg)
-    { /* Code for Match goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      for (stella.Absyn.MatchCase x: p.listmatchcase_) {
-        x.accept(new MatchCaseVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.List p, A arg)
-    { /* Code for List goes here */
-      for (stella.Absyn.Expr x: p.listexpr_) {
-        x.accept(new ExprVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.Add p, A arg)
-    { /* Code for Add goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.LogicOr p, A arg)
-    { /* Code for LogicOr goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Multiply p, A arg)
-    { /* Code for Multiply goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.LogicAnd p, A arg)
-    { /* Code for LogicAnd goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Application p, A arg)
-    { /* Code for Application goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      for (stella.Absyn.Expr x: p.listexpr_) {
-        x.accept(new ExprVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.ConsList p, A arg)
-    { /* Code for ConsList goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Head p, A arg)
-    { /* Code for Head goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.IsEmpty p, A arg)
-    { /* Code for IsEmpty goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Tail p, A arg)
-    { /* Code for Tail goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Succ p, A arg)
-    { /* Code for Succ goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.LogicNot p, A arg)
-    { /* Code for LogicNot goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Pred p, A arg)
-    { /* Code for Pred goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.IsZero p, A arg)
-    { /* Code for IsZero goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Fix p, A arg)
-    { /* Code for Fix goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.NatRec p, A arg)
-    { /* Code for NatRec goes here */
-      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
-      p.expr_3.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Fold p, A arg)
-    { /* Code for Fold goes here */
-      p.type_.accept(new TypeVisitor<R,A>(), arg);
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.Unfold p, A arg)
-    { /* Code for Unfold goes here */
-      p.type_.accept(new TypeVisitor<R,A>(), arg);
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.DotRecord p, A arg)
-    { /* Code for DotRecord goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      //p.stellaident_;
-      return null;
-    }
-    public R visit(stella.Absyn.DotTuple p, A arg)
-    { /* Code for DotTuple goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      //p.integer_;
-      return null;
-    }
-    public R visit(stella.Absyn.ConstTrue p, A arg)
-    { /* Code for ConstTrue goes here */
-      return null;
-    }
-    public R visit(stella.Absyn.ConstFalse p, A arg)
-    { /* Code for ConstFalse goes here */
-      return null;
-    }
-    public R visit(stella.Absyn.ConstInt p, A arg)
-    { /* Code for ConstInt goes here */
-      //p.integer_;
-      return null;
-    }
-    public R visit(stella.Absyn.Var p, A arg)
-    { /* Code for Var goes here */
-      //p.stellaident_;
-      return null;
-    }
-  }
-  public class MatchCaseVisitor<R,A> implements stella.Absyn.MatchCase.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.AMatchCase p, A arg)
-    { /* Code for AMatchCase goes here */
-      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-  }
-  public class OptionalTypingVisitor<R,A> implements stella.Absyn.OptionalTyping.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.NoTyping p, A arg)
-    { /* Code for NoTyping goes here */
-      return null;
-    }
-    public R visit(stella.Absyn.SomeTyping p, A arg)
-    { /* Code for SomeTyping goes here */
-      p.type_.accept(new TypeVisitor<R,A>(), arg);
-      return null;
-    }
-  }
-  public class PatternDataVisitor<R,A> implements stella.Absyn.PatternData.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.NoPatternData p, A arg)
-    { /* Code for NoPatternData goes here */
-      return null;
-    }
-    public R visit(stella.Absyn.SomePatternData p, A arg)
-    { /* Code for SomePatternData goes here */
-      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
-      return null;
-    }
-  }
-  public class ExprDataVisitor<R,A> implements stella.Absyn.ExprData.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.NoExprData p, A arg)
-    { /* Code for NoExprData goes here */
-      return null;
-    }
-    public R visit(stella.Absyn.SomeExprData p, A arg)
-    { /* Code for SomeExprData goes here */
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
-      return null;
-    }
-  }
-  public class PatternVisitor<R,A> implements stella.Absyn.Pattern.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.PatternVariant p, A arg)
-    { /* Code for PatternVariant goes here */
-      //p.stellaident_;
-      p.patterndata_.accept(new PatternDataVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.PatternTuple p, A arg)
-    { /* Code for PatternTuple goes here */
-      for (stella.Absyn.Pattern x: p.listpattern_) {
-        x.accept(new PatternVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.PatternRecord p, A arg)
-    { /* Code for PatternRecord goes here */
-      for (stella.Absyn.LabelledPattern x: p.listlabelledpattern_) {
-        x.accept(new LabelledPatternVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.PatternList p, A arg)
-    { /* Code for PatternList goes here */
-      for (stella.Absyn.Pattern x: p.listpattern_) {
-        x.accept(new PatternVisitor<R,A>(), arg);
-      }
-      return null;
-    }
-    public R visit(stella.Absyn.PatternCons p, A arg)
-    { /* Code for PatternCons goes here */
-      p.pattern_1.accept(new PatternVisitor<R,A>(), arg);
-      p.pattern_2.accept(new PatternVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.PatternFalse p, A arg)
-    { /* Code for PatternFalse goes here */
-      return null;
-    }
-    public R visit(stella.Absyn.PatternTrue p, A arg)
-    { /* Code for PatternTrue goes here */
-      return null;
-    }
-    public R visit(stella.Absyn.PatternInt p, A arg)
-    { /* Code for PatternInt goes here */
-      //p.integer_;
-      return null;
-    }
-    public R visit(stella.Absyn.PatternSucc p, A arg)
-    { /* Code for PatternSucc goes here */
-      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
-      return null;
-    }
-    public R visit(stella.Absyn.PatternVar p, A arg)
-    { /* Code for PatternVar goes here */
-      //p.stellaident_;
-      return null;
-    }
-  }
-  public class LabelledPatternVisitor<R,A> implements stella.Absyn.LabelledPattern.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.ALabelledPattern p, A arg)
-    { /* Code for ALabelledPattern goes here */
-      //p.stellaident_;
-      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
-      return null;
-    }
-  }
-  public class BindingVisitor<R,A> implements stella.Absyn.Binding.Visitor<R,A>
-  {
-    public R visit(stella.Absyn.ABinding p, A arg)
-    { /* Code for ABinding goes here */
-      //p.stellaident_;
-      p.expr_.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
   }
@@ -530,9 +190,486 @@ public class VisitSkel
     { /* Code for TypeUnit goes here */
       return null;
     }
+    public R visit(stella.Absyn.TypeTop p, A arg)
+    { /* Code for TypeTop goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.TypeBottom p, A arg)
+    { /* Code for TypeBottom goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.TypeRef p, A arg)
+    { /* Code for TypeRef goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
     public R visit(stella.Absyn.TypeVar p, A arg)
     { /* Code for TypeVar goes here */
       //p.stellaident_;
+      return null;
+    }
+  }
+  public class MatchCaseVisitor<R,A> implements stella.Absyn.MatchCase.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.AMatchCase p, A arg)
+    { /* Code for AMatchCase goes here */
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class OptionalTypingVisitor<R,A> implements stella.Absyn.OptionalTyping.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.NoTyping p, A arg)
+    { /* Code for NoTyping goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.SomeTyping p, A arg)
+    { /* Code for SomeTyping goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class PatternDataVisitor<R,A> implements stella.Absyn.PatternData.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.NoPatternData p, A arg)
+    { /* Code for NoPatternData goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.SomePatternData p, A arg)
+    { /* Code for SomePatternData goes here */
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class ExprDataVisitor<R,A> implements stella.Absyn.ExprData.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.NoExprData p, A arg)
+    { /* Code for NoExprData goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.SomeExprData p, A arg)
+    { /* Code for SomeExprData goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class PatternVisitor<R,A> implements stella.Absyn.Pattern.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.PatternVariant p, A arg)
+    { /* Code for PatternVariant goes here */
+      //p.stellaident_;
+      p.patterndata_.accept(new PatternDataVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.PatternInl p, A arg)
+    { /* Code for PatternInl goes here */
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.PatternInr p, A arg)
+    { /* Code for PatternInr goes here */
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.PatternTuple p, A arg)
+    { /* Code for PatternTuple goes here */
+      for (stella.Absyn.Pattern x: p.listpattern_) {
+        x.accept(new PatternVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.PatternRecord p, A arg)
+    { /* Code for PatternRecord goes here */
+      for (stella.Absyn.LabelledPattern x: p.listlabelledpattern_) {
+        x.accept(new LabelledPatternVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.PatternList p, A arg)
+    { /* Code for PatternList goes here */
+      for (stella.Absyn.Pattern x: p.listpattern_) {
+        x.accept(new PatternVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.PatternCons p, A arg)
+    { /* Code for PatternCons goes here */
+      p.pattern_1.accept(new PatternVisitor<R,A>(), arg);
+      p.pattern_2.accept(new PatternVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.PatternFalse p, A arg)
+    { /* Code for PatternFalse goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.PatternTrue p, A arg)
+    { /* Code for PatternTrue goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.PatternUnit p, A arg)
+    { /* Code for PatternUnit goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.PatternInt p, A arg)
+    { /* Code for PatternInt goes here */
+      //p.integer_;
+      return null;
+    }
+    public R visit(stella.Absyn.PatternSucc p, A arg)
+    { /* Code for PatternSucc goes here */
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.PatternVar p, A arg)
+    { /* Code for PatternVar goes here */
+      //p.stellaident_;
+      return null;
+    }
+  }
+  public class LabelledPatternVisitor<R,A> implements stella.Absyn.LabelledPattern.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.ALabelledPattern p, A arg)
+    { /* Code for ALabelledPattern goes here */
+      //p.stellaident_;
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class BindingVisitor<R,A> implements stella.Absyn.Binding.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.ABinding p, A arg)
+    { /* Code for ABinding goes here */
+      //p.stellaident_;
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+  }
+  public class ExprVisitor<R,A> implements stella.Absyn.Expr.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.Sequence p, A arg)
+    { /* Code for Sequence goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Let p, A arg)
+    { /* Code for Let goes here */
+      for (stella.Absyn.PatternBinding x: p.listpatternbinding_) {
+        x.accept(new PatternBindingVisitor<R,A>(), arg);
+      }
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.LetRec p, A arg)
+    { /* Code for LetRec goes here */
+      for (stella.Absyn.PatternBinding x: p.listpatternbinding_) {
+        x.accept(new PatternBindingVisitor<R,A>(), arg);
+      }
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Assign p, A arg)
+    { /* Code for Assign goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.If p, A arg)
+    { /* Code for If goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_3.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.LessThan p, A arg)
+    { /* Code for LessThan goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.LessThanOrEqual p, A arg)
+    { /* Code for LessThanOrEqual goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.GreaterThan p, A arg)
+    { /* Code for GreaterThan goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.GreaterThanOrEqual p, A arg)
+    { /* Code for GreaterThanOrEqual goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Equal p, A arg)
+    { /* Code for Equal goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.NotEqual p, A arg)
+    { /* Code for NotEqual goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.TypeAsc p, A arg)
+    { /* Code for TypeAsc goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.TypeCast p, A arg)
+    { /* Code for TypeCast goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Abstraction p, A arg)
+    { /* Code for Abstraction goes here */
+      for (stella.Absyn.ParamDecl x: p.listparamdecl_) {
+        x.accept(new ParamDeclVisitor<R,A>(), arg);
+      }
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Variant p, A arg)
+    { /* Code for Variant goes here */
+      //p.stellaident_;
+      p.exprdata_.accept(new ExprDataVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Match p, A arg)
+    { /* Code for Match goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      for (stella.Absyn.MatchCase x: p.listmatchcase_) {
+        x.accept(new MatchCaseVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.List p, A arg)
+    { /* Code for List goes here */
+      for (stella.Absyn.Expr x: p.listexpr_) {
+        x.accept(new ExprVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.Add p, A arg)
+    { /* Code for Add goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Subtract p, A arg)
+    { /* Code for Subtract goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.LogicOr p, A arg)
+    { /* Code for LogicOr goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Multiply p, A arg)
+    { /* Code for Multiply goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Divide p, A arg)
+    { /* Code for Divide goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.LogicAnd p, A arg)
+    { /* Code for LogicAnd goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Ref p, A arg)
+    { /* Code for Ref goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Deref p, A arg)
+    { /* Code for Deref goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Application p, A arg)
+    { /* Code for Application goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      for (stella.Absyn.Expr x: p.listexpr_) {
+        x.accept(new ExprVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.DotRecord p, A arg)
+    { /* Code for DotRecord goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      //p.stellaident_;
+      return null;
+    }
+    public R visit(stella.Absyn.DotTuple p, A arg)
+    { /* Code for DotTuple goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      //p.integer_;
+      return null;
+    }
+    public R visit(stella.Absyn.Tuple p, A arg)
+    { /* Code for Tuple goes here */
+      for (stella.Absyn.Expr x: p.listexpr_) {
+        x.accept(new ExprVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.Record p, A arg)
+    { /* Code for Record goes here */
+      for (stella.Absyn.Binding x: p.listbinding_) {
+        x.accept(new BindingVisitor<R,A>(), arg);
+      }
+      return null;
+    }
+    public R visit(stella.Absyn.ConsList p, A arg)
+    { /* Code for ConsList goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Head p, A arg)
+    { /* Code for Head goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.IsEmpty p, A arg)
+    { /* Code for IsEmpty goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Tail p, A arg)
+    { /* Code for Tail goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Panic p, A arg)
+    { /* Code for Panic goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.Throw p, A arg)
+    { /* Code for Throw goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.TryCatch p, A arg)
+    { /* Code for TryCatch goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.TryWith p, A arg)
+    { /* Code for TryWith goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Inl p, A arg)
+    { /* Code for Inl goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Inr p, A arg)
+    { /* Code for Inr goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Succ p, A arg)
+    { /* Code for Succ goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.LogicNot p, A arg)
+    { /* Code for LogicNot goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Pred p, A arg)
+    { /* Code for Pred goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.IsZero p, A arg)
+    { /* Code for IsZero goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Fix p, A arg)
+    { /* Code for Fix goes here */
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.NatRec p, A arg)
+    { /* Code for NatRec goes here */
+      p.expr_1.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_2.accept(new ExprVisitor<R,A>(), arg);
+      p.expr_3.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Fold p, A arg)
+    { /* Code for Fold goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.Unfold p, A arg)
+    { /* Code for Unfold goes here */
+      p.type_.accept(new TypeVisitor<R,A>(), arg);
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
+      return null;
+    }
+    public R visit(stella.Absyn.ConstTrue p, A arg)
+    { /* Code for ConstTrue goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.ConstFalse p, A arg)
+    { /* Code for ConstFalse goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.ConstUnit p, A arg)
+    { /* Code for ConstUnit goes here */
+      return null;
+    }
+    public R visit(stella.Absyn.ConstInt p, A arg)
+    { /* Code for ConstInt goes here */
+      //p.integer_;
+      return null;
+    }
+    public R visit(stella.Absyn.ConstMemory p, A arg)
+    { /* Code for ConstMemory goes here */
+      //p.memoryaddress_;
+      return null;
+    }
+    public R visit(stella.Absyn.Var p, A arg)
+    { /* Code for Var goes here */
+      //p.stellaident_;
+      return null;
+    }
+  }
+  public class PatternBindingVisitor<R,A> implements stella.Absyn.PatternBinding.Visitor<R,A>
+  {
+    public R visit(stella.Absyn.APatternBinding p, A arg)
+    { /* Code for APatternBinding goes here */
+      p.pattern_.accept(new PatternVisitor<R,A>(), arg);
+      p.expr_.accept(new ExprVisitor<R,A>(), arg);
       return null;
     }
   }

@@ -23,6 +23,8 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     /* Decl */
     public R visit(stella.Absyn.DeclFun p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.DeclTypeAlias p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.DeclExceptionType p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.DeclExceptionVariant p, A arg) { return visitDefault(p, arg); }
     public R visitDefault(stella.Absyn.Decl p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
@@ -53,46 +55,22 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visitDefault(stella.Absyn.ThrowType p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
-    /* Expr */
-    public R visit(stella.Absyn.If p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Let p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.LessThan p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.LessThanOrEqual p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.GreaterThan p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.GreaterThanOrEqual p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Equal p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.NotEqual p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeAsc p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Abstraction p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Tuple p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Record p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Variant p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Match p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.List p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Add p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.LogicOr p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Multiply p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.LogicAnd p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Application p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.ConsList p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Head p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.IsEmpty p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Tail p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Succ p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.LogicNot p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Pred p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.IsZero p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Fix p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.NatRec p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Fold p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Unfold p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.DotRecord p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.DotTuple p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.ConstTrue p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.ConstFalse p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.ConstInt p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.Var p, A arg) { return visitDefault(p, arg); }
-    public R visitDefault(stella.Absyn.Expr p, A arg) {
+    /* Type */
+    public R visit(stella.Absyn.TypeFun p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeRec p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeSum p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeTuple p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeRecord p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeVariant p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeList p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeBool p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeNat p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeUnit p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeTop p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeBottom p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeRef p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeVar p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.Type p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
     /* MatchCase */
@@ -120,12 +98,15 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     }
     /* Pattern */
     public R visit(stella.Absyn.PatternVariant p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.PatternInl p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.PatternInr p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternTuple p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternRecord p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternList p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternCons p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternFalse p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternTrue p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.PatternUnit p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternInt p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternSucc p, A arg) { return visitDefault(p, arg); }
     public R visit(stella.Absyn.PatternVar p, A arg) { return visitDefault(p, arg); }
@@ -142,19 +123,67 @@ public class AbstractVisitor<R,A> implements AllVisitor<R,A> {
     public R visitDefault(stella.Absyn.Binding p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
-    /* Type */
-    public R visit(stella.Absyn.TypeFun p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeRec p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeSum p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeTuple p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeRecord p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeVariant p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeList p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeBool p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeNat p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeUnit p, A arg) { return visitDefault(p, arg); }
-    public R visit(stella.Absyn.TypeVar p, A arg) { return visitDefault(p, arg); }
-    public R visitDefault(stella.Absyn.Type p, A arg) {
+    /* Expr */
+    public R visit(stella.Absyn.Sequence p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Let p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.LetRec p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Assign p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.If p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.LessThan p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.LessThanOrEqual p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.GreaterThan p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.GreaterThanOrEqual p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Equal p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.NotEqual p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeAsc p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TypeCast p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Abstraction p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Variant p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Match p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.List p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Add p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Subtract p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.LogicOr p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Multiply p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Divide p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.LogicAnd p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Ref p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Deref p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Application p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.DotRecord p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.DotTuple p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Tuple p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Record p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.ConsList p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Head p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.IsEmpty p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Tail p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Panic p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Throw p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TryCatch p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.TryWith p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Inl p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Inr p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Succ p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.LogicNot p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Pred p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.IsZero p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Fix p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.NatRec p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Fold p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Unfold p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.ConstTrue p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.ConstFalse p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.ConstUnit p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.ConstInt p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.ConstMemory p, A arg) { return visitDefault(p, arg); }
+    public R visit(stella.Absyn.Var p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.Expr p, A arg) {
+      throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
+    }
+    /* PatternBinding */
+    public R visit(stella.Absyn.APatternBinding p, A arg) { return visitDefault(p, arg); }
+    public R visitDefault(stella.Absyn.PatternBinding p, A arg) {
       throw new IllegalArgumentException(this.getClass().getName() + ": " + p);
     }
     /* VariantFieldType */

@@ -2,18 +2,18 @@
 
 package stella.Absyn;
 
-public class Let  extends Expr {
+public class LetRec  extends Expr {
   public final ListPatternBinding listpatternbinding_;
   public final Expr expr_;
   public int line_num, col_num, offset;
-  public Let(ListPatternBinding p1, Expr p2) { listpatternbinding_ = p1; expr_ = p2; }
+  public LetRec(ListPatternBinding p1, Expr p2) { listpatternbinding_ = p1; expr_ = p2; }
 
   public <R,A> R accept(stella.Absyn.Expr.Visitor<R,A> v, A arg) { return v.visit(this, arg); }
 
   public boolean equals(java.lang.Object o) {
     if (this == o) return true;
-    if (o instanceof stella.Absyn.Let) {
-      stella.Absyn.Let x = (stella.Absyn.Let)o;
+    if (o instanceof stella.Absyn.LetRec) {
+      stella.Absyn.LetRec x = (stella.Absyn.LetRec)o;
       return this.listpatternbinding_.equals(x.listpatternbinding_) && this.expr_.equals(x.expr_);
     }
     return false;

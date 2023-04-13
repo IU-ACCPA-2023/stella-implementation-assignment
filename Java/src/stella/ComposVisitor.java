@@ -14,7 +14,7 @@ public class ComposVisitor<A> implements
   stella.Absyn.ParamDecl.Visitor<stella.Absyn.ParamDecl,A>,
   stella.Absyn.ReturnType.Visitor<stella.Absyn.ReturnType,A>,
   stella.Absyn.ThrowType.Visitor<stella.Absyn.ThrowType,A>,
-  stella.Absyn.Expr.Visitor<stella.Absyn.Expr,A>,
+  stella.Absyn.Type.Visitor<stella.Absyn.Type,A>,
   stella.Absyn.MatchCase.Visitor<stella.Absyn.MatchCase,A>,
   stella.Absyn.OptionalTyping.Visitor<stella.Absyn.OptionalTyping,A>,
   stella.Absyn.PatternData.Visitor<stella.Absyn.PatternData,A>,
@@ -22,7 +22,8 @@ public class ComposVisitor<A> implements
   stella.Absyn.Pattern.Visitor<stella.Absyn.Pattern,A>,
   stella.Absyn.LabelledPattern.Visitor<stella.Absyn.LabelledPattern,A>,
   stella.Absyn.Binding.Visitor<stella.Absyn.Binding,A>,
-  stella.Absyn.Type.Visitor<stella.Absyn.Type,A>,
+  stella.Absyn.Expr.Visitor<stella.Absyn.Expr,A>,
+  stella.Absyn.PatternBinding.Visitor<stella.Absyn.PatternBinding,A>,
   stella.Absyn.VariantFieldType.Visitor<stella.Absyn.VariantFieldType,A>,
   stella.Absyn.RecordFieldType.Visitor<stella.Absyn.RecordFieldType,A>,
   stella.Absyn.Typing.Visitor<stella.Absyn.Typing,A>
@@ -87,6 +88,17 @@ public class ComposVisitor<A> implements
       stella.Absyn.Type type_ = p.type_.accept(this, arg);
       return new stella.Absyn.DeclTypeAlias(stellaident_, type_);
     }
+    public stella.Absyn.Decl visit(stella.Absyn.DeclExceptionType p, A arg)
+    {
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new stella.Absyn.DeclExceptionType(type_);
+    }
+    public stella.Absyn.Decl visit(stella.Absyn.DeclExceptionVariant p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new stella.Absyn.DeclExceptionVariant(stellaident_, type_);
+    }
 
     /* LocalDecl */
     public stella.Absyn.LocalDecl visit(stella.Absyn.ALocalDecl p, A arg)
@@ -133,367 +145,6 @@ public class ComposVisitor<A> implements
         listtype_.add(x.accept(this,arg));
       }
       return new stella.Absyn.SomeThrowType(listtype_);
-    }
-
-    /* Expr */
-    public stella.Absyn.Expr visit(stella.Absyn.If p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      stella.Absyn.Expr expr_3 = p.expr_3.accept(this, arg);
-      return new stella.Absyn.If(expr_1, expr_2, expr_3);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Let p, A arg)
-    {
-      String stellaident_ = p.stellaident_;
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.Let(stellaident_, expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.LessThan p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.LessThan(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.LessThanOrEqual p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.LessThanOrEqual(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.GreaterThan p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.GreaterThan(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.GreaterThanOrEqual p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.GreaterThanOrEqual(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Equal p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.Equal(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.NotEqual p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.NotEqual(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.TypeAsc p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      stella.Absyn.Type type_ = p.type_.accept(this, arg);
-      return new stella.Absyn.TypeAsc(expr_, type_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Abstraction p, A arg)
-    {
-      stella.Absyn.ListParamDecl listparamdecl_ = new stella.Absyn.ListParamDecl();
-      for (stella.Absyn.ParamDecl x : p.listparamdecl_)
-      {
-        listparamdecl_.add(x.accept(this,arg));
-      }
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Abstraction(listparamdecl_, expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Tuple p, A arg)
-    {
-      stella.Absyn.ListExpr listexpr_ = new stella.Absyn.ListExpr();
-      for (stella.Absyn.Expr x : p.listexpr_)
-      {
-        listexpr_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.Tuple(listexpr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Record p, A arg)
-    {
-      stella.Absyn.ListBinding listbinding_ = new stella.Absyn.ListBinding();
-      for (stella.Absyn.Binding x : p.listbinding_)
-      {
-        listbinding_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.Record(listbinding_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Variant p, A arg)
-    {
-      String stellaident_ = p.stellaident_;
-      stella.Absyn.ExprData exprdata_ = p.exprdata_.accept(this, arg);
-      return new stella.Absyn.Variant(stellaident_, exprdata_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Match p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      stella.Absyn.ListMatchCase listmatchcase_ = new stella.Absyn.ListMatchCase();
-      for (stella.Absyn.MatchCase x : p.listmatchcase_)
-      {
-        listmatchcase_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.Match(expr_, listmatchcase_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.List p, A arg)
-    {
-      stella.Absyn.ListExpr listexpr_ = new stella.Absyn.ListExpr();
-      for (stella.Absyn.Expr x : p.listexpr_)
-      {
-        listexpr_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.List(listexpr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Add p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.Add(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.LogicOr p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.LogicOr(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Multiply p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.Multiply(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.LogicAnd p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.LogicAnd(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Application p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      stella.Absyn.ListExpr listexpr_ = new stella.Absyn.ListExpr();
-      for (stella.Absyn.Expr x : p.listexpr_)
-      {
-        listexpr_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.Application(expr_, listexpr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.ConsList p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      return new stella.Absyn.ConsList(expr_1, expr_2);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Head p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Head(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.IsEmpty p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.IsEmpty(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Tail p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Tail(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Succ p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Succ(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.LogicNot p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.LogicNot(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Pred p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Pred(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.IsZero p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.IsZero(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Fix p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Fix(expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.NatRec p, A arg)
-    {
-      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
-      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
-      stella.Absyn.Expr expr_3 = p.expr_3.accept(this, arg);
-      return new stella.Absyn.NatRec(expr_1, expr_2, expr_3);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Fold p, A arg)
-    {
-      stella.Absyn.Type type_ = p.type_.accept(this, arg);
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Fold(type_, expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Unfold p, A arg)
-    {
-      stella.Absyn.Type type_ = p.type_.accept(this, arg);
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.Unfold(type_, expr_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.DotRecord p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      String stellaident_ = p.stellaident_;
-      return new stella.Absyn.DotRecord(expr_, stellaident_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.DotTuple p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      Integer integer_ = p.integer_;
-      return new stella.Absyn.DotTuple(expr_, integer_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.ConstTrue p, A arg)
-    {
-      return new stella.Absyn.ConstTrue();
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.ConstFalse p, A arg)
-    {
-      return new stella.Absyn.ConstFalse();
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.ConstInt p, A arg)
-    {
-      Integer integer_ = p.integer_;
-      return new stella.Absyn.ConstInt(integer_);
-    }
-    public stella.Absyn.Expr visit(stella.Absyn.Var p, A arg)
-    {
-      String stellaident_ = p.stellaident_;
-      return new stella.Absyn.Var(stellaident_);
-    }
-
-    /* MatchCase */
-    public stella.Absyn.MatchCase visit(stella.Absyn.AMatchCase p, A arg)
-    {
-      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.AMatchCase(pattern_, expr_);
-    }
-
-    /* OptionalTyping */
-    public stella.Absyn.OptionalTyping visit(stella.Absyn.NoTyping p, A arg)
-    {
-      return new stella.Absyn.NoTyping();
-    }
-    public stella.Absyn.OptionalTyping visit(stella.Absyn.SomeTyping p, A arg)
-    {
-      stella.Absyn.Type type_ = p.type_.accept(this, arg);
-      return new stella.Absyn.SomeTyping(type_);
-    }
-
-    /* PatternData */
-    public stella.Absyn.PatternData visit(stella.Absyn.NoPatternData p, A arg)
-    {
-      return new stella.Absyn.NoPatternData();
-    }
-    public stella.Absyn.PatternData visit(stella.Absyn.SomePatternData p, A arg)
-    {
-      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
-      return new stella.Absyn.SomePatternData(pattern_);
-    }
-
-    /* ExprData */
-    public stella.Absyn.ExprData visit(stella.Absyn.NoExprData p, A arg)
-    {
-      return new stella.Absyn.NoExprData();
-    }
-    public stella.Absyn.ExprData visit(stella.Absyn.SomeExprData p, A arg)
-    {
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.SomeExprData(expr_);
-    }
-
-    /* Pattern */
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternVariant p, A arg)
-    {
-      String stellaident_ = p.stellaident_;
-      stella.Absyn.PatternData patterndata_ = p.patterndata_.accept(this, arg);
-      return new stella.Absyn.PatternVariant(stellaident_, patterndata_);
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternTuple p, A arg)
-    {
-      stella.Absyn.ListPattern listpattern_ = new stella.Absyn.ListPattern();
-      for (stella.Absyn.Pattern x : p.listpattern_)
-      {
-        listpattern_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.PatternTuple(listpattern_);
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternRecord p, A arg)
-    {
-      stella.Absyn.ListLabelledPattern listlabelledpattern_ = new stella.Absyn.ListLabelledPattern();
-      for (stella.Absyn.LabelledPattern x : p.listlabelledpattern_)
-      {
-        listlabelledpattern_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.PatternRecord(listlabelledpattern_);
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternList p, A arg)
-    {
-      stella.Absyn.ListPattern listpattern_ = new stella.Absyn.ListPattern();
-      for (stella.Absyn.Pattern x : p.listpattern_)
-      {
-        listpattern_.add(x.accept(this,arg));
-      }
-      return new stella.Absyn.PatternList(listpattern_);
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternCons p, A arg)
-    {
-      stella.Absyn.Pattern pattern_1 = p.pattern_1.accept(this, arg);
-      stella.Absyn.Pattern pattern_2 = p.pattern_2.accept(this, arg);
-      return new stella.Absyn.PatternCons(pattern_1, pattern_2);
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternFalse p, A arg)
-    {
-      return new stella.Absyn.PatternFalse();
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternTrue p, A arg)
-    {
-      return new stella.Absyn.PatternTrue();
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternInt p, A arg)
-    {
-      Integer integer_ = p.integer_;
-      return new stella.Absyn.PatternInt(integer_);
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternSucc p, A arg)
-    {
-      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
-      return new stella.Absyn.PatternSucc(pattern_);
-    }
-    public stella.Absyn.Pattern visit(stella.Absyn.PatternVar p, A arg)
-    {
-      String stellaident_ = p.stellaident_;
-      return new stella.Absyn.PatternVar(stellaident_);
-    }
-
-    /* LabelledPattern */
-    public stella.Absyn.LabelledPattern visit(stella.Absyn.ALabelledPattern p, A arg)
-    {
-      String stellaident_ = p.stellaident_;
-      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
-      return new stella.Absyn.ALabelledPattern(stellaident_, pattern_);
-    }
-
-    /* Binding */
-    public stella.Absyn.Binding visit(stella.Absyn.ABinding p, A arg)
-    {
-      String stellaident_ = p.stellaident_;
-      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
-      return new stella.Absyn.ABinding(stellaident_, expr_);
     }
 
     /* Type */
@@ -563,10 +214,500 @@ public class ComposVisitor<A> implements
     {
       return new stella.Absyn.TypeUnit();
     }
+    public stella.Absyn.Type visit(stella.Absyn.TypeTop p, A arg)
+    {
+      return new stella.Absyn.TypeTop();
+    }
+    public stella.Absyn.Type visit(stella.Absyn.TypeBottom p, A arg)
+    {
+      return new stella.Absyn.TypeBottom();
+    }
+    public stella.Absyn.Type visit(stella.Absyn.TypeRef p, A arg)
+    {
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new stella.Absyn.TypeRef(type_);
+    }
     public stella.Absyn.Type visit(stella.Absyn.TypeVar p, A arg)
     {
       String stellaident_ = p.stellaident_;
       return new stella.Absyn.TypeVar(stellaident_);
+    }
+
+    /* MatchCase */
+    public stella.Absyn.MatchCase visit(stella.Absyn.AMatchCase p, A arg)
+    {
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.AMatchCase(pattern_, expr_);
+    }
+
+    /* OptionalTyping */
+    public stella.Absyn.OptionalTyping visit(stella.Absyn.NoTyping p, A arg)
+    {
+      return new stella.Absyn.NoTyping();
+    }
+    public stella.Absyn.OptionalTyping visit(stella.Absyn.SomeTyping p, A arg)
+    {
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new stella.Absyn.SomeTyping(type_);
+    }
+
+    /* PatternData */
+    public stella.Absyn.PatternData visit(stella.Absyn.NoPatternData p, A arg)
+    {
+      return new stella.Absyn.NoPatternData();
+    }
+    public stella.Absyn.PatternData visit(stella.Absyn.SomePatternData p, A arg)
+    {
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      return new stella.Absyn.SomePatternData(pattern_);
+    }
+
+    /* ExprData */
+    public stella.Absyn.ExprData visit(stella.Absyn.NoExprData p, A arg)
+    {
+      return new stella.Absyn.NoExprData();
+    }
+    public stella.Absyn.ExprData visit(stella.Absyn.SomeExprData p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.SomeExprData(expr_);
+    }
+
+    /* Pattern */
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternVariant p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      stella.Absyn.PatternData patterndata_ = p.patterndata_.accept(this, arg);
+      return new stella.Absyn.PatternVariant(stellaident_, patterndata_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternInl p, A arg)
+    {
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      return new stella.Absyn.PatternInl(pattern_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternInr p, A arg)
+    {
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      return new stella.Absyn.PatternInr(pattern_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternTuple p, A arg)
+    {
+      stella.Absyn.ListPattern listpattern_ = new stella.Absyn.ListPattern();
+      for (stella.Absyn.Pattern x : p.listpattern_)
+      {
+        listpattern_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.PatternTuple(listpattern_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternRecord p, A arg)
+    {
+      stella.Absyn.ListLabelledPattern listlabelledpattern_ = new stella.Absyn.ListLabelledPattern();
+      for (stella.Absyn.LabelledPattern x : p.listlabelledpattern_)
+      {
+        listlabelledpattern_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.PatternRecord(listlabelledpattern_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternList p, A arg)
+    {
+      stella.Absyn.ListPattern listpattern_ = new stella.Absyn.ListPattern();
+      for (stella.Absyn.Pattern x : p.listpattern_)
+      {
+        listpattern_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.PatternList(listpattern_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternCons p, A arg)
+    {
+      stella.Absyn.Pattern pattern_1 = p.pattern_1.accept(this, arg);
+      stella.Absyn.Pattern pattern_2 = p.pattern_2.accept(this, arg);
+      return new stella.Absyn.PatternCons(pattern_1, pattern_2);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternFalse p, A arg)
+    {
+      return new stella.Absyn.PatternFalse();
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternTrue p, A arg)
+    {
+      return new stella.Absyn.PatternTrue();
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternUnit p, A arg)
+    {
+      return new stella.Absyn.PatternUnit();
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternInt p, A arg)
+    {
+      Integer integer_ = p.integer_;
+      return new stella.Absyn.PatternInt(integer_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternSucc p, A arg)
+    {
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      return new stella.Absyn.PatternSucc(pattern_);
+    }
+    public stella.Absyn.Pattern visit(stella.Absyn.PatternVar p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      return new stella.Absyn.PatternVar(stellaident_);
+    }
+
+    /* LabelledPattern */
+    public stella.Absyn.LabelledPattern visit(stella.Absyn.ALabelledPattern p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      return new stella.Absyn.ALabelledPattern(stellaident_, pattern_);
+    }
+
+    /* Binding */
+    public stella.Absyn.Binding visit(stella.Absyn.ABinding p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.ABinding(stellaident_, expr_);
+    }
+
+    /* Expr */
+    public stella.Absyn.Expr visit(stella.Absyn.Sequence p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.Sequence(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Let p, A arg)
+    {
+      stella.Absyn.ListPatternBinding listpatternbinding_ = new stella.Absyn.ListPatternBinding();
+      for (stella.Absyn.PatternBinding x : p.listpatternbinding_)
+      {
+        listpatternbinding_.add(x.accept(this,arg));
+      }
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Let(listpatternbinding_, expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.LetRec p, A arg)
+    {
+      stella.Absyn.ListPatternBinding listpatternbinding_ = new stella.Absyn.ListPatternBinding();
+      for (stella.Absyn.PatternBinding x : p.listpatternbinding_)
+      {
+        listpatternbinding_.add(x.accept(this,arg));
+      }
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.LetRec(listpatternbinding_, expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Assign p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.Assign(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.If p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      stella.Absyn.Expr expr_3 = p.expr_3.accept(this, arg);
+      return new stella.Absyn.If(expr_1, expr_2, expr_3);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.LessThan p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.LessThan(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.LessThanOrEqual p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.LessThanOrEqual(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.GreaterThan p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.GreaterThan(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.GreaterThanOrEqual p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.GreaterThanOrEqual(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Equal p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.Equal(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.NotEqual p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.NotEqual(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.TypeAsc p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new stella.Absyn.TypeAsc(expr_, type_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.TypeCast p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      return new stella.Absyn.TypeCast(expr_, type_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Abstraction p, A arg)
+    {
+      stella.Absyn.ListParamDecl listparamdecl_ = new stella.Absyn.ListParamDecl();
+      for (stella.Absyn.ParamDecl x : p.listparamdecl_)
+      {
+        listparamdecl_.add(x.accept(this,arg));
+      }
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Abstraction(listparamdecl_, expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Variant p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      stella.Absyn.ExprData exprdata_ = p.exprdata_.accept(this, arg);
+      return new stella.Absyn.Variant(stellaident_, exprdata_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Match p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      stella.Absyn.ListMatchCase listmatchcase_ = new stella.Absyn.ListMatchCase();
+      for (stella.Absyn.MatchCase x : p.listmatchcase_)
+      {
+        listmatchcase_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.Match(expr_, listmatchcase_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.List p, A arg)
+    {
+      stella.Absyn.ListExpr listexpr_ = new stella.Absyn.ListExpr();
+      for (stella.Absyn.Expr x : p.listexpr_)
+      {
+        listexpr_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.List(listexpr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Add p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.Add(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Subtract p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.Subtract(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.LogicOr p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.LogicOr(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Multiply p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.Multiply(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Divide p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.Divide(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.LogicAnd p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.LogicAnd(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Ref p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Ref(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Deref p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Deref(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Application p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      stella.Absyn.ListExpr listexpr_ = new stella.Absyn.ListExpr();
+      for (stella.Absyn.Expr x : p.listexpr_)
+      {
+        listexpr_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.Application(expr_, listexpr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.DotRecord p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      String stellaident_ = p.stellaident_;
+      return new stella.Absyn.DotRecord(expr_, stellaident_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.DotTuple p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      Integer integer_ = p.integer_;
+      return new stella.Absyn.DotTuple(expr_, integer_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Tuple p, A arg)
+    {
+      stella.Absyn.ListExpr listexpr_ = new stella.Absyn.ListExpr();
+      for (stella.Absyn.Expr x : p.listexpr_)
+      {
+        listexpr_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.Tuple(listexpr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Record p, A arg)
+    {
+      stella.Absyn.ListBinding listbinding_ = new stella.Absyn.ListBinding();
+      for (stella.Absyn.Binding x : p.listbinding_)
+      {
+        listbinding_.add(x.accept(this,arg));
+      }
+      return new stella.Absyn.Record(listbinding_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.ConsList p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.ConsList(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Head p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Head(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.IsEmpty p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.IsEmpty(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Tail p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Tail(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Panic p, A arg)
+    {
+      return new stella.Absyn.Panic();
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Throw p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Throw(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.TryCatch p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.TryCatch(expr_1, pattern_, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.TryWith p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      return new stella.Absyn.TryWith(expr_1, expr_2);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Inl p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Inl(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Inr p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Inr(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Succ p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Succ(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.LogicNot p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.LogicNot(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Pred p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Pred(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.IsZero p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.IsZero(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Fix p, A arg)
+    {
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Fix(expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.NatRec p, A arg)
+    {
+      stella.Absyn.Expr expr_1 = p.expr_1.accept(this, arg);
+      stella.Absyn.Expr expr_2 = p.expr_2.accept(this, arg);
+      stella.Absyn.Expr expr_3 = p.expr_3.accept(this, arg);
+      return new stella.Absyn.NatRec(expr_1, expr_2, expr_3);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Fold p, A arg)
+    {
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Fold(type_, expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Unfold p, A arg)
+    {
+      stella.Absyn.Type type_ = p.type_.accept(this, arg);
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.Unfold(type_, expr_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.ConstTrue p, A arg)
+    {
+      return new stella.Absyn.ConstTrue();
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.ConstFalse p, A arg)
+    {
+      return new stella.Absyn.ConstFalse();
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.ConstUnit p, A arg)
+    {
+      return new stella.Absyn.ConstUnit();
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.ConstInt p, A arg)
+    {
+      Integer integer_ = p.integer_;
+      return new stella.Absyn.ConstInt(integer_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.ConstMemory p, A arg)
+    {
+      String memoryaddress_ = p.memoryaddress_;
+      return new stella.Absyn.ConstMemory(memoryaddress_);
+    }
+    public stella.Absyn.Expr visit(stella.Absyn.Var p, A arg)
+    {
+      String stellaident_ = p.stellaident_;
+      return new stella.Absyn.Var(stellaident_);
+    }
+
+    /* PatternBinding */
+    public stella.Absyn.PatternBinding visit(stella.Absyn.APatternBinding p, A arg)
+    {
+      stella.Absyn.Pattern pattern_ = p.pattern_.accept(this, arg);
+      stella.Absyn.Expr expr_ = p.expr_.accept(this, arg);
+      return new stella.Absyn.APatternBinding(pattern_, expr_);
     }
 
     /* VariantFieldType */

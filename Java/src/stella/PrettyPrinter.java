@@ -65,21 +65,6 @@ public class PrettyPrinter
 
 
   //  print and show methods are defined for each category.
-  public static String print(stella.Absyn.ListStellaIdent foo)
-  {
-    pp(foo, 0);
-    trim();
-    String temp = buf_.toString();
-    buf_.delete(0,buf_.length());
-    return temp;
-  }
-  public static String show(stella.Absyn.ListStellaIdent foo)
-  {
-    sh(foo);
-    String temp = buf_.toString();
-    buf_.delete(0,buf_.length());
-    return temp;
-  }
   public static String print(stella.Absyn.Program foo)
   {
     pp(foo, 0);
@@ -89,6 +74,21 @@ public class PrettyPrinter
     return temp;
   }
   public static String show(stella.Absyn.Program foo)
+  {
+    sh(foo);
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String print(stella.Absyn.ListStellaIdent foo)
+  {
+    pp(foo, 0);
+    trim();
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String show(stella.Absyn.ListStellaIdent foo)
   {
     sh(foo);
     String temp = buf_.toString();
@@ -305,7 +305,7 @@ public class PrettyPrinter
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String print(stella.Absyn.Expr foo)
+  public static String print(stella.Absyn.Type foo)
   {
     pp(foo, 0);
     trim();
@@ -313,14 +313,14 @@ public class PrettyPrinter
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String show(stella.Absyn.Expr foo)
+  public static String show(stella.Absyn.Type foo)
   {
     sh(foo);
     String temp = buf_.toString();
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String print(stella.Absyn.ListExpr foo)
+  public static String print(stella.Absyn.ListType foo)
   {
     pp(foo, 0);
     trim();
@@ -328,7 +328,7 @@ public class PrettyPrinter
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String show(stella.Absyn.ListExpr foo)
+  public static String show(stella.Absyn.ListType foo)
   {
     sh(foo);
     String temp = buf_.toString();
@@ -500,7 +500,7 @@ public class PrettyPrinter
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String print(stella.Absyn.Type foo)
+  public static String print(stella.Absyn.Expr foo)
   {
     pp(foo, 0);
     trim();
@@ -508,14 +508,14 @@ public class PrettyPrinter
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String show(stella.Absyn.Type foo)
+  public static String show(stella.Absyn.Expr foo)
   {
     sh(foo);
     String temp = buf_.toString();
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String print(stella.Absyn.ListType foo)
+  public static String print(stella.Absyn.ListExpr foo)
   {
     pp(foo, 0);
     trim();
@@ -523,7 +523,37 @@ public class PrettyPrinter
     buf_.delete(0,buf_.length());
     return temp;
   }
-  public static String show(stella.Absyn.ListType foo)
+  public static String show(stella.Absyn.ListExpr foo)
+  {
+    sh(foo);
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String print(stella.Absyn.PatternBinding foo)
+  {
+    pp(foo, 0);
+    trim();
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String show(stella.Absyn.PatternBinding foo)
+  {
+    sh(foo);
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String print(stella.Absyn.ListPatternBinding foo)
+  {
+    pp(foo, 0);
+    trim();
+    String temp = buf_.toString();
+    buf_.delete(0,buf_.length());
+    return temp;
+  }
+  public static String show(stella.Absyn.ListPatternBinding foo)
   {
     sh(foo);
     String temp = buf_.toString();
@@ -607,6 +637,20 @@ public class PrettyPrinter
   }
   /***   You shouldn't need to change anything beyond this point.   ***/
 
+  private static void pp(stella.Absyn.Program foo, int _i_)
+  {
+    if (foo instanceof stella.Absyn.AProgram)
+    {
+       stella.Absyn.AProgram _aprogram = (stella.Absyn.AProgram) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       pp(_aprogram.languagedecl_, 0);
+       pp(_aprogram.listextension_, 0);
+       pp(_aprogram.listdecl_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+
+  }
+
   private static void pp(stella.Absyn.ListStellaIdent foo, int _i_)
   {
     ppListStellaIdent(foo.iterator(), _i_);
@@ -628,20 +672,6 @@ public class PrettyPrinter
     }
   }
 
-
-  private static void pp(stella.Absyn.Program foo, int _i_)
-  {
-    if (foo instanceof stella.Absyn.AProgram)
-    {
-       stella.Absyn.AProgram _aprogram = (stella.Absyn.AProgram) foo;
-       if (_i_ > 0) render(_L_PAREN);
-       pp(_aprogram.languagedecl_, 0);
-       pp(_aprogram.listextension_, 0);
-       pp(_aprogram.listdecl_, 0);
-       if (_i_ > 0) render(_R_PAREN);
-    }
-
-  }
 
   private static void pp(stella.Absyn.LanguageDecl foo, int _i_)
   {
@@ -726,7 +756,6 @@ public class PrettyPrinter
        pp(_declfun.listdecl_, 0);
        render("return");
        pp(_declfun.expr_, 0);
-       render(";");
        render("}");
        if (_i_ > 0) render(_R_PAREN);
     }
@@ -738,6 +767,27 @@ public class PrettyPrinter
        pp(_decltypealias.stellaident_, 0);
        render("=");
        pp(_decltypealias.type_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.DeclExceptionType)
+    {
+       stella.Absyn.DeclExceptionType _declexceptiontype = (stella.Absyn.DeclExceptionType) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("exception");
+       render("type");
+       render("=");
+       pp(_declexceptiontype.type_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.DeclExceptionVariant)
+    {
+       stella.Absyn.DeclExceptionVariant _declexceptionvariant = (stella.Absyn.DeclExceptionVariant) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("exception");
+       render("variant");
+       pp(_declexceptionvariant.stellaident_, 0);
+       render(":");
+       pp(_declexceptionvariant.type_, 0);
        if (_i_ > 0) render(_R_PAREN);
     }
 
@@ -880,405 +930,159 @@ public class PrettyPrinter
        stella.Absyn.SomeThrowType _somethrowtype = (stella.Absyn.SomeThrowType) foo;
        if (_i_ > 0) render(_L_PAREN);
        render("throws");
-       pp(_somethrowtype.listtype_, 0);
+       pp(_somethrowtype.listtype_, 9);
        if (_i_ > 0) render(_R_PAREN);
     }
 
   }
 
-  private static void pp(stella.Absyn.Expr foo, int _i_)
+  private static void pp(stella.Absyn.Type foo, int _i_)
   {
-    if (foo instanceof stella.Absyn.If)
+    if (foo instanceof stella.Absyn.TypeFun)
     {
-       stella.Absyn.If _if = (stella.Absyn.If) foo;
+       stella.Absyn.TypeFun _typefun = (stella.Absyn.TypeFun) foo;
        if (_i_ > 0) render(_L_PAREN);
-       render("if");
-       pp(_if.expr_1, 0);
-       render("then");
-       pp(_if.expr_2, 0);
-       render("else");
-       pp(_if.expr_3, 0);
-       if (_i_ > 0) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Let)
-    {
-       stella.Absyn.Let _let = (stella.Absyn.Let) foo;
-       if (_i_ > 0) render(_L_PAREN);
-       render("let");
-       pp(_let.stellaident_, 0);
-       render("=");
-       pp(_let.expr_1, 0);
-       render("in");
-       pp(_let.expr_2, 0);
-       if (_i_ > 0) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.LessThan)
-    {
-       stella.Absyn.LessThan _lessthan = (stella.Absyn.LessThan) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       pp(_lessthan.expr_1, 2);
-       render("<");
-       pp(_lessthan.expr_2, 2);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.LessThanOrEqual)
-    {
-       stella.Absyn.LessThanOrEqual _lessthanorequal = (stella.Absyn.LessThanOrEqual) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       pp(_lessthanorequal.expr_1, 2);
-       render("<=");
-       pp(_lessthanorequal.expr_2, 2);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.GreaterThan)
-    {
-       stella.Absyn.GreaterThan _greaterthan = (stella.Absyn.GreaterThan) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       pp(_greaterthan.expr_1, 2);
-       render(">");
-       pp(_greaterthan.expr_2, 2);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.GreaterThanOrEqual)
-    {
-       stella.Absyn.GreaterThanOrEqual _greaterthanorequal = (stella.Absyn.GreaterThanOrEqual) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       pp(_greaterthanorequal.expr_1, 2);
-       render(">=");
-       pp(_greaterthanorequal.expr_2, 2);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Equal)
-    {
-       stella.Absyn.Equal _equal = (stella.Absyn.Equal) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       pp(_equal.expr_1, 2);
-       render("==");
-       pp(_equal.expr_2, 2);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.NotEqual)
-    {
-       stella.Absyn.NotEqual _notequal = (stella.Absyn.NotEqual) foo;
-       if (_i_ > 1) render(_L_PAREN);
-       pp(_notequal.expr_1, 2);
-       render("!=");
-       pp(_notequal.expr_2, 2);
-       if (_i_ > 1) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.TypeAsc)
-    {
-       stella.Absyn.TypeAsc _typeasc = (stella.Absyn.TypeAsc) foo;
-       if (_i_ > 2) render(_L_PAREN);
-       pp(_typeasc.expr_, 2);
-       render("as");
-       pp(_typeasc.type_, 0);
-       if (_i_ > 2) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Abstraction)
-    {
-       stella.Absyn.Abstraction _abstraction = (stella.Absyn.Abstraction) foo;
-       if (_i_ > 2) render(_L_PAREN);
        render("fn");
        render("(");
-       pp(_abstraction.listparamdecl_, 0);
+       pp(_typefun.listtype_, 0);
        render(")");
-       render("{");
-       render("return");
-       pp(_abstraction.expr_, 0);
-       render(";");
-       render("}");
-       if (_i_ > 2) render(_R_PAREN);
+       render("->");
+       pp(_typefun.type_, 0);
+       if (_i_ > 0) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Tuple)
+    else     if (foo instanceof stella.Absyn.TypeRec)
     {
-       stella.Absyn.Tuple _tuple = (stella.Absyn.Tuple) foo;
+       stella.Absyn.TypeRec _typerec = (stella.Absyn.TypeRec) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("µ");
+       pp(_typerec.stellaident_, 0);
+       render(".");
+       pp(_typerec.type_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.TypeSum)
+    {
+       stella.Absyn.TypeSum _typesum = (stella.Absyn.TypeSum) foo;
+       if (_i_ > 1) render(_L_PAREN);
+       pp(_typesum.type_1, 2);
+       render("+");
+       pp(_typesum.type_2, 2);
+       if (_i_ > 1) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.TypeTuple)
+    {
+       stella.Absyn.TypeTuple _typetuple = (stella.Absyn.TypeTuple) foo;
        if (_i_ > 2) render(_L_PAREN);
        render("{");
-       pp(_tuple.listexpr_, 0);
+       pp(_typetuple.listtype_, 0);
        render("}");
        if (_i_ > 2) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Record)
+    else     if (foo instanceof stella.Absyn.TypeRecord)
     {
-       stella.Absyn.Record _record = (stella.Absyn.Record) foo;
+       stella.Absyn.TypeRecord _typerecord = (stella.Absyn.TypeRecord) foo;
        if (_i_ > 2) render(_L_PAREN);
-       render("record");
        render("{");
-       pp(_record.listbinding_, 0);
+       pp(_typerecord.listrecordfieldtype_, 0);
        render("}");
        if (_i_ > 2) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Variant)
+    else     if (foo instanceof stella.Absyn.TypeVariant)
     {
-       stella.Absyn.Variant _variant = (stella.Absyn.Variant) foo;
+       stella.Absyn.TypeVariant _typevariant = (stella.Absyn.TypeVariant) foo;
        if (_i_ > 2) render(_L_PAREN);
        render("<|");
-       pp(_variant.stellaident_, 0);
-       pp(_variant.exprdata_, 0);
+       pp(_typevariant.listvariantfieldtype_, 0);
        render("|>");
        if (_i_ > 2) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Match)
+    else     if (foo instanceof stella.Absyn.TypeList)
     {
-       stella.Absyn.Match _match = (stella.Absyn.Match) foo;
-       if (_i_ > 2) render(_L_PAREN);
-       render("match");
-       pp(_match.expr_, 1);
-       render("{");
-       pp(_match.listmatchcase_, 0);
-       render("}");
-       if (_i_ > 2) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.List)
-    {
-       stella.Absyn.List _list = (stella.Absyn.List) foo;
+       stella.Absyn.TypeList _typelist = (stella.Absyn.TypeList) foo;
        if (_i_ > 2) render(_L_PAREN);
        render("[");
-       pp(_list.listexpr_, 0);
+       pp(_typelist.type_, 0);
        render("]");
        if (_i_ > 2) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Add)
+    else     if (foo instanceof stella.Absyn.TypeBool)
     {
-       stella.Absyn.Add _add = (stella.Absyn.Add) foo;
-       if (_i_ > 2) render(_L_PAREN);
-       pp(_add.expr_1, 2);
-       render("+");
-       pp(_add.expr_2, 3);
-       if (_i_ > 2) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.LogicOr)
-    {
-       stella.Absyn.LogicOr _logicor = (stella.Absyn.LogicOr) foo;
-       if (_i_ > 2) render(_L_PAREN);
-       pp(_logicor.expr_1, 2);
-       render("or");
-       pp(_logicor.expr_2, 3);
-       if (_i_ > 2) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Multiply)
-    {
-       stella.Absyn.Multiply _multiply = (stella.Absyn.Multiply) foo;
+       stella.Absyn.TypeBool _typebool = (stella.Absyn.TypeBool) foo;
        if (_i_ > 3) render(_L_PAREN);
-       pp(_multiply.expr_1, 3);
-       render("*");
-       pp(_multiply.expr_2, 4);
+       render("Bool");
        if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.LogicAnd)
+    else     if (foo instanceof stella.Absyn.TypeNat)
     {
-       stella.Absyn.LogicAnd _logicand = (stella.Absyn.LogicAnd) foo;
+       stella.Absyn.TypeNat _typenat = (stella.Absyn.TypeNat) foo;
        if (_i_ > 3) render(_L_PAREN);
-       pp(_logicand.expr_1, 3);
-       render("and");
-       pp(_logicand.expr_2, 4);
+       render("Nat");
        if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Application)
+    else     if (foo instanceof stella.Absyn.TypeUnit)
     {
-       stella.Absyn.Application _application = (stella.Absyn.Application) foo;
-       if (_i_ > 4) render(_L_PAREN);
-       pp(_application.expr_, 4);
-       render("(");
-       pp(_application.listexpr_, 0);
-       render(")");
-       if (_i_ > 4) render(_R_PAREN);
+       stella.Absyn.TypeUnit _typeunit = (stella.Absyn.TypeUnit) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("Unit");
+       if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.ConsList)
+    else     if (foo instanceof stella.Absyn.TypeTop)
     {
-       stella.Absyn.ConsList _conslist = (stella.Absyn.ConsList) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("cons");
-       render("(");
-       pp(_conslist.expr_1, 0);
-       render(",");
-       pp(_conslist.expr_2, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
+       stella.Absyn.TypeTop _typetop = (stella.Absyn.TypeTop) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("Top");
+       if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Head)
+    else     if (foo instanceof stella.Absyn.TypeBottom)
     {
-       stella.Absyn.Head _head = (stella.Absyn.Head) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("List::head");
-       render("(");
-       pp(_head.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
+       stella.Absyn.TypeBottom _typebottom = (stella.Absyn.TypeBottom) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("Bot");
+       if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.IsEmpty)
+    else     if (foo instanceof stella.Absyn.TypeRef)
     {
-       stella.Absyn.IsEmpty _isempty = (stella.Absyn.IsEmpty) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("List::isempty");
-       render("(");
-       pp(_isempty.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
+       stella.Absyn.TypeRef _typeref = (stella.Absyn.TypeRef) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("&");
+       pp(_typeref.type_, 2);
+       if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.Tail)
+    else     if (foo instanceof stella.Absyn.TypeVar)
     {
-       stella.Absyn.Tail _tail = (stella.Absyn.Tail) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("List::tail");
-       render("(");
-       pp(_tail.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Succ)
-    {
-       stella.Absyn.Succ _succ = (stella.Absyn.Succ) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("succ");
-       render("(");
-       pp(_succ.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.LogicNot)
-    {
-       stella.Absyn.LogicNot _logicnot = (stella.Absyn.LogicNot) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("not");
-       render("(");
-       pp(_logicnot.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Pred)
-    {
-       stella.Absyn.Pred _pred = (stella.Absyn.Pred) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("Nat::pred");
-       render("(");
-       pp(_pred.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.IsZero)
-    {
-       stella.Absyn.IsZero _iszero = (stella.Absyn.IsZero) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("Nat::iszero");
-       render("(");
-       pp(_iszero.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Fix)
-    {
-       stella.Absyn.Fix _fix = (stella.Absyn.Fix) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("fix");
-       render("(");
-       pp(_fix.expr_, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.NatRec)
-    {
-       stella.Absyn.NatRec _natrec = (stella.Absyn.NatRec) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("Nat::rec");
-       render("(");
-       pp(_natrec.expr_1, 0);
-       render(",");
-       pp(_natrec.expr_2, 0);
-       render(",");
-       pp(_natrec.expr_3, 0);
-       render(")");
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Fold)
-    {
-       stella.Absyn.Fold _fold = (stella.Absyn.Fold) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("fold");
-       render("[");
-       pp(_fold.type_, 0);
-       render("]");
-       pp(_fold.expr_, 6);
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Unfold)
-    {
-       stella.Absyn.Unfold _unfold = (stella.Absyn.Unfold) foo;
-       if (_i_ > 5) render(_L_PAREN);
-       render("unfold");
-       render("[");
-       pp(_unfold.type_, 0);
-       render("]");
-       pp(_unfold.expr_, 6);
-       if (_i_ > 5) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.DotRecord)
-    {
-       stella.Absyn.DotRecord _dotrecord = (stella.Absyn.DotRecord) foo;
-       if (_i_ > 6) render(_L_PAREN);
-       pp(_dotrecord.expr_, 6);
-       render(".");
-       pp(_dotrecord.stellaident_, 0);
-       if (_i_ > 6) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.DotTuple)
-    {
-       stella.Absyn.DotTuple _dottuple = (stella.Absyn.DotTuple) foo;
-       if (_i_ > 6) render(_L_PAREN);
-       pp(_dottuple.expr_, 6);
-       render(".");
-       pp(_dottuple.integer_, 0);
-       if (_i_ > 6) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.ConstTrue)
-    {
-       stella.Absyn.ConstTrue _consttrue = (stella.Absyn.ConstTrue) foo;
-       if (_i_ > 6) render(_L_PAREN);
-       render("true");
-       if (_i_ > 6) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.ConstFalse)
-    {
-       stella.Absyn.ConstFalse _constfalse = (stella.Absyn.ConstFalse) foo;
-       if (_i_ > 6) render(_L_PAREN);
-       render("false");
-       if (_i_ > 6) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.ConstInt)
-    {
-       stella.Absyn.ConstInt _constint = (stella.Absyn.ConstInt) foo;
-       if (_i_ > 6) render(_L_PAREN);
-       pp(_constint.integer_, 0);
-       if (_i_ > 6) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.Var)
-    {
-       stella.Absyn.Var _var = (stella.Absyn.Var) foo;
-       if (_i_ > 6) render(_L_PAREN);
-       pp(_var.stellaident_, 0);
-       if (_i_ > 6) render(_R_PAREN);
+       stella.Absyn.TypeVar _typevar = (stella.Absyn.TypeVar) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       pp(_typevar.stellaident_, 0);
+       if (_i_ > 3) render(_R_PAREN);
     }
 
   }
 
-  private static void pp(stella.Absyn.ListExpr foo, int _i_)
+  private static void pp(stella.Absyn.ListType foo, int _i_)
   {
-    ppListExpr(foo.iterator(), _i_);
+    ppListType(foo.iterator(), _i_);
   }
 
-  private static void ppListExpr(java.util.Iterator<stella.Absyn.Expr> it, int _i_)
+  private static void ppListType(java.util.Iterator<stella.Absyn.Type> it, int _i_)
   {
     if (it.hasNext())
     {
-      stella.Absyn.Expr el = it.next();
+      stella.Absyn.Type el = it.next();
       if (!it.hasNext())
       { /* last */
-        pp(el, _i_);
+        switch(_i_)
+    {
+      case 9: pp(el, _i_); break;
+      case 0: pp(el, _i_); break;
+    }
       }
       else
       { /* cons */
-        pp(el, _i_); render(","); ppListExpr(it, _i_);
+        switch(_i_)
+    {
+      case 9: pp(el, _i_); render(","); ppListType(it, _i_); break;
+      case 0: pp(el, _i_); render(","); ppListType(it, _i_); break;
+    }
       }
     }
   }
@@ -1314,7 +1118,7 @@ public class PrettyPrinter
       }
       else
       { /* cons */
-        pp(el, _i_); render(";"); ppListMatchCase(it, _i_);
+        pp(el, _i_); render("|"); ppListMatchCase(it, _i_);
       }
     }
   }
@@ -1389,6 +1193,26 @@ public class PrettyPrinter
        render("|>");
        if (_i_ > 0) render(_R_PAREN);
     }
+    else     if (foo instanceof stella.Absyn.PatternInl)
+    {
+       stella.Absyn.PatternInl _patterninl = (stella.Absyn.PatternInl) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("inl");
+       render("(");
+       pp(_patterninl.pattern_, 0);
+       render(")");
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.PatternInr)
+    {
+       stella.Absyn.PatternInr _patterninr = (stella.Absyn.PatternInr) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("inr");
+       render("(");
+       pp(_patterninr.pattern_, 0);
+       render(")");
+       if (_i_ > 0) render(_R_PAREN);
+    }
     else     if (foo instanceof stella.Absyn.PatternTuple)
     {
        stella.Absyn.PatternTuple _patterntuple = (stella.Absyn.PatternTuple) foo;
@@ -1402,7 +1226,6 @@ public class PrettyPrinter
     {
        stella.Absyn.PatternRecord _patternrecord = (stella.Absyn.PatternRecord) foo;
        if (_i_ > 0) render(_L_PAREN);
-       render("record");
        render("{");
        pp(_patternrecord.listlabelledpattern_, 0);
        render("}");
@@ -1421,7 +1244,6 @@ public class PrettyPrinter
     {
        stella.Absyn.PatternCons _patterncons = (stella.Absyn.PatternCons) foo;
        if (_i_ > 0) render(_L_PAREN);
-       render("cons");
        render("(");
        pp(_patterncons.pattern_1, 0);
        render(",");
@@ -1441,6 +1263,13 @@ public class PrettyPrinter
        stella.Absyn.PatternTrue _patterntrue = (stella.Absyn.PatternTrue) foo;
        if (_i_ > 0) render(_L_PAREN);
        render("true");
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.PatternUnit)
+    {
+       stella.Absyn.PatternUnit _patternunit = (stella.Absyn.PatternUnit) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("unit");
        if (_i_ > 0) render(_R_PAREN);
     }
     else     if (foo instanceof stella.Absyn.PatternInt)
@@ -1564,125 +1393,594 @@ public class PrettyPrinter
   }
 
 
-  private static void pp(stella.Absyn.Type foo, int _i_)
+  private static void pp(stella.Absyn.Expr foo, int _i_)
   {
-    if (foo instanceof stella.Absyn.TypeFun)
+    if (foo instanceof stella.Absyn.Sequence)
     {
-       stella.Absyn.TypeFun _typefun = (stella.Absyn.TypeFun) foo;
+       stella.Absyn.Sequence _sequence = (stella.Absyn.Sequence) foo;
        if (_i_ > 0) render(_L_PAREN);
-       render("fn");
-       render("(");
-       pp(_typefun.listtype_, 0);
-       render(")");
-       render("->");
-       pp(_typefun.type_, 0);
+       pp(_sequence.expr_1, 1);
+       render(";");
+       pp(_sequence.expr_2, 0);
        if (_i_ > 0) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeRec)
+    else     if (foo instanceof stella.Absyn.Let)
     {
-       stella.Absyn.TypeRec _typerec = (stella.Absyn.TypeRec) foo;
+       stella.Absyn.Let _let = (stella.Absyn.Let) foo;
        if (_i_ > 0) render(_L_PAREN);
-       render("µ");
-       pp(_typerec.stellaident_, 0);
-       render(".");
-       pp(_typerec.type_, 0);
+       render("let");
+       pp(_let.listpatternbinding_, 0);
+       render("in");
+       pp(_let.expr_, 0);
        if (_i_ > 0) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeSum)
+    else     if (foo instanceof stella.Absyn.LetRec)
     {
-       stella.Absyn.TypeSum _typesum = (stella.Absyn.TypeSum) foo;
+       stella.Absyn.LetRec _letrec = (stella.Absyn.LetRec) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       render("letrec");
+       pp(_letrec.listpatternbinding_, 0);
+       render("in");
+       pp(_letrec.expr_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Assign)
+    {
+       stella.Absyn.Assign _assign = (stella.Absyn.Assign) foo;
        if (_i_ > 1) render(_L_PAREN);
-       pp(_typesum.type_1, 2);
-       render("+");
-       pp(_typesum.type_2, 2);
+       pp(_assign.expr_1, 2);
+       render(":=");
+       pp(_assign.expr_2, 1);
        if (_i_ > 1) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeTuple)
+    else     if (foo instanceof stella.Absyn.If)
     {
-       stella.Absyn.TypeTuple _typetuple = (stella.Absyn.TypeTuple) foo;
+       stella.Absyn.If _if = (stella.Absyn.If) foo;
+       if (_i_ > 1) render(_L_PAREN);
+       render("if");
+       pp(_if.expr_1, 1);
+       render("then");
+       pp(_if.expr_2, 1);
+       render("else");
+       pp(_if.expr_3, 1);
+       if (_i_ > 1) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.LessThan)
+    {
+       stella.Absyn.LessThan _lessthan = (stella.Absyn.LessThan) foo;
        if (_i_ > 2) render(_L_PAREN);
-       render("{");
-       pp(_typetuple.listtype_, 0);
-       render("}");
+       pp(_lessthan.expr_1, 3);
+       render("<");
+       pp(_lessthan.expr_2, 3);
        if (_i_ > 2) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeRecord)
+    else     if (foo instanceof stella.Absyn.LessThanOrEqual)
     {
-       stella.Absyn.TypeRecord _typerecord = (stella.Absyn.TypeRecord) foo;
+       stella.Absyn.LessThanOrEqual _lessthanorequal = (stella.Absyn.LessThanOrEqual) foo;
        if (_i_ > 2) render(_L_PAREN);
-       render("record");
-       render("{");
-       pp(_typerecord.listrecordfieldtype_, 0);
-       render("}");
+       pp(_lessthanorequal.expr_1, 3);
+       render("<=");
+       pp(_lessthanorequal.expr_2, 3);
        if (_i_ > 2) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeVariant)
+    else     if (foo instanceof stella.Absyn.GreaterThan)
     {
-       stella.Absyn.TypeVariant _typevariant = (stella.Absyn.TypeVariant) foo;
+       stella.Absyn.GreaterThan _greaterthan = (stella.Absyn.GreaterThan) foo;
        if (_i_ > 2) render(_L_PAREN);
-       render("variant");
+       pp(_greaterthan.expr_1, 3);
+       render(">");
+       pp(_greaterthan.expr_2, 3);
+       if (_i_ > 2) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.GreaterThanOrEqual)
+    {
+       stella.Absyn.GreaterThanOrEqual _greaterthanorequal = (stella.Absyn.GreaterThanOrEqual) foo;
+       if (_i_ > 2) render(_L_PAREN);
+       pp(_greaterthanorequal.expr_1, 3);
+       render(">=");
+       pp(_greaterthanorequal.expr_2, 3);
+       if (_i_ > 2) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Equal)
+    {
+       stella.Absyn.Equal _equal = (stella.Absyn.Equal) foo;
+       if (_i_ > 2) render(_L_PAREN);
+       pp(_equal.expr_1, 3);
+       render("==");
+       pp(_equal.expr_2, 3);
+       if (_i_ > 2) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.NotEqual)
+    {
+       stella.Absyn.NotEqual _notequal = (stella.Absyn.NotEqual) foo;
+       if (_i_ > 2) render(_L_PAREN);
+       pp(_notequal.expr_1, 3);
+       render("!=");
+       pp(_notequal.expr_2, 3);
+       if (_i_ > 2) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.TypeAsc)
+    {
+       stella.Absyn.TypeAsc _typeasc = (stella.Absyn.TypeAsc) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       pp(_typeasc.expr_, 3);
+       render("as");
+       pp(_typeasc.type_, 2);
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.TypeCast)
+    {
+       stella.Absyn.TypeCast _typecast = (stella.Absyn.TypeCast) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       pp(_typecast.expr_, 3);
+       render("cast");
+       render("as");
+       pp(_typecast.type_, 2);
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Abstraction)
+    {
+       stella.Absyn.Abstraction _abstraction = (stella.Absyn.Abstraction) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("fn");
+       render("(");
+       pp(_abstraction.listparamdecl_, 0);
+       render(")");
+       render("{");
+       render("return");
+       pp(_abstraction.expr_, 0);
+       render("}");
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Variant)
+    {
+       stella.Absyn.Variant _variant = (stella.Absyn.Variant) foo;
+       if (_i_ > 3) render(_L_PAREN);
        render("<|");
-       pp(_typevariant.listvariantfieldtype_, 0);
+       pp(_variant.stellaident_, 0);
+       pp(_variant.exprdata_, 0);
        render("|>");
-       if (_i_ > 2) render(_R_PAREN);
+       if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeList)
+    else     if (foo instanceof stella.Absyn.Match)
     {
-       stella.Absyn.TypeList _typelist = (stella.Absyn.TypeList) foo;
-       if (_i_ > 2) render(_L_PAREN);
+       stella.Absyn.Match _match = (stella.Absyn.Match) foo;
+       if (_i_ > 3) render(_L_PAREN);
+       render("match");
+       pp(_match.expr_, 2);
+       render("{");
+       pp(_match.listmatchcase_, 0);
+       render("}");
+       if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.List)
+    {
+       stella.Absyn.List _list = (stella.Absyn.List) foo;
+       if (_i_ > 3) render(_L_PAREN);
        render("[");
-       pp(_typelist.type_, 0);
+       pp(_list.listexpr_, 0);
        render("]");
-       if (_i_ > 2) render(_R_PAREN);
-    }
-    else     if (foo instanceof stella.Absyn.TypeBool)
-    {
-       stella.Absyn.TypeBool _typebool = (stella.Absyn.TypeBool) foo;
-       if (_i_ > 3) render(_L_PAREN);
-       render("Bool");
        if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeNat)
+    else     if (foo instanceof stella.Absyn.Add)
     {
-       stella.Absyn.TypeNat _typenat = (stella.Absyn.TypeNat) foo;
+       stella.Absyn.Add _add = (stella.Absyn.Add) foo;
        if (_i_ > 3) render(_L_PAREN);
-       render("Nat");
+       pp(_add.expr_1, 3);
+       render("+");
+       pp(_add.expr_2, 4);
        if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeUnit)
+    else     if (foo instanceof stella.Absyn.Subtract)
     {
-       stella.Absyn.TypeUnit _typeunit = (stella.Absyn.TypeUnit) foo;
+       stella.Absyn.Subtract _subtract = (stella.Absyn.Subtract) foo;
        if (_i_ > 3) render(_L_PAREN);
-       render("Unit");
+       pp(_subtract.expr_1, 3);
+       render("-");
+       pp(_subtract.expr_2, 4);
        if (_i_ > 3) render(_R_PAREN);
     }
-    else     if (foo instanceof stella.Absyn.TypeVar)
+    else     if (foo instanceof stella.Absyn.LogicOr)
     {
-       stella.Absyn.TypeVar _typevar = (stella.Absyn.TypeVar) foo;
+       stella.Absyn.LogicOr _logicor = (stella.Absyn.LogicOr) foo;
        if (_i_ > 3) render(_L_PAREN);
-       pp(_typevar.stellaident_, 0);
+       pp(_logicor.expr_1, 3);
+       render("or");
+       pp(_logicor.expr_2, 4);
        if (_i_ > 3) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Multiply)
+    {
+       stella.Absyn.Multiply _multiply = (stella.Absyn.Multiply) foo;
+       if (_i_ > 4) render(_L_PAREN);
+       pp(_multiply.expr_1, 4);
+       render("*");
+       pp(_multiply.expr_2, 5);
+       if (_i_ > 4) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Divide)
+    {
+       stella.Absyn.Divide _divide = (stella.Absyn.Divide) foo;
+       if (_i_ > 4) render(_L_PAREN);
+       pp(_divide.expr_1, 4);
+       render("/");
+       pp(_divide.expr_2, 5);
+       if (_i_ > 4) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.LogicAnd)
+    {
+       stella.Absyn.LogicAnd _logicand = (stella.Absyn.LogicAnd) foo;
+       if (_i_ > 4) render(_L_PAREN);
+       pp(_logicand.expr_1, 4);
+       render("and");
+       pp(_logicand.expr_2, 5);
+       if (_i_ > 4) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Ref)
+    {
+       stella.Absyn.Ref _ref = (stella.Absyn.Ref) foo;
+       if (_i_ > 5) render(_L_PAREN);
+       render("new");
+       render("(");
+       pp(_ref.expr_, 5);
+       render(")");
+       if (_i_ > 5) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Deref)
+    {
+       stella.Absyn.Deref _deref = (stella.Absyn.Deref) foo;
+       if (_i_ > 5) render(_L_PAREN);
+       render("*");
+       pp(_deref.expr_, 5);
+       if (_i_ > 5) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Application)
+    {
+       stella.Absyn.Application _application = (stella.Absyn.Application) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       pp(_application.expr_, 6);
+       render("(");
+       pp(_application.listexpr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.DotRecord)
+    {
+       stella.Absyn.DotRecord _dotrecord = (stella.Absyn.DotRecord) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       pp(_dotrecord.expr_, 6);
+       render(".");
+       pp(_dotrecord.stellaident_, 0);
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.DotTuple)
+    {
+       stella.Absyn.DotTuple _dottuple = (stella.Absyn.DotTuple) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       pp(_dottuple.expr_, 6);
+       render(".");
+       pp(_dottuple.integer_, 0);
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Tuple)
+    {
+       stella.Absyn.Tuple _tuple = (stella.Absyn.Tuple) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("{");
+       pp(_tuple.listexpr_, 0);
+       render("}");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Record)
+    {
+       stella.Absyn.Record _record = (stella.Absyn.Record) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("{");
+       pp(_record.listbinding_, 0);
+       render("}");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.ConsList)
+    {
+       stella.Absyn.ConsList _conslist = (stella.Absyn.ConsList) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("cons");
+       render("(");
+       pp(_conslist.expr_1, 0);
+       render(",");
+       pp(_conslist.expr_2, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Head)
+    {
+       stella.Absyn.Head _head = (stella.Absyn.Head) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("List::head");
+       render("(");
+       pp(_head.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.IsEmpty)
+    {
+       stella.Absyn.IsEmpty _isempty = (stella.Absyn.IsEmpty) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("List::isempty");
+       render("(");
+       pp(_isempty.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Tail)
+    {
+       stella.Absyn.Tail _tail = (stella.Absyn.Tail) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("List::tail");
+       render("(");
+       pp(_tail.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Panic)
+    {
+       stella.Absyn.Panic _panic = (stella.Absyn.Panic) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("panic!");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Throw)
+    {
+       stella.Absyn.Throw _throw = (stella.Absyn.Throw) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("throw");
+       render("(");
+       pp(_throw.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.TryCatch)
+    {
+       stella.Absyn.TryCatch _trycatch = (stella.Absyn.TryCatch) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("try");
+       render("{");
+       pp(_trycatch.expr_1, 0);
+       render("}");
+       render("catch");
+       render("{");
+       pp(_trycatch.pattern_, 0);
+       render("=>");
+       pp(_trycatch.expr_2, 0);
+       render("}");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.TryWith)
+    {
+       stella.Absyn.TryWith _trywith = (stella.Absyn.TryWith) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("try");
+       render("{");
+       pp(_trywith.expr_1, 0);
+       render("}");
+       render("with");
+       render("{");
+       pp(_trywith.expr_2, 0);
+       render("}");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Inl)
+    {
+       stella.Absyn.Inl _inl = (stella.Absyn.Inl) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("inl");
+       render("(");
+       pp(_inl.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Inr)
+    {
+       stella.Absyn.Inr _inr = (stella.Absyn.Inr) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("inr");
+       render("(");
+       pp(_inr.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Succ)
+    {
+       stella.Absyn.Succ _succ = (stella.Absyn.Succ) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("succ");
+       render("(");
+       pp(_succ.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.LogicNot)
+    {
+       stella.Absyn.LogicNot _logicnot = (stella.Absyn.LogicNot) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("not");
+       render("(");
+       pp(_logicnot.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Pred)
+    {
+       stella.Absyn.Pred _pred = (stella.Absyn.Pred) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("Nat::pred");
+       render("(");
+       pp(_pred.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.IsZero)
+    {
+       stella.Absyn.IsZero _iszero = (stella.Absyn.IsZero) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("Nat::iszero");
+       render("(");
+       pp(_iszero.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Fix)
+    {
+       stella.Absyn.Fix _fix = (stella.Absyn.Fix) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("fix");
+       render("(");
+       pp(_fix.expr_, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.NatRec)
+    {
+       stella.Absyn.NatRec _natrec = (stella.Absyn.NatRec) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("Nat::rec");
+       render("(");
+       pp(_natrec.expr_1, 0);
+       render(",");
+       pp(_natrec.expr_2, 0);
+       render(",");
+       pp(_natrec.expr_3, 0);
+       render(")");
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Fold)
+    {
+       stella.Absyn.Fold _fold = (stella.Absyn.Fold) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("fold");
+       render("[");
+       pp(_fold.type_, 0);
+       render("]");
+       pp(_fold.expr_, 7);
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Unfold)
+    {
+       stella.Absyn.Unfold _unfold = (stella.Absyn.Unfold) foo;
+       if (_i_ > 6) render(_L_PAREN);
+       render("unfold");
+       render("[");
+       pp(_unfold.type_, 0);
+       render("]");
+       pp(_unfold.expr_, 7);
+       if (_i_ > 6) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.ConstTrue)
+    {
+       stella.Absyn.ConstTrue _consttrue = (stella.Absyn.ConstTrue) foo;
+       if (_i_ > 7) render(_L_PAREN);
+       render("true");
+       if (_i_ > 7) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.ConstFalse)
+    {
+       stella.Absyn.ConstFalse _constfalse = (stella.Absyn.ConstFalse) foo;
+       if (_i_ > 7) render(_L_PAREN);
+       render("false");
+       if (_i_ > 7) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.ConstUnit)
+    {
+       stella.Absyn.ConstUnit _constunit = (stella.Absyn.ConstUnit) foo;
+       if (_i_ > 7) render(_L_PAREN);
+       render("unit");
+       if (_i_ > 7) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.ConstInt)
+    {
+       stella.Absyn.ConstInt _constint = (stella.Absyn.ConstInt) foo;
+       if (_i_ > 7) render(_L_PAREN);
+       pp(_constint.integer_, 0);
+       if (_i_ > 7) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.ConstMemory)
+    {
+       stella.Absyn.ConstMemory _constmemory = (stella.Absyn.ConstMemory) foo;
+       if (_i_ > 7) render(_L_PAREN);
+       pp(_constmemory.memoryaddress_, 0);
+       if (_i_ > 7) render(_R_PAREN);
+    }
+    else     if (foo instanceof stella.Absyn.Var)
+    {
+       stella.Absyn.Var _var = (stella.Absyn.Var) foo;
+       if (_i_ > 7) render(_L_PAREN);
+       pp(_var.stellaident_, 0);
+       if (_i_ > 7) render(_R_PAREN);
     }
 
   }
 
-  private static void pp(stella.Absyn.ListType foo, int _i_)
+  private static void pp(stella.Absyn.ListExpr foo, int _i_)
   {
-    ppListType(foo.iterator(), _i_);
+    ppListExpr(foo.iterator(), _i_);
   }
 
-  private static void ppListType(java.util.Iterator<stella.Absyn.Type> it, int _i_)
+  private static void ppListExpr(java.util.Iterator<stella.Absyn.Expr> it, int _i_)
   {
     if (it.hasNext())
     {
-      stella.Absyn.Type el = it.next();
+      stella.Absyn.Expr el = it.next();
+      if (!it.hasNext())
+      { /* last */
+        switch(_i_)
+    {
+      case 2: pp(el, _i_); render(";"); break;
+      case 0: pp(el, _i_); break;
+    }
+      }
+      else
+      { /* cons */
+        switch(_i_)
+    {
+      case 2: pp(el, _i_); render(";"); ppListExpr(it, _i_); break;
+      case 0: pp(el, _i_); render(","); ppListExpr(it, _i_); break;
+    }
+      }
+    }
+  }
+
+
+  private static void pp(stella.Absyn.PatternBinding foo, int _i_)
+  {
+    if (foo instanceof stella.Absyn.APatternBinding)
+    {
+       stella.Absyn.APatternBinding _apatternbinding = (stella.Absyn.APatternBinding) foo;
+       if (_i_ > 0) render(_L_PAREN);
+       pp(_apatternbinding.pattern_, 0);
+       render("=");
+       pp(_apatternbinding.expr_, 0);
+       if (_i_ > 0) render(_R_PAREN);
+    }
+
+  }
+
+  private static void pp(stella.Absyn.ListPatternBinding foo, int _i_)
+  {
+    ppListPatternBinding(foo.iterator(), _i_);
+  }
+
+  private static void ppListPatternBinding(java.util.Iterator<stella.Absyn.PatternBinding> it, int _i_)
+  {
+    if (it.hasNext())
+    {
+      stella.Absyn.PatternBinding el = it.next();
       if (!it.hasNext())
       { /* last */
         pp(el, _i_);
       }
       else
       { /* cons */
-        pp(el, _i_); render(","); ppListType(it, _i_);
+        pp(el, _i_); render(","); ppListPatternBinding(it, _i_);
       }
     }
   }
@@ -1774,16 +2072,6 @@ public class PrettyPrinter
   }
 
 
-  private static void sh(stella.Absyn.ListStellaIdent foo)
-  {
-     for (java.util.Iterator<String> it = foo.iterator(); it.hasNext();)
-     {
-       sh(it.next());
-       if (it.hasNext())
-         render(",");
-     }
-  }
-
   private static void sh(stella.Absyn.Program foo)
   {
     if (foo instanceof stella.Absyn.AProgram)
@@ -1800,6 +2088,16 @@ public class PrettyPrinter
        render("]");
        render(")");
     }
+  }
+
+  private static void sh(stella.Absyn.ListStellaIdent foo)
+  {
+     for (java.util.Iterator<String> it = foo.iterator(); it.hasNext();)
+     {
+       sh(it.next());
+       if (it.hasNext())
+         render(",");
+     }
   }
 
   private static void sh(stella.Absyn.LanguageDecl foo)
@@ -1874,6 +2172,23 @@ public class PrettyPrinter
        render("DeclTypeAlias");
        sh(_decltypealias.stellaident_);
        sh(_decltypealias.type_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.DeclExceptionType)
+    {
+       stella.Absyn.DeclExceptionType _declexceptiontype = (stella.Absyn.DeclExceptionType) foo;
+       render("(");
+       render("DeclExceptionType");
+       sh(_declexceptiontype.type_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.DeclExceptionVariant)
+    {
+       stella.Absyn.DeclExceptionVariant _declexceptionvariant = (stella.Absyn.DeclExceptionVariant) foo;
+       render("(");
+       render("DeclExceptionVariant");
+       sh(_declexceptionvariant.stellaident_);
+       sh(_declexceptionvariant.type_);
        render(")");
     }
   }
@@ -1988,349 +2303,121 @@ public class PrettyPrinter
     }
   }
 
-  private static void sh(stella.Absyn.Expr foo)
+  private static void sh(stella.Absyn.Type foo)
   {
-    if (foo instanceof stella.Absyn.If)
+    if (foo instanceof stella.Absyn.TypeFun)
     {
-       stella.Absyn.If _if = (stella.Absyn.If) foo;
+       stella.Absyn.TypeFun _typefun = (stella.Absyn.TypeFun) foo;
        render("(");
-       render("If");
-       sh(_if.expr_1);
-       sh(_if.expr_2);
-       sh(_if.expr_3);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Let)
-    {
-       stella.Absyn.Let _let = (stella.Absyn.Let) foo;
-       render("(");
-       render("Let");
-       sh(_let.stellaident_);
-       sh(_let.expr_1);
-       sh(_let.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.LessThan)
-    {
-       stella.Absyn.LessThan _lessthan = (stella.Absyn.LessThan) foo;
-       render("(");
-       render("LessThan");
-       sh(_lessthan.expr_1);
-       sh(_lessthan.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.LessThanOrEqual)
-    {
-       stella.Absyn.LessThanOrEqual _lessthanorequal = (stella.Absyn.LessThanOrEqual) foo;
-       render("(");
-       render("LessThanOrEqual");
-       sh(_lessthanorequal.expr_1);
-       sh(_lessthanorequal.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.GreaterThan)
-    {
-       stella.Absyn.GreaterThan _greaterthan = (stella.Absyn.GreaterThan) foo;
-       render("(");
-       render("GreaterThan");
-       sh(_greaterthan.expr_1);
-       sh(_greaterthan.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.GreaterThanOrEqual)
-    {
-       stella.Absyn.GreaterThanOrEqual _greaterthanorequal = (stella.Absyn.GreaterThanOrEqual) foo;
-       render("(");
-       render("GreaterThanOrEqual");
-       sh(_greaterthanorequal.expr_1);
-       sh(_greaterthanorequal.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Equal)
-    {
-       stella.Absyn.Equal _equal = (stella.Absyn.Equal) foo;
-       render("(");
-       render("Equal");
-       sh(_equal.expr_1);
-       sh(_equal.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.NotEqual)
-    {
-       stella.Absyn.NotEqual _notequal = (stella.Absyn.NotEqual) foo;
-       render("(");
-       render("NotEqual");
-       sh(_notequal.expr_1);
-       sh(_notequal.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.TypeAsc)
-    {
-       stella.Absyn.TypeAsc _typeasc = (stella.Absyn.TypeAsc) foo;
-       render("(");
-       render("TypeAsc");
-       sh(_typeasc.expr_);
-       sh(_typeasc.type_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Abstraction)
-    {
-       stella.Absyn.Abstraction _abstraction = (stella.Absyn.Abstraction) foo;
-       render("(");
-       render("Abstraction");
+       render("TypeFun");
        render("[");
-       sh(_abstraction.listparamdecl_);
+       sh(_typefun.listtype_);
        render("]");
-       sh(_abstraction.expr_);
+       sh(_typefun.type_);
        render(")");
     }
-    if (foo instanceof stella.Absyn.Tuple)
+    if (foo instanceof stella.Absyn.TypeRec)
     {
-       stella.Absyn.Tuple _tuple = (stella.Absyn.Tuple) foo;
+       stella.Absyn.TypeRec _typerec = (stella.Absyn.TypeRec) foo;
        render("(");
-       render("Tuple");
+       render("TypeRec");
+       sh(_typerec.stellaident_);
+       sh(_typerec.type_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.TypeSum)
+    {
+       stella.Absyn.TypeSum _typesum = (stella.Absyn.TypeSum) foo;
+       render("(");
+       render("TypeSum");
+       sh(_typesum.type_1);
+       sh(_typesum.type_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.TypeTuple)
+    {
+       stella.Absyn.TypeTuple _typetuple = (stella.Absyn.TypeTuple) foo;
+       render("(");
+       render("TypeTuple");
        render("[");
-       sh(_tuple.listexpr_);
+       sh(_typetuple.listtype_);
        render("]");
        render(")");
     }
-    if (foo instanceof stella.Absyn.Record)
+    if (foo instanceof stella.Absyn.TypeRecord)
     {
-       stella.Absyn.Record _record = (stella.Absyn.Record) foo;
+       stella.Absyn.TypeRecord _typerecord = (stella.Absyn.TypeRecord) foo;
        render("(");
-       render("Record");
+       render("TypeRecord");
        render("[");
-       sh(_record.listbinding_);
+       sh(_typerecord.listrecordfieldtype_);
        render("]");
        render(")");
     }
-    if (foo instanceof stella.Absyn.Variant)
+    if (foo instanceof stella.Absyn.TypeVariant)
     {
-       stella.Absyn.Variant _variant = (stella.Absyn.Variant) foo;
+       stella.Absyn.TypeVariant _typevariant = (stella.Absyn.TypeVariant) foo;
        render("(");
-       render("Variant");
-       sh(_variant.stellaident_);
-       sh(_variant.exprdata_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Match)
-    {
-       stella.Absyn.Match _match = (stella.Absyn.Match) foo;
-       render("(");
-       render("Match");
-       sh(_match.expr_);
+       render("TypeVariant");
        render("[");
-       sh(_match.listmatchcase_);
+       sh(_typevariant.listvariantfieldtype_);
        render("]");
        render(")");
     }
-    if (foo instanceof stella.Absyn.List)
+    if (foo instanceof stella.Absyn.TypeList)
     {
-       stella.Absyn.List _list = (stella.Absyn.List) foo;
+       stella.Absyn.TypeList _typelist = (stella.Absyn.TypeList) foo;
        render("(");
-       render("List");
-       render("[");
-       sh(_list.listexpr_);
-       render("]");
+       render("TypeList");
+       sh(_typelist.type_);
        render(")");
     }
-    if (foo instanceof stella.Absyn.Add)
+    if (foo instanceof stella.Absyn.TypeBool)
     {
-       stella.Absyn.Add _add = (stella.Absyn.Add) foo;
+       stella.Absyn.TypeBool _typebool = (stella.Absyn.TypeBool) foo;
+       render("TypeBool");
+    }
+    if (foo instanceof stella.Absyn.TypeNat)
+    {
+       stella.Absyn.TypeNat _typenat = (stella.Absyn.TypeNat) foo;
+       render("TypeNat");
+    }
+    if (foo instanceof stella.Absyn.TypeUnit)
+    {
+       stella.Absyn.TypeUnit _typeunit = (stella.Absyn.TypeUnit) foo;
+       render("TypeUnit");
+    }
+    if (foo instanceof stella.Absyn.TypeTop)
+    {
+       stella.Absyn.TypeTop _typetop = (stella.Absyn.TypeTop) foo;
+       render("TypeTop");
+    }
+    if (foo instanceof stella.Absyn.TypeBottom)
+    {
+       stella.Absyn.TypeBottom _typebottom = (stella.Absyn.TypeBottom) foo;
+       render("TypeBottom");
+    }
+    if (foo instanceof stella.Absyn.TypeRef)
+    {
+       stella.Absyn.TypeRef _typeref = (stella.Absyn.TypeRef) foo;
        render("(");
-       render("Add");
-       sh(_add.expr_1);
-       sh(_add.expr_2);
+       render("TypeRef");
+       sh(_typeref.type_);
        render(")");
     }
-    if (foo instanceof stella.Absyn.LogicOr)
+    if (foo instanceof stella.Absyn.TypeVar)
     {
-       stella.Absyn.LogicOr _logicor = (stella.Absyn.LogicOr) foo;
+       stella.Absyn.TypeVar _typevar = (stella.Absyn.TypeVar) foo;
        render("(");
-       render("LogicOr");
-       sh(_logicor.expr_1);
-       sh(_logicor.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Multiply)
-    {
-       stella.Absyn.Multiply _multiply = (stella.Absyn.Multiply) foo;
-       render("(");
-       render("Multiply");
-       sh(_multiply.expr_1);
-       sh(_multiply.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.LogicAnd)
-    {
-       stella.Absyn.LogicAnd _logicand = (stella.Absyn.LogicAnd) foo;
-       render("(");
-       render("LogicAnd");
-       sh(_logicand.expr_1);
-       sh(_logicand.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Application)
-    {
-       stella.Absyn.Application _application = (stella.Absyn.Application) foo;
-       render("(");
-       render("Application");
-       sh(_application.expr_);
-       render("[");
-       sh(_application.listexpr_);
-       render("]");
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.ConsList)
-    {
-       stella.Absyn.ConsList _conslist = (stella.Absyn.ConsList) foo;
-       render("(");
-       render("ConsList");
-       sh(_conslist.expr_1);
-       sh(_conslist.expr_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Head)
-    {
-       stella.Absyn.Head _head = (stella.Absyn.Head) foo;
-       render("(");
-       render("Head");
-       sh(_head.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.IsEmpty)
-    {
-       stella.Absyn.IsEmpty _isempty = (stella.Absyn.IsEmpty) foo;
-       render("(");
-       render("IsEmpty");
-       sh(_isempty.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Tail)
-    {
-       stella.Absyn.Tail _tail = (stella.Absyn.Tail) foo;
-       render("(");
-       render("Tail");
-       sh(_tail.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Succ)
-    {
-       stella.Absyn.Succ _succ = (stella.Absyn.Succ) foo;
-       render("(");
-       render("Succ");
-       sh(_succ.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.LogicNot)
-    {
-       stella.Absyn.LogicNot _logicnot = (stella.Absyn.LogicNot) foo;
-       render("(");
-       render("LogicNot");
-       sh(_logicnot.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Pred)
-    {
-       stella.Absyn.Pred _pred = (stella.Absyn.Pred) foo;
-       render("(");
-       render("Pred");
-       sh(_pred.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.IsZero)
-    {
-       stella.Absyn.IsZero _iszero = (stella.Absyn.IsZero) foo;
-       render("(");
-       render("IsZero");
-       sh(_iszero.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Fix)
-    {
-       stella.Absyn.Fix _fix = (stella.Absyn.Fix) foo;
-       render("(");
-       render("Fix");
-       sh(_fix.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.NatRec)
-    {
-       stella.Absyn.NatRec _natrec = (stella.Absyn.NatRec) foo;
-       render("(");
-       render("NatRec");
-       sh(_natrec.expr_1);
-       sh(_natrec.expr_2);
-       sh(_natrec.expr_3);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Fold)
-    {
-       stella.Absyn.Fold _fold = (stella.Absyn.Fold) foo;
-       render("(");
-       render("Fold");
-       sh(_fold.type_);
-       sh(_fold.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Unfold)
-    {
-       stella.Absyn.Unfold _unfold = (stella.Absyn.Unfold) foo;
-       render("(");
-       render("Unfold");
-       sh(_unfold.type_);
-       sh(_unfold.expr_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.DotRecord)
-    {
-       stella.Absyn.DotRecord _dotrecord = (stella.Absyn.DotRecord) foo;
-       render("(");
-       render("DotRecord");
-       sh(_dotrecord.expr_);
-       sh(_dotrecord.stellaident_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.DotTuple)
-    {
-       stella.Absyn.DotTuple _dottuple = (stella.Absyn.DotTuple) foo;
-       render("(");
-       render("DotTuple");
-       sh(_dottuple.expr_);
-       sh(_dottuple.integer_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.ConstTrue)
-    {
-       stella.Absyn.ConstTrue _consttrue = (stella.Absyn.ConstTrue) foo;
-       render("ConstTrue");
-    }
-    if (foo instanceof stella.Absyn.ConstFalse)
-    {
-       stella.Absyn.ConstFalse _constfalse = (stella.Absyn.ConstFalse) foo;
-       render("ConstFalse");
-    }
-    if (foo instanceof stella.Absyn.ConstInt)
-    {
-       stella.Absyn.ConstInt _constint = (stella.Absyn.ConstInt) foo;
-       render("(");
-       render("ConstInt");
-       sh(_constint.integer_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.Var)
-    {
-       stella.Absyn.Var _var = (stella.Absyn.Var) foo;
-       render("(");
-       render("Var");
-       sh(_var.stellaident_);
+       render("TypeVar");
+       sh(_typevar.stellaident_);
        render(")");
     }
   }
 
-  private static void sh(stella.Absyn.ListExpr foo)
+  private static void sh(stella.Absyn.ListType foo)
   {
-     for (java.util.Iterator<stella.Absyn.Expr> it = foo.iterator(); it.hasNext();)
+     for (java.util.Iterator<stella.Absyn.Type> it = foo.iterator(); it.hasNext();)
      {
        sh(it.next());
        if (it.hasNext())
@@ -2423,6 +2510,22 @@ public class PrettyPrinter
        sh(_patternvariant.patterndata_);
        render(")");
     }
+    if (foo instanceof stella.Absyn.PatternInl)
+    {
+       stella.Absyn.PatternInl _patterninl = (stella.Absyn.PatternInl) foo;
+       render("(");
+       render("PatternInl");
+       sh(_patterninl.pattern_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.PatternInr)
+    {
+       stella.Absyn.PatternInr _patterninr = (stella.Absyn.PatternInr) foo;
+       render("(");
+       render("PatternInr");
+       sh(_patterninr.pattern_);
+       render(")");
+    }
     if (foo instanceof stella.Absyn.PatternTuple)
     {
        stella.Absyn.PatternTuple _patterntuple = (stella.Absyn.PatternTuple) foo;
@@ -2471,6 +2574,11 @@ public class PrettyPrinter
     {
        stella.Absyn.PatternTrue _patterntrue = (stella.Absyn.PatternTrue) foo;
        render("PatternTrue");
+    }
+    if (foo instanceof stella.Absyn.PatternUnit)
+    {
+       stella.Absyn.PatternUnit _patternunit = (stella.Absyn.PatternUnit) foo;
+       render("PatternUnit");
     }
     if (foo instanceof stella.Absyn.PatternInt)
     {
@@ -2554,103 +2662,506 @@ public class PrettyPrinter
      }
   }
 
-  private static void sh(stella.Absyn.Type foo)
+  private static void sh(stella.Absyn.Expr foo)
   {
-    if (foo instanceof stella.Absyn.TypeFun)
+    if (foo instanceof stella.Absyn.Sequence)
     {
-       stella.Absyn.TypeFun _typefun = (stella.Absyn.TypeFun) foo;
+       stella.Absyn.Sequence _sequence = (stella.Absyn.Sequence) foo;
        render("(");
-       render("TypeFun");
+       render("Sequence");
+       sh(_sequence.expr_1);
+       sh(_sequence.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Let)
+    {
+       stella.Absyn.Let _let = (stella.Absyn.Let) foo;
+       render("(");
+       render("Let");
        render("[");
-       sh(_typefun.listtype_);
+       sh(_let.listpatternbinding_);
        render("]");
-       sh(_typefun.type_);
+       sh(_let.expr_);
        render(")");
     }
-    if (foo instanceof stella.Absyn.TypeRec)
+    if (foo instanceof stella.Absyn.LetRec)
     {
-       stella.Absyn.TypeRec _typerec = (stella.Absyn.TypeRec) foo;
+       stella.Absyn.LetRec _letrec = (stella.Absyn.LetRec) foo;
        render("(");
-       render("TypeRec");
-       sh(_typerec.stellaident_);
-       sh(_typerec.type_);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.TypeSum)
-    {
-       stella.Absyn.TypeSum _typesum = (stella.Absyn.TypeSum) foo;
-       render("(");
-       render("TypeSum");
-       sh(_typesum.type_1);
-       sh(_typesum.type_2);
-       render(")");
-    }
-    if (foo instanceof stella.Absyn.TypeTuple)
-    {
-       stella.Absyn.TypeTuple _typetuple = (stella.Absyn.TypeTuple) foo;
-       render("(");
-       render("TypeTuple");
+       render("LetRec");
        render("[");
-       sh(_typetuple.listtype_);
+       sh(_letrec.listpatternbinding_);
        render("]");
+       sh(_letrec.expr_);
        render(")");
     }
-    if (foo instanceof stella.Absyn.TypeRecord)
+    if (foo instanceof stella.Absyn.Assign)
     {
-       stella.Absyn.TypeRecord _typerecord = (stella.Absyn.TypeRecord) foo;
+       stella.Absyn.Assign _assign = (stella.Absyn.Assign) foo;
        render("(");
-       render("TypeRecord");
+       render("Assign");
+       sh(_assign.expr_1);
+       sh(_assign.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.If)
+    {
+       stella.Absyn.If _if = (stella.Absyn.If) foo;
+       render("(");
+       render("If");
+       sh(_if.expr_1);
+       sh(_if.expr_2);
+       sh(_if.expr_3);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.LessThan)
+    {
+       stella.Absyn.LessThan _lessthan = (stella.Absyn.LessThan) foo;
+       render("(");
+       render("LessThan");
+       sh(_lessthan.expr_1);
+       sh(_lessthan.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.LessThanOrEqual)
+    {
+       stella.Absyn.LessThanOrEqual _lessthanorequal = (stella.Absyn.LessThanOrEqual) foo;
+       render("(");
+       render("LessThanOrEqual");
+       sh(_lessthanorequal.expr_1);
+       sh(_lessthanorequal.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.GreaterThan)
+    {
+       stella.Absyn.GreaterThan _greaterthan = (stella.Absyn.GreaterThan) foo;
+       render("(");
+       render("GreaterThan");
+       sh(_greaterthan.expr_1);
+       sh(_greaterthan.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.GreaterThanOrEqual)
+    {
+       stella.Absyn.GreaterThanOrEqual _greaterthanorequal = (stella.Absyn.GreaterThanOrEqual) foo;
+       render("(");
+       render("GreaterThanOrEqual");
+       sh(_greaterthanorequal.expr_1);
+       sh(_greaterthanorequal.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Equal)
+    {
+       stella.Absyn.Equal _equal = (stella.Absyn.Equal) foo;
+       render("(");
+       render("Equal");
+       sh(_equal.expr_1);
+       sh(_equal.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.NotEqual)
+    {
+       stella.Absyn.NotEqual _notequal = (stella.Absyn.NotEqual) foo;
+       render("(");
+       render("NotEqual");
+       sh(_notequal.expr_1);
+       sh(_notequal.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.TypeAsc)
+    {
+       stella.Absyn.TypeAsc _typeasc = (stella.Absyn.TypeAsc) foo;
+       render("(");
+       render("TypeAsc");
+       sh(_typeasc.expr_);
+       sh(_typeasc.type_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.TypeCast)
+    {
+       stella.Absyn.TypeCast _typecast = (stella.Absyn.TypeCast) foo;
+       render("(");
+       render("TypeCast");
+       sh(_typecast.expr_);
+       sh(_typecast.type_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Abstraction)
+    {
+       stella.Absyn.Abstraction _abstraction = (stella.Absyn.Abstraction) foo;
+       render("(");
+       render("Abstraction");
        render("[");
-       sh(_typerecord.listrecordfieldtype_);
+       sh(_abstraction.listparamdecl_);
        render("]");
+       sh(_abstraction.expr_);
        render(")");
     }
-    if (foo instanceof stella.Absyn.TypeVariant)
+    if (foo instanceof stella.Absyn.Variant)
     {
-       stella.Absyn.TypeVariant _typevariant = (stella.Absyn.TypeVariant) foo;
+       stella.Absyn.Variant _variant = (stella.Absyn.Variant) foo;
        render("(");
-       render("TypeVariant");
+       render("Variant");
+       sh(_variant.stellaident_);
+       sh(_variant.exprdata_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Match)
+    {
+       stella.Absyn.Match _match = (stella.Absyn.Match) foo;
+       render("(");
+       render("Match");
+       sh(_match.expr_);
        render("[");
-       sh(_typevariant.listvariantfieldtype_);
+       sh(_match.listmatchcase_);
        render("]");
        render(")");
     }
-    if (foo instanceof stella.Absyn.TypeList)
+    if (foo instanceof stella.Absyn.List)
     {
-       stella.Absyn.TypeList _typelist = (stella.Absyn.TypeList) foo;
+       stella.Absyn.List _list = (stella.Absyn.List) foo;
        render("(");
-       render("TypeList");
-       sh(_typelist.type_);
+       render("List");
+       render("[");
+       sh(_list.listexpr_);
+       render("]");
        render(")");
     }
-    if (foo instanceof stella.Absyn.TypeBool)
+    if (foo instanceof stella.Absyn.Add)
     {
-       stella.Absyn.TypeBool _typebool = (stella.Absyn.TypeBool) foo;
-       render("TypeBool");
-    }
-    if (foo instanceof stella.Absyn.TypeNat)
-    {
-       stella.Absyn.TypeNat _typenat = (stella.Absyn.TypeNat) foo;
-       render("TypeNat");
-    }
-    if (foo instanceof stella.Absyn.TypeUnit)
-    {
-       stella.Absyn.TypeUnit _typeunit = (stella.Absyn.TypeUnit) foo;
-       render("TypeUnit");
-    }
-    if (foo instanceof stella.Absyn.TypeVar)
-    {
-       stella.Absyn.TypeVar _typevar = (stella.Absyn.TypeVar) foo;
+       stella.Absyn.Add _add = (stella.Absyn.Add) foo;
        render("(");
-       render("TypeVar");
-       sh(_typevar.stellaident_);
+       render("Add");
+       sh(_add.expr_1);
+       sh(_add.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Subtract)
+    {
+       stella.Absyn.Subtract _subtract = (stella.Absyn.Subtract) foo;
+       render("(");
+       render("Subtract");
+       sh(_subtract.expr_1);
+       sh(_subtract.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.LogicOr)
+    {
+       stella.Absyn.LogicOr _logicor = (stella.Absyn.LogicOr) foo;
+       render("(");
+       render("LogicOr");
+       sh(_logicor.expr_1);
+       sh(_logicor.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Multiply)
+    {
+       stella.Absyn.Multiply _multiply = (stella.Absyn.Multiply) foo;
+       render("(");
+       render("Multiply");
+       sh(_multiply.expr_1);
+       sh(_multiply.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Divide)
+    {
+       stella.Absyn.Divide _divide = (stella.Absyn.Divide) foo;
+       render("(");
+       render("Divide");
+       sh(_divide.expr_1);
+       sh(_divide.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.LogicAnd)
+    {
+       stella.Absyn.LogicAnd _logicand = (stella.Absyn.LogicAnd) foo;
+       render("(");
+       render("LogicAnd");
+       sh(_logicand.expr_1);
+       sh(_logicand.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Ref)
+    {
+       stella.Absyn.Ref _ref = (stella.Absyn.Ref) foo;
+       render("(");
+       render("Ref");
+       sh(_ref.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Deref)
+    {
+       stella.Absyn.Deref _deref = (stella.Absyn.Deref) foo;
+       render("(");
+       render("Deref");
+       sh(_deref.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Application)
+    {
+       stella.Absyn.Application _application = (stella.Absyn.Application) foo;
+       render("(");
+       render("Application");
+       sh(_application.expr_);
+       render("[");
+       sh(_application.listexpr_);
+       render("]");
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.DotRecord)
+    {
+       stella.Absyn.DotRecord _dotrecord = (stella.Absyn.DotRecord) foo;
+       render("(");
+       render("DotRecord");
+       sh(_dotrecord.expr_);
+       sh(_dotrecord.stellaident_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.DotTuple)
+    {
+       stella.Absyn.DotTuple _dottuple = (stella.Absyn.DotTuple) foo;
+       render("(");
+       render("DotTuple");
+       sh(_dottuple.expr_);
+       sh(_dottuple.integer_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Tuple)
+    {
+       stella.Absyn.Tuple _tuple = (stella.Absyn.Tuple) foo;
+       render("(");
+       render("Tuple");
+       render("[");
+       sh(_tuple.listexpr_);
+       render("]");
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Record)
+    {
+       stella.Absyn.Record _record = (stella.Absyn.Record) foo;
+       render("(");
+       render("Record");
+       render("[");
+       sh(_record.listbinding_);
+       render("]");
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.ConsList)
+    {
+       stella.Absyn.ConsList _conslist = (stella.Absyn.ConsList) foo;
+       render("(");
+       render("ConsList");
+       sh(_conslist.expr_1);
+       sh(_conslist.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Head)
+    {
+       stella.Absyn.Head _head = (stella.Absyn.Head) foo;
+       render("(");
+       render("Head");
+       sh(_head.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.IsEmpty)
+    {
+       stella.Absyn.IsEmpty _isempty = (stella.Absyn.IsEmpty) foo;
+       render("(");
+       render("IsEmpty");
+       sh(_isempty.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Tail)
+    {
+       stella.Absyn.Tail _tail = (stella.Absyn.Tail) foo;
+       render("(");
+       render("Tail");
+       sh(_tail.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Panic)
+    {
+       stella.Absyn.Panic _panic = (stella.Absyn.Panic) foo;
+       render("Panic");
+    }
+    if (foo instanceof stella.Absyn.Throw)
+    {
+       stella.Absyn.Throw _throw = (stella.Absyn.Throw) foo;
+       render("(");
+       render("Throw");
+       sh(_throw.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.TryCatch)
+    {
+       stella.Absyn.TryCatch _trycatch = (stella.Absyn.TryCatch) foo;
+       render("(");
+       render("TryCatch");
+       sh(_trycatch.expr_1);
+       sh(_trycatch.pattern_);
+       sh(_trycatch.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.TryWith)
+    {
+       stella.Absyn.TryWith _trywith = (stella.Absyn.TryWith) foo;
+       render("(");
+       render("TryWith");
+       sh(_trywith.expr_1);
+       sh(_trywith.expr_2);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Inl)
+    {
+       stella.Absyn.Inl _inl = (stella.Absyn.Inl) foo;
+       render("(");
+       render("Inl");
+       sh(_inl.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Inr)
+    {
+       stella.Absyn.Inr _inr = (stella.Absyn.Inr) foo;
+       render("(");
+       render("Inr");
+       sh(_inr.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Succ)
+    {
+       stella.Absyn.Succ _succ = (stella.Absyn.Succ) foo;
+       render("(");
+       render("Succ");
+       sh(_succ.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.LogicNot)
+    {
+       stella.Absyn.LogicNot _logicnot = (stella.Absyn.LogicNot) foo;
+       render("(");
+       render("LogicNot");
+       sh(_logicnot.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Pred)
+    {
+       stella.Absyn.Pred _pred = (stella.Absyn.Pred) foo;
+       render("(");
+       render("Pred");
+       sh(_pred.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.IsZero)
+    {
+       stella.Absyn.IsZero _iszero = (stella.Absyn.IsZero) foo;
+       render("(");
+       render("IsZero");
+       sh(_iszero.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Fix)
+    {
+       stella.Absyn.Fix _fix = (stella.Absyn.Fix) foo;
+       render("(");
+       render("Fix");
+       sh(_fix.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.NatRec)
+    {
+       stella.Absyn.NatRec _natrec = (stella.Absyn.NatRec) foo;
+       render("(");
+       render("NatRec");
+       sh(_natrec.expr_1);
+       sh(_natrec.expr_2);
+       sh(_natrec.expr_3);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Fold)
+    {
+       stella.Absyn.Fold _fold = (stella.Absyn.Fold) foo;
+       render("(");
+       render("Fold");
+       sh(_fold.type_);
+       sh(_fold.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Unfold)
+    {
+       stella.Absyn.Unfold _unfold = (stella.Absyn.Unfold) foo;
+       render("(");
+       render("Unfold");
+       sh(_unfold.type_);
+       sh(_unfold.expr_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.ConstTrue)
+    {
+       stella.Absyn.ConstTrue _consttrue = (stella.Absyn.ConstTrue) foo;
+       render("ConstTrue");
+    }
+    if (foo instanceof stella.Absyn.ConstFalse)
+    {
+       stella.Absyn.ConstFalse _constfalse = (stella.Absyn.ConstFalse) foo;
+       render("ConstFalse");
+    }
+    if (foo instanceof stella.Absyn.ConstUnit)
+    {
+       stella.Absyn.ConstUnit _constunit = (stella.Absyn.ConstUnit) foo;
+       render("ConstUnit");
+    }
+    if (foo instanceof stella.Absyn.ConstInt)
+    {
+       stella.Absyn.ConstInt _constint = (stella.Absyn.ConstInt) foo;
+       render("(");
+       render("ConstInt");
+       sh(_constint.integer_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.ConstMemory)
+    {
+       stella.Absyn.ConstMemory _constmemory = (stella.Absyn.ConstMemory) foo;
+       render("(");
+       render("ConstMemory");
+       sh(_constmemory.memoryaddress_);
+       render(")");
+    }
+    if (foo instanceof stella.Absyn.Var)
+    {
+       stella.Absyn.Var _var = (stella.Absyn.Var) foo;
+       render("(");
+       render("Var");
+       sh(_var.stellaident_);
        render(")");
     }
   }
 
-  private static void sh(stella.Absyn.ListType foo)
+  private static void sh(stella.Absyn.ListExpr foo)
   {
-     for (java.util.Iterator<stella.Absyn.Type> it = foo.iterator(); it.hasNext();)
+     for (java.util.Iterator<stella.Absyn.Expr> it = foo.iterator(); it.hasNext();)
+     {
+       sh(it.next());
+       if (it.hasNext())
+         render(",");
+     }
+  }
+
+  private static void sh(stella.Absyn.PatternBinding foo)
+  {
+    if (foo instanceof stella.Absyn.APatternBinding)
+    {
+       stella.Absyn.APatternBinding _apatternbinding = (stella.Absyn.APatternBinding) foo;
+       render("(");
+       render("APatternBinding");
+       sh(_apatternbinding.pattern_);
+       sh(_apatternbinding.expr_);
+       render(")");
+    }
+  }
+
+  private static void sh(stella.Absyn.ListPatternBinding foo)
+  {
+     for (java.util.Iterator<stella.Absyn.PatternBinding> it = foo.iterator(); it.hasNext();)
      {
        sh(it.next());
        if (it.hasNext())

@@ -66,20 +66,21 @@ public class Test
             p.addErrorListener(new BNFCErrorListener());
   }
 
-  public stella.Absyn.ListStellaIdent parse() throws Exception
+  public stella.Absyn.Program parse() throws Exception
   {
     /* The default parser is the first-defined entry point. */
     /* Other options are: */
-    /* program, languageDecl, extension, listExtensionName,
+    /* listStellaIdent, languageDecl, extension, listExtensionName,
        listExtension, decl, listDecl, localDecl, listLocalDecl,
        annotation, listAnnotation, paramDecl, listParamDecl, returnType,
-       throwType, expr, listExpr, matchCase, listMatchCase,
-       optionalTyping, patternData, exprData, pattern, listPattern,
-       labelledPattern, listLabelledPattern, binding, listBinding, type,
-       listType, variantFieldType, listVariantFieldType, recordFieldType,
+       throwType, matchCase, listMatchCase, optionalTyping, patternData,
+       exprData, pattern, listPattern, labelledPattern,
+       listLabelledPattern, binding, listBinding, expr, listExpr,
+       patternBinding, listPatternBinding, type, listType,
+       variantFieldType, listVariantFieldType, recordFieldType,
        listRecordFieldType, typing */
-    stellaParser.Start_ListStellaIdentContext pc = p.start_ListStellaIdent();
-    stella.Absyn.ListStellaIdent ast = pc.result;
+    stellaParser.Start_ProgramContext pc = p.start_Program();
+    stella.Absyn.Program ast = pc.result;
     System.out.println();
     System.out.println("Parse Succesful!");
     System.out.println();

@@ -7,6 +7,8 @@ public abstract class Decl implements java.io.Serializable {
   public interface Visitor <R,A> {
     public R visit(stella.Absyn.DeclFun p, A arg);
     public R visit(stella.Absyn.DeclTypeAlias p, A arg);
+    public R visit(stella.Absyn.DeclExceptionType p, A arg);
+    public R visit(stella.Absyn.DeclExceptionVariant p, A arg);
 
   }
 
